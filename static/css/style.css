@@ -2010,7 +2010,7 @@ table.dataTable thead > tr > td.sorting {
   padding-right: 15px;
 }
 .dash-widget-icon {
-  background-color: rgba(244, 59, 72, 0.2);
+  background-color: rgb(158 211 187 / 20%);
   border-radius: 100%;
   color: #16a085;
   display: inline-block;

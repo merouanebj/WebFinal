@@ -50,7 +50,7 @@ def Logout_views(request):
  
 def Login_views(request):
     if request.user.is_authenticated:
-        return redirect('createquipe')
+        return redirect('profil')
     if request.method == 'POST':
         email =request.POST.get('email')
         password = request.POST.get('password')
@@ -508,3 +508,40 @@ def Liste_cher_Equipe_aff(request):
     liste = CherList_equipe (request,inter2)
     context ={'liste':liste}
     return render (request,'list_ch_equipe.html',context)         
+
+
+# les affichage d'une chef d'equipe
+       #DashEquipe
+       #Liste Chercheur
+             
+ 
+def Liste_cher_Equipe_aff(request):
+    inter=Recup_id(request)
+    inter2 = inter["equipe_id"]
+    liste = CherList_equipe (request,inter2)
+    context ={'liste':liste}
+    return render (request,'list_ch_equipe.html',context)
+
+# les affichage d'une chef de labo
+      #DashLabo
+      #Liste Equipe labo
+      #Liste chercheur labo
+      
+#les affichage d'une chef Divsion
+      #Dash Divsion
+      #Liste labo 
+      #Liste Equipe 
+      #Liste chercheur  
+
+#les affichage d'une chef Divsion
+      #Dash Divsion
+      #Liste labo 
+      #Liste Equipe 
+      #Liste chercheur 
+      
+#les affichage d'une chef Etablisment
+      #Dash Etablismet
+      #liste division
+      #Liste labo 
+      #Liste Equipe 
+      #Liste chercheur         
