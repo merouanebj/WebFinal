@@ -65,7 +65,7 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
     grade = models.CharField(max_length=200, blank=True)
 
     # extra info  
-    image = models.ImageField(blank=True, upload_to='user_pic')
+    image = models.ImageField(blank=True,default='D', upload_to='images')
     linkedin_account = models.URLField(blank=True)
     google_scholar_account = models.URLField(blank=True,unique=True)
     date_joined = models.DateTimeField(auto_now_add=True)
@@ -94,13 +94,11 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
         ordering = ['date_joined']
 
     # Researche : YAHIA Ilyes
-    def clean(self):
-               if self.google_scholar_account[0:42] != 'https://scholar.google.com/citations?user=':
-                  raise ValidationError('format compte google scholar non valide')
-    
+    def get_google_id(self):
+        return self.google_scholar_account.partition("user=")[2][:12]
     
     def __str__(self) -> str:
-        return " ".join(["Researcher :", self.first_name.upper(), self.last_name.capitalize()])
+        return " ".join([ self.first_name.upper(), self.last_name.capitalize()])
     def get_username(self) -> str:
         return super().get_username()
 

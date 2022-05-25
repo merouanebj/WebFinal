@@ -171,3 +171,15 @@ form .buttons button,
     width: 100%;
   }
 }
+
+.errorlist {
+  color: red;
+}
+*/ .errorlist .nonfield {
+  color: red;
+  margin-right: 100px;
+}
+
+.errorlist .nonfield li {
+  display: inline;
+}

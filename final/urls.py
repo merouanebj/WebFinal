@@ -16,10 +16,10 @@ Including another URLconf
 from turtle import home
 from django.contrib import admin
 from django.urls import path
-
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from finalapp.views import *
-
-
+from django.conf import settings
+from django.conf.urls.static import static 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',home_views, name='landing'),
@@ -28,7 +28,11 @@ urlpatterns = [
         path('createquipe/', creat_equipe_views ,name="createquipe"),
         path('register/', Register_views ,name="register"),
         path('login/', Login_views ,name="login"),
-
-    
-    
+        path('logout/', Logout_views ,name="logout"),
+        path('profil/' , Profil_views, name='profil'),
+        path('DashEquipe/<int:pk>/' , Dash_Equipe, name='Dash_equipe'),
+        path('DashLaboratoire/<str:pk>/' , Dash_Laboratoire, name='Dash_laboratoire'),
+        path('test/' , Test, name='Test'),  
 ]
+urlpatterns += static(settings.MEDIA_URL,  document_root=settings.MEDIA_ROOT)
+urlpatterns += staticfiles_urlpatterns()

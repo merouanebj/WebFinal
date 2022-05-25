@@ -1,5 +1,9 @@
 
  {% load static %}
+ {% comment %} <form action="" method="post">
+  {% csrf_token %} {{ form }}
+  <input type="submit" value="Save" />
+</form> {% endcomment %}
 <!DOCTYPE html>
 <!--=== Coding by CodingLab | www.codinglabweb.com === -->
 <html lang="en">
@@ -104,7 +108,7 @@
     </div>
      
     {% comment %} ------------------------------------------------------------------------------------------------------ {% endcomment %}
-    <div class="input-field">
+    {% comment %} <div class="input-field">
       <label>Wilaya d'etablisment</label>
       <select id="wilaya1">
         <option selected disabled="true" >Wilaya</option>
@@ -121,7 +125,7 @@
         <option value="{{item2.location}}">{{item2.nom}}</option>
         {% endfor %}
       </select>
-    </div>
+    </div> {% endcomment %}
 
     <div class="input-field">
       <label>Equipe</label>
@@ -147,6 +151,7 @@ name="google_scholar_account"
 placeholder="https://scholar.google.com/citations?hl=ar&user="
 required
 />
+{{form.errors.google_scholar_scholar}}
 </div>
 
 <div class="input-field">
@@ -158,22 +163,32 @@ required
   {% csrf_token %}{% csrf_token %}
   <input type="password" name="password1" autocomplete="new-password" required id="id_password1" placeholder="Password">
 </div>
+
 <div class="input-field">
   <label>Confirme Password</label>
   {% csrf_token %}{% csrf_token %}
   <input type="password" name="password2" autocomplete="new-password" required id="id_password2" placeholder="Confirme Password">
 </div>
 <div class="input-field"></div>
+{{ form.errors}}
+<div class="input-field"></div>
           </div>
             <button class="sumbit">
               <span class="btnText">Submit</span>
               <i class="uil uil-navigator"></i>
           </button>
-          {% for message in messages %}
-          <p id="messages">{{message}}</p>
-          {% endfor %}
+          
         </form>
-   
+ {% comment %} {% for message in messages %}
+<p id="messages" style="margin-bottom: -91px;
+margin-right: 263px; text-align:left;
+color: red;
+}">{{message}}</p>
+{% endfor %}  {% endcomment %}
+ 
+
+
+
 
     {% comment %} <script src="{% static 'js/register.js'%}"></script> {% endcomment %}
 </body>

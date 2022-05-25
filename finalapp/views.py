@@ -10,16 +10,22 @@ from  django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate,login,logout
 from .models import *
 from django.contrib import messages
+from serpapi import GoogleSearch
 
 # Create your views here.
 #Login
+
+
+def Test (request):
+    return render (request,'main.html')
+
 def Register_views(request):
     if request.user.is_authenticated:
         return redirect('createquipe')
-    wilaya = Location.objects.all()
-    etablisment= Etablisment.objects.all()
-    division= Division.objects.all()
-    laboratoire= Laboratoire.objects.all()
+    # wilaya = Location.objects.all()
+    # etablisment= Etablisment.objects.all()
+    # division= Division.objects.all()
+    # laboratoire= Laboratoire.objects.all()
     form = CreateUserForm()
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
@@ -27,17 +33,21 @@ def Register_views(request):
             form.save()
             user = form.cleaned_data.get('first_name')
             user1 = form.cleaned_data.get('last_name')
-            messages.success(request,'Compte cree pour '+user +''+user1)
+            messages.success(request,'Compte cree pour '+user +' '+user1)
             return redirect('login')
-        messages.error(request,'Verifier vous information n\'oublier pas que')      
-    context = {'form':form,               
-               'etablisment':etablisment,
-               'wilaya':wilaya,
-               'laboratoire':laboratoire ,
-               'division':division}
+        # messages.error(request,'Verifier les inforamation fournit ')      
+    context = {'form':form}              
+            #    'etablisment':etablisment,
+            #    'wilaya':wilaya,
+            #    'laboratoire':laboratoire ,
+            #    'division':division}
 
     return render (request,'register.html',context)
 
+def Logout_views(request):
+    logout(request)
+    return redirect('login')
+ 
 def Login_views(request):
     if request.user.is_authenticated:
         return redirect('createquipe')
@@ -56,22 +66,15 @@ def Login_views(request):
    
 
 def ApiData(pk): # l'id du chercheur
-    researchers  = Researcher.objects.filter(pk = pk)
-    API ="https://serpapi.com/search.json?engine=google_scholar_author&author_id=LSsXyncAAAAJ&hl&api_key=b4c86099edf995eae27b4b1fde352761f65bf5cc39610783615a1382c05a33d4"
-    merouane = API.replace('LSsXyncAAAAJ',str(researchers[0].google_scholar_account[42:]))
-    response = requests.get(merouane).json()
-    citation=0
-    index_h=0
-    index_i10 = 0
-    citation=response["cited_by"]["table"][0]["citations"]["all"]
-    index_h=response["cited_by"]["table"][1]["h_index"]["all"]  
-    index_i10=response["cited_by"]["table"][2]["i10_index"]["all"]
-    context ={
-    'citation':citation,
-    'index_h':index_h,
-    'index_i10':index_i10,  
-    }    
-    return  context
+    r  = Researcher.objects.get(pk = pk)
+    params = {
+    "engine": "google_scholar_author",
+    "author_id": r.get_google_id(),
+    "api_key": "7e3cd1a6a37b960e426e2d09bcf5fec5ff3e62219a4bc1e42cd907b464e6977e"
+    }
+    search = GoogleSearch(params)
+    results = search.get_dict()
+    return  results 
 
 
 def home_views(request):
@@ -169,7 +172,7 @@ def update_division_views(request,pk):
 
 #Supprimer
 def Delete_division_views (request,pk):
-    Etu=Division.objects.get(id_author=pk)
+    Etu=Division.objects.get(id =pk)
     Etu.delete()
     return redirect('G_chercheurs')  
 
@@ -214,7 +217,7 @@ def update_laboratoire_views(request,pk):
 
 #Supprimer
 def Delete_laboratoire_views (request,pk):
-    Etu=Laboratoire.objects.get(id_author=pk)
+    Etu=Laboratoire.objects.get(id=pk)
     Etu.delete()
     return redirect('G_chercheurs')      
 
@@ -242,19 +245,21 @@ def LaboratoireList_Eta(pk):
 #Equipe
 #Ajouter
 def creat_equipe_views(request):
+    idc =""
     form =EquipeForm(data=request.POST)
     if request.method =="POST":   
         if form.is_valid() :
              form.save()
              messages.success(request, 'Equipe a été ajouté avec succée')
              return redirect("createquipe")
-        i=ApiData(1)
-        context={"form":form,'i':i}
+         
+        
+        context={"form":form}
         return render(request,"createquipe.html",context)
 
     else:   
-           i=ApiData(1)
-           context={"form":form,'i':i}
+           
+           context={"form":form,'idc':idc}
            form= EquipeForm
            return render(request,'createquipe.html',context)
 
@@ -272,7 +277,7 @@ def update_equipe_views(request,pk):
 #Supprimer
 
 def Delete_equipe_views (request,pk):
-    Etu=Equipe.objects.get(id_author=pk)
+    Etu=Equipe.objects.get(id=pk)
     Etu.delete()
     return redirect('G_chercheurs')
 
@@ -316,23 +321,133 @@ def EquipeList_Lab(pk):#pk d'un labo
 #Chercheur
 # les information pour un profil de chercheur
 
-#Ajax
-def load_etablisments(request):
-    wilaya_id = request.GET.get('wilaya_id')
-    etablisments = Etablisment.objects.filter(wilaya_id=wilaya_id).all()
-    return render(request, 'etablisments_dropdown_list_options.html', {'etablisments': etablisments})
 
-def load_divisions(request):
-    etablisment_id = request.GET.get('etablisment_id')
-    divisions = Division.objects.filter(etablisment_id=etablisment_id).all()
-    return render(request, 'divisions_dropdown_list_options.html', {'divisions': divisions})
+def CherList_equipe(request,pk):# pk represent l'id de l'equipe (rest a test)
+    researchers = Researcher.objects.filter(equipe_researchers = pk)
+    context ={'final':researchers}
+    return render(request,'GEquipe.html',context)
 
-def load_labos(request):
-    division_id = request.GET.get('division_id')
-    labos = Laboratoire.objects.filter(division=division_id).all()
-    return render(request, 'labos_dropdown_list_options.html', {'labos': labos})
+# afficher les chercheur d'un laboratoire
 
-def load_equipes(request):
-    labo_id = request.GET.get('labo_id')
-    equipes = Equipe.objects.filter(labo_id=labo_id).all()
-    return render(request, 'equipes_dropdown_list_options.html', {'equipes': equipes})
+def CherList_labo(request,pk):
+    
+    inter = Equipe.objects.filter(laboratoire = pk)
+    researchers = Researcher.objects.none()
+    inter2 =[]
+    for i in inter:
+       researchers = Researcher.objects.filter(equipe_researchers = i.id)
+       
+       inter2 +=researchers
+    
+    context ={'final':inter2}
+    return render(request,'GEquipe.html',context)
+
+# afficher les chercheur d'un division 
+
+def CherList_div(request,pk):
+     inter = Laboratoire.objects.filter(division = pk)
+     interEquipe = Equipe.objects.none()
+     inter2 =[]
+     for i in inter:
+        interEquipe = Equipe.objects.filter(laboratoire = i.id)
+        inter2 +=interEquipe 
+
+     final =[]
+     for i in inter2:
+        researchers = Researcher.objects.filter(equipe_researchers = i.id)
+        final +=researchers
+     
+     context ={'final':final}
+     return render(request,'GEquipe.html',context)
+
+# afficher les chercheur d'un  Etablisment
+
+
+
+def CherList_eta(request,pk):
+     inter = Division.objects.filter(etablisment= pk)
+     interLaboratoire = Equipe.objects.none()
+     inter3 =[]
+     # recuperation des Laboratoire
+     for i in inter:
+        interLaboratoire = Laboratoire.objects.filter(division = i.id)
+        inter3 +=interLaboratoire
+     # recuperation des Equipe    
+     inter2 =[]
+     for i in inter3:
+        interEquipe = Equipe.objects.filter(laboratoire = i.id)
+        inter2 +=interEquipe 
+     # recuperation des chercheur
+     final =[]
+     for i in inter2:
+        researchers = Researcher.objects.filter(equipe_researchers = i.id)
+        final +=researchers
+     
+     context ={'final':final}
+     return render(request,'GEquipe.html',context)
+
+def Profil_views(request):
+    chercheur1 = Researcher.objects.get(id = request.user.pk)
+    # pour recuperer les donnes
+    chercheur = Researcher.objects.filter(id =request.user.pk)
+    equipe = Equipe.objects.filter(id = chercheur[0].equipe_researchers.id)
+    laboratoire = Laboratoire.objects.filter(id = equipe[0].laboratoire.id)
+    division = Division.objects.filter(id = laboratoire[0].division.id)
+    etablisment = Etablisment.objects.filter(id =division[0].etablisment.id)
+    apiData = ApiData(request.user.pk)
+    context ={'chercheur1':chercheur1,'apiData':apiData,'etablisment':etablisment,'equipe':equipe,'laboratoire':laboratoire,'division':division,'equipe':equipe}
+    return render (request,'profil.html',context)
+
+
+def Delete_Cher_views (request,pk):
+    Etu=Researcher.objects.get(id = pk)
+    Etu.delete()
+    return redirect('G_chercheurs')# la page li nekonon fiha nekhedmo bel confirme
+
+def Dash_Equipe_calc(pk):# on fait sous form de fonction pour utulistaion direct dans les autre dash board
+    info_equipe = Equipe.objects.get(pk = pk)
+    researchers = Researcher.objects.filter(equipe_researchers = pk) # recupere les chercheur des equipe
+    nbr_cher_equipe = researchers.count()
+    nbr_Citation = 0
+    moy_indice_h = 0.0
+    moy_indice_i10 = 0.0
+    for i in researchers:
+        inter = ApiData(i.id)
+        nbr_Citation += inter["cited_by"]["table"][0]["citations"]["all"]
+        moy_indice_h += inter["cited_by"]["table"][1]["h_index"]["all"]  
+        moy_indice_i10 += inter["cited_by"]["table"][2]["i10_index"]["all"]
+     
+    moy_indice_h = moy_indice_h/nbr_cher_equipe
+    moy_indice_i10 = moy_indice_i10/nbr_cher_equipe
+      
+    context ={'nbr_cher_equipe':nbr_cher_equipe ,'info_equipe': info_equipe,'nbr_Citation':nbr_Citation,'moy_indice_h':moy_indice_h,'moy_indice_i10':moy_indice_i10}
+    return context
+
+def Dash_Laboratoire_calc(pk):
+    info_laboratoire = Laboratoire.objects.get(pk = pk)
+    equipes = Equipe.objects.filter(laboratoire = pk)
+    nbr_equipe_laboratoire = equipes.count()
+    nbr_CitationL = 0
+    nbr_cher_laboratoire=0
+    moy_indice_hL = 0.0
+    moy_indice_i10L = 0.0
+    for i in equipes:
+        inter = Dash_Equipe_calc(i.id)
+        nbr_CitationL += inter["nbr_Citation"]       
+        moy_indice_hL += inter["moy_indice_h"]
+        moy_indice_i10L += inter["moy_indice_i10"]
+        nbr_cher_laboratoire += inter["nbr_cher_equipe"]
+    
+    moy_indice_hL=moy_indice_hL/nbr_equipe_laboratoire
+    moy_indice_i10L=moy_indice_i10L/nbr_equipe_laboratoire
+    
+    context ={'nbr_equipe_laboratoire':nbr_equipe_laboratoire,'nbr_cher_laboratoire':nbr_cher_laboratoire ,'info_laboratoire': info_laboratoire,'nbr_Citation':nbr_CitationL,'moy_indice_h':moy_indice_hL,'moy_indice_i10':moy_indice_i10L}
+    return context
+    
+def Dash_Equipe(request,pk):
+    context = Dash_Equipe_calc(pk)
+    return render (request,'DashEquipe.html',context)
+
+def Dash_Laboratoire(request,pk):
+    context = Dash_Laboratoire_calc(pk)
+    return render (request,'DashLaboratoire.html',context)

@@ -3,10 +3,13 @@
   {% csrf_token %} {{ form.as_p }}
   <input type="submit" value="Save" />
 </form>
-{% endblock content %}
+
 <h1>la list des equipes {{researchers.first_name}}</h1>
 
-<li>nbr de citation :{{i.citation}}</li>
-<li>index_h :{{i.index_h}}</li>
-<li>index_i10 :{{i}}</li>
-<li>index_i10 :{{data}}</li>
+<li>nbr de citation :{{i}}</li>
+<li>nbr de citation :{{idc}}</li>
+
+<li>nbr de citation :{{i.cited_by.table.0.citations.all}}</li>
+<li>index_h :{{i.cited_by.table.1.h_index.all}}</li>
+<li>index_i10 :{{i.cited_by.table.2.i10_index.all}}</li>
+{% endblock content %}
