@@ -58,7 +58,7 @@ def Login_views(request):
         user =authenticate(request,email=email,password=password)
         if user is not None:
             login(request,user)
-            return redirect('landing')
+            return redirect('profil')
         else:
             messages.info(request,'Email ou Mot de passe incorect')
     context = {}
@@ -457,9 +457,7 @@ def Dash_Equipe(request,pk):
     context = Dash_Equipe_calc(pk)
     return render (request,'DashEquipe.html',context)
 
-def Dash_Laboratoire(request,pk):
-    context = Dash_Laboratoire_calc(pk)
-    return render (request,'DashLaboratoire.html',context)
+
 
 
 
@@ -495,19 +493,7 @@ def Liste_cher_Div_aff(request):
     context ={'liste':liste}
     return render (request,'list_ch_div.html',context)
 
-def Liste_cher_Lab_aff(request):
-    inter=Recup_id(request)
-    inter2 = inter["laboratoire_id"]
-    liste = CherList_labo (request,inter2)
-    context ={'liste':liste}
-    return render (request,'list_ch_lab.html',context) 
 
-def Liste_cher_Equipe_aff(request):
-    inter=Recup_id(request)
-    inter2 = inter["equipe_id"]
-    liste = CherList_equipe (request,inter2)
-    context ={'liste':liste}
-    return render (request,'list_ch_equipe.html',context)         
 
 
 # les affichage d'une chef d'equipe
@@ -523,9 +509,24 @@ def Liste_cher_Equipe_aff(request):
     return render (request,'list_ch_equipe.html',context)
 
 # les affichage d'une chef de labo
-      #DashLabo
-      #Liste Equipe labo
-      #Liste chercheur labo
+  #DashLabo
+def Dash_Laboratoire(request,pk):
+    context = Dash_Laboratoire_calc(pk)
+    return render (request,'DashLaboratoire.html',context)
+  #Liste Equipe labo
+def Liste_equipe_Lab_aff (request):
+    inter = Recup_id(request)
+    inter2 = inter["laboratoire_id"]
+    liste = EquipeList_Lab(request,inter2)
+    context ={'liste':liste}  
+  #Liste chercheur labo
+def Liste_cher_Lab_aff(request):
+      inter=Recup_id(request)
+      inter2 = inter["laboratoire_id"]
+      liste = CherList_labo (request,inter2)
+      context ={'liste':liste}
+      return render (request,'list_ch_lab.html',context) 
+
       
 #les affichage d'une chef Divsion
       #Dash Divsion
