@@ -437,7 +437,7 @@
           <div id="sidebar-menu" class="sidebar-menu">
             <ul>
               <li class="menu-title">
-                <span>Main</span>
+                <span>Dashboard</span>
               </li>
               <li class="submenu">
                 <a href="#"
@@ -488,12 +488,29 @@
               </li>
               {% endcomment %}
               <li class="menu-title">
-                <span>Employees</span>
+                <span>Effectifs </span>
               </li>
-              {% comment %} class="noti-dot" {% endcomment %}
+              {% comment %} class="noti-dot" {% endcomment %} {% comment %}
+              Division {% endcomment %} {% comment %} Chercheur {% endcomment %}
+              <li>
+                <a href="clients.html"
+                  ><i class="la la-users"></i> <span>Divisions</span></a
+                >
+              </li>
+              <li>
+                <a href="clients.html"
+                  ><i class="la la-users"></i> <span>Laboratoires</span></a
+                >
+              </li>
+              <li>
+                <a href="clients.html"
+                  ><i class="la la-users"></i> <span>Equipes</span></a
+                >
+              </li>
+
               <li class="submenu">
                 <a href="#"
-                  ><i class="la la-user"></i> <span> Chercheur</span>
+                  ><i class="la la-user"></i> <span> Chercheurs</span>
                   <span class="menu-arrow"></span
                 ></a>
                 <ul style="display: none">
@@ -502,8 +519,8 @@
                   <li>
                     <a href="leaves.html"
                       >Les Chefs Des Laboratoires
-                      <span class="badge badge-pill bg-primary float-right"
-                        >1</span
+                      {% comment %} <span class="badge badge-pill bg-primary float-right"
+                        >1</span {% endcomment %}
                       ></a
                     >
                   </li>
@@ -512,32 +529,7 @@
                   </li>
                 </ul>
               </li>
-              <li>
-                <a href="clients.html"
-                  ><i class="la la-users"></i> <span>Clients</span></a
-                >
-              </li>
-              <li class="submenu">
-                <a href="#"
-                  ><i class="la la-rocket"></i> <span> Projects</span>
-                  <span class="menu-arrow"></span
-                ></a>
-                <ul style="display: none">
-                  <li><a href="projects.html">Projects</a></li>
-                  <li><a href="tasks.html">Tasks</a></li>
-                  <li><a href="task-board.html">Task Board</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="leads.html"
-                  ><i class="la la-user-secret"></i> <span>Leads</span></a
-                >
-              </li>
-              <li>
-                <a href="tickets.html"
-                  ><i class="la la-ticket"></i> <span>Tickets</span></a
-                >
-              </li>
+
               <li class="menu-title">
                 <span>HR</span>
               </li>
@@ -874,8 +866,12 @@
           </div>
         </div>
       </div>
-
+      <div class="page-wrapper">
+        <!-- Page Content -->
+        <div class="content container-fluid">
       {% block content %}{% endblock content %}
+    </div>  </div>
+    
       <!-- /Page Wrapper -->
     </div>
     <!-- /Main Wrapper -->

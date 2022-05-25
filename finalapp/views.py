@@ -324,8 +324,7 @@ def EquipeList_Lab(pk):#pk d'un labo
 
 def CherList_equipe(request,pk):# pk represent l'id de l'equipe (rest a test)
     researchers = Researcher.objects.filter(equipe_researchers = pk)
-    context ={'final':researchers}
-    return render(request,'GEquipe.html',context)
+    return researchers
 
 # afficher les chercheur d'un laboratoire
 
@@ -339,8 +338,7 @@ def CherList_labo(request,pk):
        
        inter2 +=researchers
     
-    context ={'final':inter2}
-    return render(request,'GEquipe.html',context)
+    return inter2
 
 # afficher les chercheur d'un division 
 
@@ -357,8 +355,8 @@ def CherList_div(request,pk):
         researchers = Researcher.objects.filter(equipe_researchers = i.id)
         final +=researchers
      
-     context ={'final':final}
-     return render(request,'GEquipe.html',context)
+     
+     return final
 
 # afficher les chercheur d'un  Etablisment
 
@@ -383,8 +381,8 @@ def CherList_eta(request,pk):
         researchers = Researcher.objects.filter(equipe_researchers = i.id)
         final +=researchers
      
-     context ={'final':final}
-     return render(request,'GEquipe.html',context)
+    
+     return final
 
 def Profil_views(request):
     chercheur1 = Researcher.objects.get(id = request.user.pk)
@@ -396,6 +394,17 @@ def Profil_views(request):
     etablisment = Etablisment.objects.filter(id =division[0].etablisment.id)
     apiData = ApiData(request.user.pk)
     context ={'chercheur1':chercheur1,'apiData':apiData,'etablisment':etablisment,'equipe':equipe,'laboratoire':laboratoire,'division':division,'equipe':equipe}
+    return render (request,'profil.html',context)
+
+def Profil_views_externe(request,pk):
+    chercheur1 = Researcher.objects.get(id = pk)
+    # pour recuperer les donnes
+    chercheur = Researcher.objects.filter(id =pk)
+    equipe = Equipe.objects.filter(id = chercheur[0].equipe_researchers.id)
+    laboratoire = Laboratoire.objects.filter(id = equipe[0].laboratoire.id)
+    division = Division.objects.filter(id = laboratoire[0].division.id)
+    etablisment = Etablisment.objects.filter(id =division[0].etablisment.id)
+    context ={'chercheur1':chercheur1,'etablisment':etablisment,'equipe':equipe,'laboratoire':laboratoire,'division':division,'equipe':equipe}
     return render (request,'profil.html',context)
 
 
@@ -451,3 +460,51 @@ def Dash_Equipe(request,pk):
 def Dash_Laboratoire(request,pk):
     context = Dash_Laboratoire_calc(pk)
     return render (request,'DashLaboratoire.html',context)
+
+
+
+def Recup_id(request):
+    i = Researcher.objects.get(pk = request.user.id)
+    equipe_id = Equipe.objects.get(pk = i.equipe_researchers.id)
+    laboratoire_id = Laboratoire.objects.get(pk = equipe_id.laboratoire.id)
+    division_id = Division.objects.get(id = laboratoire_id.division.id)
+    etablisment_id = Etablisment.objects.get(id = division_id.etablisment.id)
+    context ={
+       'equipe_id':equipe_id,
+       'laboratoire_id':laboratoire_id,
+       'division_id':division_id,
+       'etablisment_id':etablisment_id 
+    } 
+    return context
+
+
+# affichage des listes de chercheur
+
+def Liste_cher_Eta_aff(request):
+    inter=Recup_id(request)
+    inter2 = inter["etablisment_id"]
+    liste = CherList_eta (request,inter2)
+    context ={'liste':liste}
+    return render (request,'list_ch_eta.html',context)
+        
+
+def Liste_cher_Div_aff(request):
+    inter=Recup_id(request)
+    inter2 = inter["division_id"]
+    liste = CherList_div (request,inter2)
+    context ={'liste':liste}
+    return render (request,'list_ch_div.html',context)
+
+def Liste_cher_Lab_aff(request):
+    inter=Recup_id(request)
+    inter2 = inter["laboratoire_id"]
+    liste = CherList_labo (request,inter2)
+    context ={'liste':liste}
+    return render (request,'list_ch_lab.html',context) 
+
+def Liste_cher_Equipe_aff(request):
+    inter=Recup_id(request)
+    inter2 = inter["equipe_id"]
+    liste = CherList_equipe (request,inter2)
+    context ={'liste':liste}
+    return render (request,'list_ch_equipe.html',context)         
