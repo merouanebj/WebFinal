@@ -244,8 +244,9 @@ def LaboratoireList_Eta(pk):
 #--------------------------------------------------------
 #Equipe
 #Ajouter
+# le seul role qui peut cree une equipe s'est le chef laboratoire
 def creat_equipe_views(request):
-    idc =""
+    chef_labo = Researcher.objects.get(pk = request.user.id)
     form =EquipeForm(data=request.POST)
     if request.method =="POST":   
         if form.is_valid() :
@@ -253,13 +254,10 @@ def creat_equipe_views(request):
              messages.success(request, 'Equipe a été ajouté avec succée')
              return redirect("createquipe")
          
-        
         context={"form":form}
         return render(request,"createquipe.html",context)
-
     else:   
-           
-           context={"form":form,'idc':idc}
+           context={"form":form}
            form= EquipeForm
            return render(request,'createquipe.html',context)
 

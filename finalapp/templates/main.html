@@ -38,7 +38,11 @@
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-
+    <link
+    href="{% static 'css/register.css' %}"
+    type="text/css"
+    rel="stylesheet"
+  />
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="{% static 'js/html5shiv.min.js' %}"></script>
@@ -450,9 +454,11 @@
                       >Etablisment Dashboard</a
                     >
                   </li>
+                  
                   <li>
                     <a href="employee-dashboard.html">Division Dashboard</a>
                   </li>
+                  
                   <li>
                     <a href="employee-dashboard.html">Laboratoire Dashboard</a>
                   </li>

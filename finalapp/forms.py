@@ -30,6 +30,7 @@ class EquipeForm  (ModelForm):
           model = Equipe
           fields = '__all__'
           
+          
 #Login Form      
 class CreateUserForm(UserCreationForm):
     class Meta:

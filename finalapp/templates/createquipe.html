@@ -1,15 +1,33 @@
-{% block content %}
-<form action="" method="post">
-  {% csrf_token %} {{ form.as_p }}
-  <input type="submit" value="Save" />
-</form>
+{% extends 'main.html' %} {% block content %}
+<div class="container">
+  <h2>Creation d'un nouvelle Equipe</h2>
+  <form action="" method="post">
+    <div class="fields">
+      <div class="input-field">
+        {% csrf_token %}<label>Nom</label> {{ form.nom }}
+      </div>
+    </div>
+    <div class="fields">
+      <div class="input-field">
+        {% csrf_token %}<label>Site Web</label> {{ form.site_web }}
+      </div>
+    </div>
+    <div class="fields">
+      <div class="input-field">
+        {%csrf_token %} <label>Chef D'equipe</label>{{ form.chef_equipe }}
+      </div>
+    </div>
+    <div class="fields">
+      <div class="input-field">
+        {%csrf_token %} <label>Laboratoire</label>{{ form.laboratoire}}
+      </div>
+    </div>
 
-<h1>la list des equipes {{researchers.first_name}}</h1>
+    <button class="sumbit">
+      <span class="btnText">Submit</span>
+      <i class="uil uil-navigator"></i>
+    </button>
+  </form>
 
-<li>nbr de citation :{{i}}</li>
-<li>nbr de citation :{{idc}}</li>
-
-<li>nbr de citation :{{i.cited_by.table.0.citations.all}}</li>
-<li>index_h :{{i.cited_by.table.1.h_index.all}}</li>
-<li>index_i10 :{{i.cited_by.table.2.i10_index.all}}</li>
-{% endblock content %}
+  {% endblock content %}
+</div>
