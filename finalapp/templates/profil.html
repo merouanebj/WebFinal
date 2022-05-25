@@ -1,4 +1,5 @@
-{% extends 'main.html' %} {% comment %}
+{% extends 'main.html' %}
+{% comment %}
 <h1>{{ apiData.author.name}}</h1>
 <ul>
   <li>Nom : {{ chercheur1.first_name }}</li>
@@ -19,17 +20,14 @@
 </ul>
 {% if chercheur1.image == null %} {% else %}
 <img src="{{ chercheur1.image.url }}" />
-{% endif %} {% endcomment %} {% block content %}
+{% endif %} {% endcomment %}
+
+{% block content %}
 
 <div class="page-header">
   <div class="row">
     <div class="col-sm-12">
-      <h3 class="page-title">Profile</h3>
-      {% comment %}
-      <ul class="breadcrumb">
-        <li class="breadcrumb-item active"></li>
-      </ul>
-      {% endcomment %}
+      <h3 class="page-title">Bienvenue {{user}}</h3>
     </div>
   </div>
 </div>
@@ -100,6 +98,7 @@
                 <div class="profile-info-left">
                   <h3 class="user-name m-t-0 mb-0">{{user}}</h3>
                   <h6 class="text-muted">{{user.speciality}}</h6>
+                  <!-- <h6 class="text-muted">{{user.}}</h6> -->
 
                   <div class="small doj text-muted">
                     Date of Join : {{user.date_joined}}
@@ -152,13 +151,8 @@
             </div>
           </div>
           <div class="pro-edit">
-            <a
-              data-target="#profile_info"
-              data-toggle="modal"
-              class="edit-icon"
-              href="#"
-              ><i class="fa fa-pencil"></i
-            ></a>
+            <a data-target="#profile_info" data-toggle="modal" class="edit-icon" href="#"><i
+                class="fa fa-pencil"></i></a>
           </div>
         </div>
       </div>

@@ -1,71 +1,13 @@
-from atexit import register
-
-
-from pyexpat.errors import messages
-
 from django.shortcuts import get_object_or_404, redirect, render
-
-from .forms import *
-from django.core.exceptions import ValidationError
-from django.contrib.auth import authenticate, login, logout
-from .models import *
+from finalapp.forms import *
+from finalapp.models import *
 from django.contrib import messages
 from serpapi import GoogleSearch
-from django.contrib.auth.decorators import login_required
-# Create your views here.
-# Login
+from django.contrib.auth.decorators import login_required, permission_required
 
 
 def Test(request):
     return render(request, 'main.html')
-
-
-def Register_views(request):
-    if request.user.is_authenticated:
-        return redirect('createquipe')
-    # wilaya = Location.objects.all()
-    # etablisment= Etablisment.objects.all()
-    # division= Division.objects.all()
-    # laboratoire= Laboratoire.objects.all()
-    form = CreateUserForm()
-    if request.method == 'POST':
-        form = CreateUserForm(request.POST)
-        if form.is_valid():
-            form.save()
-            user = form.cleaned_data.get('first_name')
-            user1 = form.cleaned_data.get('last_name')
-            messages.success(request, 'Compte cree pour '+user + ' '+user1)
-            return redirect('login')
-        # messages.error(request,'Verifier les inforamation fournit ')
-    context = {'form': form}
-    #    'etablisment':etablisment,
-    #    'wilaya':wilaya,
-    #    'laboratoire':laboratoire ,
-    #    'division':division}
-
-    return render(request, 'register.html', context)
-
-
-def Logout_views(request):
-    logout(request)
-    return redirect('login')
-
-
-def Login_views(request):
-    if request.user.is_authenticated:
-        return redirect('profil')
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-
-        user = authenticate(request, email=email, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('profil')
-        else:
-            messages.info(request, 'Email ou Mot de passe incorect')
-    context = {}
-    return render(request, 'login.html', context)
 
 
 def ApiData(pk):  # l'id du chercheur
@@ -103,6 +45,7 @@ def home_views(request):
 # Etablisment
 
 
+@permission_required('finalapp.add_etablisement')
 def creat_Etablisment_views(request):
     form = EtablismentForm(data=request.POST)
     if request.method == "POST":
@@ -431,6 +374,14 @@ def CherList_eta(request, pk):
 
 
 def Profil_views(request):
+    if not request.user in Researcher.objects.filter(etablisment__isnull=True):
+        request.user.researcher_role = Researcher.CHEFETA
+    elif not request.user in Researcher.objects.filter(division__isnull=True):
+        request.user.researcher_role = Researcher.CHEFDIV
+    elif not request.user in Researcher.objects.filter(laboratoire__isnull=True):
+        request.user.researcher_role = Researcher.CHEFLAB
+    elif not request.user in Researcher.objects.filter(equipe__isnull=True):
+        request.user.researcher_role = Researcher.MEMBRE
     chercheur1 = Researcher.objects.get(id=request.user.pk)
     # pour recuperer les donnes
     chercheur = Researcher.objects.filter(id=request.user.pk)
@@ -441,6 +392,8 @@ def Profil_views(request):
     apiData = ApiData(request.user.pk)
     context = {'chercheur1': chercheur1, 'apiData': apiData, 'etablisment': etablisment,
                'equipe': equipe, 'laboratoire': laboratoire, 'division': division, 'equipe': equipe}
+
+    context = {}
     return render(request, 'profil.html', context)
 
 
@@ -582,9 +535,54 @@ def Liste_cher_Equipe_aff(request):
     return render(request, 'list_ch_equipe.html', context)
 
 # les affichage d'une chef de labo
+
     # DashLabo
     # Liste Equipe labo
     # Liste chercheur labo
+
+# les affichage d'une chef Divsion
+    # Dash Divsion
+    # Liste labo
+    # Liste Equipe
+    # Liste chercheur
+
+# les affichage d'une chef Divsion
+    # Dash Divsion
+    # Liste labo
+    # Liste Equipe
+    # Liste chercheur
+
+# les affichage d'une chef Etablisment
+    # Dash Etablismet
+    # liste division
+    # Liste labo
+    # Liste Equipe
+    # Liste chercheur
+
+  # DashLabo
+
+
+def Dash_Laboratoire(request, pk):
+    context = Dash_Laboratoire_calc(pk)
+    return render(request, 'DashLaboratoire.html', context)
+  # Liste Equipe labo
+
+
+def Liste_equipe_Lab_aff(request):
+    inter = Recup_id(request)
+    inter2 = inter["laboratoire_id"]
+    liste = EquipeList_Lab(request, inter2)
+    context = {'liste': liste}
+  # Liste chercheur labo
+
+
+def Liste_cher_Lab_aff(request):
+    inter = Recup_id(request)
+    inter2 = inter["laboratoire_id"]
+    liste = CherList_labo(request, inter2)
+    context = {'liste': liste}
+    return render(request, 'list_ch_lab.html', context)
+
 
 # les affichage d'une chef Divsion
     # Dash Divsion

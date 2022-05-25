@@ -39,32 +39,32 @@ class UserChangeForm(forms.ModelForm):
     class Meta:
         model = Researcher
         fields = ('email', 'first_name', 'last_name',
-                  'speciality', 'grade', 'google_scholar_account', 'is_active', 'is_staff')
+                  'speciality', 'grade', 'google_scholar_account', 'is_active', 'is_staff', 'equipe_researchers')
 
 
 class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
-    list_display = ('email', 'first_name', 'is_staff', 'last_name', 'speciality',
+    list_display = ('__str__', 'email', 'first_name', 'is_staff', 'last_name', 'speciality',
                     'grade', 'linkedin_account', 'google_scholar_account', 'equipe_researchers')
     list_filter = ('is_staff',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': ('first_name', 'last_name', 'speciality',
                                       'grade', 'linkedin_account', 'google_scholar_account',)}),
-        ('Permissions', {
-         'fields': ('is_active','is_staff', 'is_superuser',)}),
+        ('Permissions', {'fields': ('is_active', 'is_staff',
+         'is_superuser', 'researcher_role', 'groups', 'user_permissions',)}),
+        ('Relations', {'fields': ('equipe_researchers',)}),
     )
 
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'first_name', 'last_name', 'speciality', 'grade', 'linkedin_account', 'google_scholar_account', 'password1', 'password2'),
+            'fields': ('email', 'first_name', 'last_name', 'speciality', 'grade', 'linkedin_account', 'google_scholar_account', 'equipe_researchers', 'researcher_role', 'password1', 'password2'),
         }),
     )
     search_fields = ('email',)
-    ordering = ('email',)
-    filter_horizontal = ()
+    ordering = ('date_joined',)
 
 
 admin.site.register(Researcher, UserAdmin),

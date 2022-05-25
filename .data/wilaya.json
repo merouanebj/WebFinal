@@ -1,0 +1,234 @@
+[
+  {
+    "wilaya_name": "Adrar",
+    "wilaya_number": "01"
+  },
+  {
+    "wilaya_name": "Chlef",
+    "wilaya_number": "02"
+  },
+  {
+    "wilaya_name": "Laghouat",
+    "wilaya_number": "03"
+  },
+  {
+    "wilaya_name": "Oum El Bouaghi",
+    "wilaya_number": "04"
+  },
+  {
+    "wilaya_name": "Batna",
+    "wilaya_number": "05"
+  },
+  {
+    "wilaya_name": "Béjaïa",
+    "wilaya_number": "06"
+  },
+  {
+    "wilaya_name": "Biskra",
+    "wilaya_number": "07"
+  },
+  {
+    "wilaya_name": "Béchar",
+    "wilaya_number": "08"
+  },
+  {
+    "wilaya_name": "Blida",
+    "wilaya_number": "09"
+  },
+  {
+    "wilaya_name": "Bouira",
+    "wilaya_number": "10"
+  },
+  {
+    "wilaya_name": "Tamanrasset",
+    "wilaya_number": "11"
+  },
+  {
+    "wilaya_name": "Tébessa",
+    "wilaya_number": "12"
+  },
+  {
+    "wilaya_name": "Tlemcen",
+    "wilaya_number": "13"
+  },
+  {
+    "wilaya_name": "Tiaret",
+    "wilaya_number": "14"
+  },
+  {
+    "wilaya_name": "Tizi Ouzou",
+    "wilaya_number": "15"
+  },
+  {
+    "wilaya_name": "Alger",
+    "wilaya_number": "16"
+  },
+  {
+    "wilaya_name": "Djelfa",
+    "wilaya_number": "17"
+  },
+  {
+    "wilaya_name": "Jijel",
+    "wilaya_number": "18"
+  },
+  {
+    "wilaya_name": "Sétif",
+    "wilaya_number": "19"
+  },
+  {
+    "wilaya_name": "Saïda",
+    "wilaya_number": "20"
+  },
+  {
+    "wilaya_name": "Skikda",
+    "wilaya_number": "21"
+  },
+  {
+    "wilaya_name": "Sidi Bel Abbès",
+    "wilaya_number": "22"
+  },
+  {
+    "wilaya_name": "Annaba",
+    "wilaya_number": "23"
+  },
+  {
+    "wilaya_name": "Guelma",
+    "wilaya_number": "24"
+  },
+  {
+    "wilaya_name": "Constantine",
+    "wilaya_number": "25"
+  },
+  {
+    "wilaya_name": "Médéa",
+    "wilaya_number": "26"
+  },
+  {
+    "wilaya_name": "Mostaganem",
+    "wilaya_number": "27"
+  },
+  {
+    "wilaya_name": "M'Sila",
+    "wilaya_number": "28"
+  },
+  {
+    "wilaya_name": "Mascara",
+    "wilaya_number": "29"
+  },
+  {
+    "wilaya_name": "Ouargla",
+    "wilaya_number": "30"
+  },
+  {
+    "wilaya_name": "Oran",
+    "wilaya_number": "31"
+  },
+  {
+    "wilaya_name": "El Bayadh",
+    "wilaya_number": "32"
+  },
+  {
+    "wilaya_name": "Illizi",
+    "wilaya_number": "33"
+  },
+  {
+    "wilaya_name": "Bordj Bou Arreridj",
+    "wilaya_number": "34"
+  },
+  {
+    "wilaya_name": "Boumerdès",
+    "wilaya_number": "35"
+  },
+  {
+    "wilaya_name": "El Tarf",
+    "wilaya_number": "36"
+  },
+  {
+    "wilaya_name": "Tindouf",
+    "wilaya_number": "37"
+  },
+  {
+    "wilaya_name": "Tissemsilt",
+    "wilaya_number": "38"
+  },
+  {
+    "wilaya_name": "El Oued",
+    "wilaya_number": "39"
+  },
+  {
+    "wilaya_name": "Khenchela",
+    "wilaya_number": "40"
+  },
+  {
+    "wilaya_name": "Souk Ahras",
+    "wilaya_number": "41"
+  },
+  {
+    "wilaya_name": "Tipaza",
+    "wilaya_number": "42"
+  },
+  {
+    "wilaya_name": "Mila",
+    "wilaya_number": "43"
+  },
+  {
+    "wilaya_name": "Aïn Defla",
+    "wilaya_number": "44"
+  },
+  {
+    "wilaya_name": "Naâma",
+    "wilaya_number": "45"
+  },
+  {
+    "wilaya_name": "Aïn Témouchent",
+    "wilaya_number": "46"
+  },
+  {
+    "wilaya_name": "Ghardaïa",
+    "wilaya_number": "47"
+  },
+  {
+    "wilaya_name": "Relizane",
+    "wilaya_number": "48"
+  },
+  {
+    "wilaya_name": "Timimoun",
+    "wilaya_number": "49"
+  },
+  {
+    "wilaya_name": "Bordj Badji Mokhtar",
+    "wilaya_number": "50"
+  },
+  {
+    "wilaya_name": "Ouled Djellal",
+    "wilaya_number": "51"
+  },
+  {
+    "wilaya_name": "Béni Abbès",
+    "wilaya_number": "52"
+  },
+  {
+    "wilaya_name": "In Salah",
+    "wilaya_number": "53"
+  },
+  {
+    "wilaya_name": "In Guezzam",
+    "wilaya_number": "54"
+  },
+  {
+    "wilaya_name": "Touggourt",
+    "wilaya_number": "55"
+  },
+  {
+    "wilaya_name": "Djanet",
+    "wilaya_number": "56"
+  },
+  {
+    "wilaya_name": "El Meghaier",
+    "wilaya_number": "57"
+  },
+  {
+    "wilaya_name": "El Menia",
+    "wilaya_number": "58"
+  }
+]

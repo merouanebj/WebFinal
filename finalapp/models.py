@@ -59,16 +59,25 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
     google_scholar_account = models.URLField(blank=True, unique=True)
     date_joined = models.DateTimeField(auto_now_add=True)
     affecte = models.BooleanField(default=False)
+
     # Relationship between Database tables
     equipe_researchers = models.ForeignKey(
         'Equipe', on_delete=models.SET_NULL, null=True, blank=True)
-    # Role dans l'organissme
-    roleD = (('Membre d\'equipe ', 'Membre d\'equipe '),
-             ('Chef d\'equipe', 'Chef d\'equipe'),
-             ('Chef de Laboratoire', 'Chef de Laboratoire'),
-             ('Chef de Divsion', 'Chef de Division'),
-             ('Chef d\'etablisment', 'Chef d\'etablisment'))
-    role = models.CharField(max_length=100, null=True, choices=roleD)
+
+    CHEFETA = 1
+    CHEFDIV = 2
+    CHEFLAB = 3
+    CHEFEQUIPE = 4
+    MEMBRE = 5
+    ROLE_CHOICES = (
+        (CHEFETA, 'Chef d\'etablisment'),
+        (CHEFDIV, 'Chef de Division'),
+        (CHEFLAB, 'Chef de Laboratoire'),
+        (CHEFEQUIPE, 'Chef d\'equipe'),
+        (MEMBRE, 'Membre d\'equipe'),
+    )
+    researcher_role = models.PositiveSmallIntegerField(
+        choices=ROLE_CHOICES, blank=True, null=True, default=1)
 
     # interests
     is_staff = models.BooleanField(default=False)
@@ -77,8 +86,7 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
     objects = ResearcherUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name',
-                       'speciality', 'grade', 'google_scholar_account']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'google_scholar_account']
 
     class Meta:
         ordering = ['date_joined']
@@ -92,6 +100,9 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
 
     def get_username(self) -> str:
         return super().get_username()
+
+    def get_user_role(self):
+        return " ".join([self.ROLE_CHOICES[self.researcher_role-1][1], str(self.equipe_researchers)])
 
 
 class Location(models.Model):
