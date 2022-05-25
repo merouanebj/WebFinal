@@ -1,17 +1,7 @@
-from enum import unique
-from re import U
 from django.db import models
-from django.core.exceptions import ValidationError
-
-# Create your models here.
-from email.policy import default
 from django.utils.translation import gettext_lazy as _
 from django.db import models
-
-# For the Custom user
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-# to specify a range
-# from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class ResearcherUserManager(BaseUserManager):
@@ -52,7 +42,6 @@ class ResearcherUserManager(BaseUserManager):
         return self.create_user(first_name, last_name, google_scholar_account, email, password, **other_fields)
 
 
-# custom user
 class Researcher(AbstractBaseUser, PermissionsMixin):
     """
     The user profile of a researcher 
@@ -64,31 +53,40 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
     speciality = models.CharField(max_length=150, blank=True)
     grade = models.CharField(max_length=200, blank=True)
 
-    # extra info  
-    image = models.ImageField(blank=True,default='D', upload_to='images')
+    # extra info
+    image = models.ImageField(blank=True, default='D', upload_to='images')
     linkedin_account = models.URLField(blank=True)
-    google_scholar_account = models.URLField(blank=True,unique=True)
+    google_scholar_account = models.URLField(blank=True, unique=True)
     date_joined = models.DateTimeField(auto_now_add=True)
     affecte = models.BooleanField(default=False)
+
     # Relationship between Database tables
     equipe_researchers = models.ForeignKey(
         'Equipe', on_delete=models.SET_NULL, null=True, blank=True)
-    # Role dans l'organissme
-    roleD=(('Membre d\'equipe ','Membre d\'equipe '),
-         ('Chef d\'equipe','Chef d\'equipe'),
-         ('Chef de Laboratoire','Chef de Laboratoire'),
-         ('Chef de Divsion','Chef de Division'),
-         ('Chef d\'etablisment','Chef d\'etablisment'))
-    role=models.CharField(max_length=100,null=True,choices=roleD)
+
+    CHEFETA = 1
+    CHEFDIV = 2
+    CHEFLAB = 3
+    CHEFEQUIPE = 4
+    MEMBRE = 5
+    ROLE_CHOICES = (
+        (CHEFETA, 'Chef d\'etablisment'),
+        (CHEFDIV, 'Chef de Division'),
+        (CHEFLAB, 'Chef de Laboratoire'),
+        (CHEFEQUIPE, 'Chef d\'equipe'),
+        (MEMBRE, 'Membre d\'equipe'),
+    )
+    researcher_role = models.PositiveSmallIntegerField(
+        choices=ROLE_CHOICES, blank=True, null=True, default=1)
 
     # interests
     is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
 
     objects = ResearcherUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name','speciality','grade' ,'google_scholar_account']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'google_scholar_account']
 
     class Meta:
         ordering = ['date_joined']
@@ -96,11 +94,15 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
     # Researche : YAHIA Ilyes
     def get_google_id(self):
         return self.google_scholar_account.partition("user=")[2][:12]
-    
+
     def __str__(self) -> str:
-        return " ".join([ self.first_name.upper(), self.last_name.capitalize()])
+        return " ".join([self.first_name.upper(), self.last_name.capitalize()])
+
     def get_username(self) -> str:
         return super().get_username()
+
+    def get_user_role(self):
+        return " ".join([self.ROLE_CHOICES[self.researcher_role-1][1], str(self.equipe_researchers)])
 
 
 class Location(models.Model):
@@ -115,7 +117,7 @@ class Location(models.Model):
 class Etablisment(models.Model):
     nom = models.CharField(max_length=200, default='')
     logo = models.ImageField(null=True, blank=True)
-    site_web=models.URLField(blank=True)
+    site_web = models.URLField(blank=True)
     location = models.ForeignKey(
         'Location', on_delete=models.CASCADE, null=True)
     chef_etablisement = models.OneToOneField(
@@ -129,7 +131,7 @@ class Etablisment(models.Model):
 
 class Division(models.Model):
     nom = models.CharField(max_length=200, default='')
-    site_web=models.URLField(blank=True)
+    site_web = models.URLField(blank=True)
 
     # relationshi
     etablisment = models.ForeignKey(
@@ -143,7 +145,7 @@ class Division(models.Model):
 
 class Laboratoire(models.Model):
     nom = models.CharField(max_length=200)
-    site_web=models.URLField(blank=True)
+    site_web = models.URLField(blank=True)
 
     # relationship
     division = models.ForeignKey(
@@ -157,7 +159,7 @@ class Laboratoire(models.Model):
 
 class Equipe(models.Model):
     nom = models.CharField(max_length=200)
-    site_web=models.URLField(blank=True)
+    site_web = models.URLField(blank=True)
     # Relationship
     laboratoire = models.ForeignKey(
         'Laboratoire', on_delete=models.CASCADE, null=True)
@@ -172,4 +174,3 @@ class Directions(models.Model):
     nom = models.CharField(max_length=150, )
     chef_direction = models.OneToOneField(
         'Researcher', on_delete=models.SET_NULL, null=True)
-    

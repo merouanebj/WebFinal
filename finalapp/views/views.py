@@ -1,63 +1,13 @@
-from django.contrib.auth import decorators
-from pyexpat.errors import messages
 from django.shortcuts import get_object_or_404, redirect, render
-from .forms import *
-from django.contrib.auth import authenticate, login, logout
-from .models import *
+from finalapp.forms import *
+from finalapp.models import *
 from django.contrib import messages
 from serpapi import GoogleSearch
+from django.contrib.auth.decorators import login_required, permission_required
 
 
 def Test(request):
     return render(request, 'main.html')
-
-
-def Register_views(request):
-    if request.user.is_authenticated:
-        return redirect('createquipe')
-    # wilaya = Location.objects.all()
-    # etablisment= Etablisment.objects.all()
-    # division= Division.objects.all()
-    # laboratoire= Laboratoire.objects.all()
-    form = CreateUserForm()
-    if request.method == 'POST':
-        form = CreateUserForm(request.POST)
-        if form.is_valid():
-            form.save()
-            user = form.cleaned_data.get('first_name')
-            user1 = form.cleaned_data.get('last_name')
-            messages.success(request, 'Compte cree pour '+user + ' '+user1)
-            return redirect('login')
-        # messages.error(request,'Verifier les inforamation fournit ')
-    context = {'form': form}
-    #    'etablisment':etablisment,
-    #    'wilaya':wilaya,
-    #    'laboratoire':laboratoire ,
-    #    'division':division}
-
-    return render(request, 'register.html', context)
-
-
-def Logout_views(request):
-    logout(request)
-    return redirect('login')
-
-
-def Login_views(request):
-    if request.user.is_authenticated:
-        return redirect('profil')
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-
-        user = authenticate(request, email=email, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('profil')
-        else:
-            messages.info(request, 'Email ou Mot de passe incorect')
-    context = {}
-    return render(request, 'login.html', context)
 
 
 def ApiData(pk):  # l'id du chercheur
@@ -72,7 +22,7 @@ def ApiData(pk):  # l'id du chercheur
     return results
 
 
-@decorators.login_required
+@login_required
 def home_views(request):
     labos = Laboratoire.objects.all()
     chercheurs = Researcher.objects.all()
@@ -95,6 +45,7 @@ def home_views(request):
 # Etablisment
 
 
+@permission_required('finalapp.add_etablisement')
 def creat_Etablisment_views(request):
     form = EtablismentForm(data=request.POST)
     if request.method == "POST":
@@ -362,8 +313,7 @@ def EquipeList_Lab(pk):  # pk d'un labo
 
 def CherList_equipe(request, pk):  # pk represent l'id de l'equipe (rest a test)
     researchers = Researcher.objects.filter(equipe_researchers=pk)
-    context = {'final': researchers}
-    return render(request, 'GEquipe.html', context)
+    return researchers
 
 # afficher les chercheur d'un laboratoire
 
@@ -378,8 +328,7 @@ def CherList_labo(request, pk):
 
         inter2 += researchers
 
-    context = {'final': inter2}
-    return render(request, 'GEquipe.html', context)
+    return inter2
 
 # afficher les chercheur d'un division
 
@@ -397,8 +346,7 @@ def CherList_div(request, pk):
         researchers = Researcher.objects.filter(equipe_researchers=i.id)
         final += researchers
 
-    context = {'final': final}
-    return render(request, 'GEquipe.html', context)
+    return final
 
 # afficher les chercheur d'un  Etablisment
 
@@ -422,23 +370,43 @@ def CherList_eta(request, pk):
         researchers = Researcher.objects.filter(equipe_researchers=i.id)
         final += researchers
 
-    context = {'final': final}
-    return render(request, 'GEquipe.html', context)
+    return final
 
 
-@decorators.login_required
 def Profil_views(request):
-    # chercheur1 = Researcher.objects.get(id=request.user.pk)
-    # # pour recuperer les donnes
-    # chercheur = Researcher.objects.filter(id=request.user.pk)
-    # equipe = Equipe.objects.filter(id=chercheur[0].equipe_researchers.id)
-    # laboratoire = Laboratoire.objects.filter(id=equipe[0].laboratoire.id)
-    # division = Division.objects.filter(id=laboratoire[0].division.id)
-    # etablisment = Etablisment.objects.filter(id=division[0].etablisment.id)
-    # apiData = ApiData(request.user.pk)
-    # context = {'chercheur1': chercheur1, 'apiData': apiData, 'etablisment': etablisment,
-    #            'equipe': equipe, 'laboratoire': laboratoire, 'division': division, 'equipe': equipe}
+    if not request.user in Researcher.objects.filter(etablisment__isnull=True):
+        request.user.researcher_role = Researcher.CHEFETA
+    elif not request.user in Researcher.objects.filter(division__isnull=True):
+        request.user.researcher_role = Researcher.CHEFDIV
+    elif not request.user in Researcher.objects.filter(laboratoire__isnull=True):
+        request.user.researcher_role = Researcher.CHEFLAB
+    elif not request.user in Researcher.objects.filter(equipe__isnull=True):
+        request.user.researcher_role = Researcher.MEMBRE
+    chercheur1 = Researcher.objects.get(id=request.user.pk)
+    # pour recuperer les donnes
+    chercheur = Researcher.objects.filter(id=request.user.pk)
+    equipe = Equipe.objects.filter(id=chercheur[0].equipe_researchers.id)
+    laboratoire = Laboratoire.objects.filter(id=equipe[0].laboratoire.id)
+    division = Division.objects.filter(id=laboratoire[0].division.id)
+    etablisment = Etablisment.objects.filter(id=division[0].etablisment.id)
+    apiData = ApiData(request.user.pk)
+    context = {'chercheur1': chercheur1, 'apiData': apiData, 'etablisment': etablisment,
+               'equipe': equipe, 'laboratoire': laboratoire, 'division': division, 'equipe': equipe}
+
     context = {}
+    return render(request, 'profil.html', context)
+
+
+def Profil_views_externe(request, pk):
+    chercheur1 = Researcher.objects.get(id=pk)
+    # pour recuperer les donnes
+    chercheur = Researcher.objects.filter(id=pk)
+    equipe = Equipe.objects.filter(id=chercheur[0].equipe_researchers.id)
+    laboratoire = Laboratoire.objects.filter(id=equipe[0].laboratoire.id)
+    division = Division.objects.filter(id=laboratoire[0].division.id)
+    etablisment = Etablisment.objects.filter(id=division[0].etablisment.id)
+    context = {'chercheur1': chercheur1, 'etablisment': etablisment, 'equipe': equipe,
+               'laboratoire': laboratoire, 'division': division, 'equipe': equipe}
     return render(request, 'profil.html', context)
 
 
@@ -495,7 +463,6 @@ def Dash_Laboratoire_calc(pk):
     return context
 
 
-@decorators.login_required
 def Dash_Equipe(request, pk):
     context = Dash_Equipe_calc(pk)
     return render(request, 'DashEquipe.html', context)
@@ -506,28 +473,132 @@ def Dash_Laboratoire(request, pk):
     return render(request, 'DashLaboratoire.html', context)
 
 
-# new views
+def Recup_id(request):
+    i = Researcher.objects.get(pk=request.user.id)
+    equipe_id = Equipe.objects.get(pk=i.equipe_researchers.id)
+    laboratoire_id = Laboratoire.objects.get(pk=equipe_id.laboratoire.id)
+    division_id = Division.objects.get(id=laboratoire_id.division.id)
+    etablisment_id = Etablisment.objects.get(id=division_id.etablisment.id)
+    context = {
+        'equipe_id': equipe_id,
+        'laboratoire_id': laboratoire_id,
+        'division_id': division_id,
+        'etablisment_id': etablisment_id
+    }
+    return context
 
 
-def lab_equipes():
-    pass
+# affichage des listes de chercheur
+
+def Liste_cher_Eta_aff(request):
+    inter = Recup_id(request)
+    inter2 = inter["etablisment_id"]
+    liste = CherList_eta(request, inter2)
+    context = {'liste': liste}
+    return render(request, 'list_ch_eta.html', context)
 
 
-def equipe_members():
-    pass
+def Liste_cher_Div_aff(request):
+    inter = Recup_id(request)
+    inter2 = inter["division_id"]
+    liste = CherList_div(request, inter2)
+    context = {'liste': liste}
+    return render(request, 'list_ch_div.html', context)
 
 
-def division_labs():
-    pass
+def Liste_cher_Lab_aff(request):
+    inter = Recup_id(request)
+    inter2 = inter["laboratoire_id"]
+    liste = CherList_labo(request, inter2)
+    context = {'liste': liste}
+    return render(request, 'list_ch_lab.html', context)
 
 
-def equipe_members():
-    pass
+def Liste_cher_Equipe_aff(request):
+    inter = Recup_id(request)
+    inter2 = inter["equipe_id"]
+    liste = CherList_equipe(request, inter2)
+    context = {'liste': liste}
+    return render(request, 'list_ch_equipe.html', context)
 
 
-def equipe_members():
-    pass
+# les affichage d'une chef d'equipe
+    # DashEquipe
+    # Liste Chercheur
 
 
-def user_personal_dash():
-    pass
+def Liste_cher_Equipe_aff(request):
+    inter = Recup_id(request)
+    inter2 = inter["equipe_id"]
+    liste = CherList_equipe(request, inter2)
+    context = {'liste': liste}
+    return render(request, 'list_ch_equipe.html', context)
+
+# les affichage d'une chef de labo
+
+    # DashLabo
+    # Liste Equipe labo
+    # Liste chercheur labo
+
+# les affichage d'une chef Divsion
+    # Dash Divsion
+    # Liste labo
+    # Liste Equipe
+    # Liste chercheur
+
+# les affichage d'une chef Divsion
+    # Dash Divsion
+    # Liste labo
+    # Liste Equipe
+    # Liste chercheur
+
+# les affichage d'une chef Etablisment
+    # Dash Etablismet
+    # liste division
+    # Liste labo
+    # Liste Equipe
+    # Liste chercheur
+
+  # DashLabo
+
+
+def Dash_Laboratoire(request, pk):
+    context = Dash_Laboratoire_calc(pk)
+    return render(request, 'DashLaboratoire.html', context)
+  # Liste Equipe labo
+
+
+def Liste_equipe_Lab_aff(request):
+    inter = Recup_id(request)
+    inter2 = inter["laboratoire_id"]
+    liste = EquipeList_Lab(request, inter2)
+    context = {'liste': liste}
+  # Liste chercheur labo
+
+
+def Liste_cher_Lab_aff(request):
+    inter = Recup_id(request)
+    inter2 = inter["laboratoire_id"]
+    liste = CherList_labo(request, inter2)
+    context = {'liste': liste}
+    return render(request, 'list_ch_lab.html', context)
+
+
+# les affichage d'une chef Divsion
+    # Dash Divsion
+    # Liste labo
+    # Liste Equipe
+    # Liste chercheur
+
+# les affichage d'une chef Divsion
+    # Dash Divsion
+    # Liste labo
+    # Liste Equipe
+    # Liste chercheur
+
+# les affichage d'une chef Etablisment
+    # Dash Etablismet
+    # liste division
+    # Liste labo
+    # Liste Equipe
+    # Liste chercheur

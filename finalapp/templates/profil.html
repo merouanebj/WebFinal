@@ -1,4 +1,5 @@
-{% extends 'main.html' %} {% comment %}
+{% extends 'main.html' %}
+{% comment %}
 <h1>{{ apiData.author.name}}</h1>
 <ul>
   <li>Nom : {{ chercheur1.first_name }}</li>
@@ -19,157 +20,144 @@
 </ul>
 {% if chercheur1.image == null %} {% else %}
 <img src="{{ chercheur1.image.url }}" />
-{% endif %} {% endcomment %} {% block content %}
-<div class="page-wrapper">
-  <!-- Page Content -->
-  <div class="content container-fluid">
-    <div class="page-header">
-      <div class="row">
-        <div class="col-sm-12">
-          <h3 class="page-title">Profile</h3>
-          {% comment %}
-          <ul class="breadcrumb">
-            <li class="breadcrumb-item active"></li>
-          </ul>
-          {% endcomment %}
-        </div>
-      </div>
+{% endif %} {% endcomment %}
+
+{% block content %}
+
+<div class="page-header">
+  <div class="row">
+    <div class="col-sm-12">
+      <h3 class="page-title">Bienvenue {{user}}</h3>
     </div>
-
-    {% comment %} les indicateur {% endcomment %}
-    <div class="row">
-      <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-        <div class="card dash-widget">
-          <div class="card-body">
-            <span class="dash-widget-icon"><i class="fa fa-cubes"></i></span>
-            <div class="dash-widget-info">
-              <h3>{{apiData.cited_by.table.1.h_index.all}}</h3>
-              <span>Citations</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-        <div class="card dash-widget">
-          <div class="card-body">
-            <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
-            <div class="dash-widget-info">
-              <h3>{{apiData.cited_by.table.1.h_index.all}}</h3>
-              <span>Index H</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-        <div class="card dash-widget">
-          <div class="card-body">
-            <span class="dash-widget-icon"><i class="fa fa-usd"></i></span>
-            <div class="dash-widget-info">
-              <h3>{{apiData.cited_by.table.2.i10_index.all}}</h3>
-              <span>Index I10</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-        <div class="card dash-widget">
-          <div class="card-body">
-            <span class="dash-widget-icon"><i class="fa fa-usd"></i></span>
-            <div class="dash-widget-info">
-              <h3>{{apiData.cited_by.table.2.i10_index.all}}</h3>
-              <span>Index I10</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    {% comment %} profil {% endcomment %}
-    <div class="card mb-0">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="profile-view">
-              <div class="profile-img-wrap">
-                <div class="profile-img">
-                  <a href="#"><img alt="" src="{{ user.image.url}}" /></a>
-                </div>
-              </div>
-              <div class="profile-basic">
-                <div class="row">
-                  <div class="col-md-5">
-                    <div class="profile-info-left">
-                      <h3 class="user-name m-t-0 mb-0">{{user}}</h3>
-                      <h6 class="text-muted">{{user.speciality}}</h6>
-
-                      <div class="small doj text-muted">
-                        Date of Join : {{user.date_joined}}
-                      </div>
-                      <div class="staff-msg">
-                        <a class="btn btn-custom" href="chat.html"
-                          >Send Message</a
-                        >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-7">
-                    <ul class="personal-info">
-                      <li>
-                        <div class="title">Etablisment:</div>
-                        <div class="text">
-                          <a href="">{{ etablisment.0}}</a>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="title">Division:</div>
-                        <div class="text">
-                          <a href="">{{ division.0}}</a>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="title">Laboratoire:</div>
-                        <div class="text">
-                          <a href="">{{ laboratoire.0}}</a>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="title">Equipe:</div>
-                        <div class="text">
-                          <a href="">{{ equipe.0}}</a>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="title">Grade:</div>
-                        <div class="text">
-                          <a href="">{{user.grade}}</a>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="title">Email:</div>
-                        <div class="text">
-                          <a href="">{{user.email}}</a>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="pro-edit">
-                <a
-                  data-target="#profile_info"
-                  data-toggle="modal"
-                  class="edit-icon"
-                  href="#"
-                  ><i class="fa fa-pencil"></i
-                ></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    {% endblock content %}
   </div>
 </div>
+
+{% comment %} les indicateur {% endcomment %}
+<div class="row">
+  <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+    <div class="card dash-widget">
+      <div class="card-body">
+        <span class="dash-widget-icon"><i class="fa fa-cubes"></i></span>
+        <div class="dash-widget-info">
+          <h3>{{apiData.cited_by.table.1.h_index.all}}</h3>
+          <span>Citations</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+    <div class="card dash-widget">
+      <div class="card-body">
+        <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
+        <div class="dash-widget-info">
+          <h3>{{apiData.cited_by.table.1.h_index.all}}</h3>
+          <span>Index H</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+    <div class="card dash-widget">
+      <div class="card-body">
+        <span class="dash-widget-icon"><i class="fa fa-usd"></i></span>
+        <div class="dash-widget-info">
+          <h3>{{apiData.cited_by.table.2.i10_index.all}}</h3>
+          <span>Index I10</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+    <div class="card dash-widget">
+      <div class="card-body">
+        <span class="dash-widget-icon"><i class="fa fa-usd"></i></span>
+        <div class="dash-widget-info">
+          <h3>{{apiData.cited_by.table.2.i10_index.all}}</h3>
+          <span>Index I10</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% comment %} profil {% endcomment %}
+<div class="card mb-0">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="profile-view">
+          <div class="profile-img-wrap">
+            <div class="profile-img">
+              <a href="#"><img alt="" src="{{ user.image.url}}" /></a>
+            </div>
+          </div>
+          <div class="profile-basic">
+            <div class="row">
+              <div class="col-md-5">
+                <div class="profile-info-left">
+                  <h3 class="user-name m-t-0 mb-0">{{user}}</h3>
+                  <h6 class="text-muted">{{user.speciality}}</h6>
+                  <!-- <h6 class="text-muted">{{user.}}</h6> -->
+
+                  <div class="small doj text-muted">
+                    Date of Join : {{user.date_joined}}
+                  </div>
+                  <div class="staff-msg">
+                    <a class="btn btn-custom" href="chat.html">Send Message</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7">
+                <ul class="personal-info">
+                  <li>
+                    <div class="title">Etablisment:</div>
+                    <div class="text">
+                      <a href="">{{ etablisment.0}}</a>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="title">Division:</div>
+                    <div class="text">
+                      <a href="">{{ division.0}}</a>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="title">Laboratoire:</div>
+                    <div class="text">
+                      <a href="">{{ laboratoire.0}}</a>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="title">Equipe:</div>
+                    <div class="text">
+                      <a href="">{{ equipe.0}}</a>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="title">Grade:</div>
+                    <div class="text">
+                      <a href="">{{user.grade}}</a>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="title">Email:</div>
+                    <div class="text">
+                      <a href="">{{user.email}}</a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="pro-edit">
+            <a data-target="#profile_info" data-toggle="modal" class="edit-icon" href="#"><i
+                class="fa fa-pencil"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

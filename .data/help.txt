@@ -1,0 +1,3 @@
+index dynamique 
+
+le profil d'un chercheur contient NOM PRENOM {indicateur} etablisment equipe labo

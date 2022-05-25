@@ -1,0 +1,4 @@
+"first_name","last_name","grade","speciality","google_scholar_account","email",password=""
+
+"ALIANE","Hassina"  , "Natural Language Processing" ,"M.R.A","https://scholar.google.com/citations?user=VOkaVCMAAAAJ&hl=en","haliane@mail.cerist.dz" ,password="RLt5idBGWjM8mQ7z"
+Researcher.objects.create_user(email="bessa@gmail.com",first_name="bessaa",     last_name="brahim",     google_scholar_account="https://scholar.google.com/citations?user=ZYT9EzkAAAAJ",password="bessaa123")

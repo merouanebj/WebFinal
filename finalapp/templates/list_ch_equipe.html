@@ -1,0 +1,9 @@
+{% extends 'main.html' %} {% block content %}
+
+<h1>Saha chikh</h1>
+<ul>
+  {% for i in liste %}
+  <li>{{i.first_name}}</li>
+  {% endfor %}
+</ul>
+{% endblock content %}
