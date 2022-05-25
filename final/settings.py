@@ -119,7 +119,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 MEDIA_URL = '/images/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+    BASE_DIR / 'finalapp/static',
+
+]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
 # Default primary key field type
@@ -128,5 +132,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
-#wache 
-AUTH_USER_MODEL = "finalapp.Researcher" 
+# wache
+AUTH_USER_MODEL = "finalapp.Researcher"
+LOGIN_REDIRCT_URL = '/user/<int:pk>/dashboard/'
+LOGIN_URL = '/login/'
