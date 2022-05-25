@@ -11,9 +11,9 @@
   <li>Laboratoire :{{ laboratoire.0}}</li>
 
   <li>Equipe : {{ equipe.0 }}</li>
-  <li>Nombre de citation : {{ apiData.cited_by.table.0.citations.all}}</li>
-  <li>H_index : {{ apiData.cited_by.table.1.h_index.all}}</li>
-  <li>I10_Index : {{apiData.cited_by.table.2.i10_index.all}}</li>
+  <li>Nombre de citation : {{ }}</li>
+  <li>H_index : {{ }}</li>
+  <li>I10_Index :</li>
 
   <li>fait partie depuis : {{ chercheur1.date_joined}}</li>
 </ul>
@@ -35,6 +35,57 @@
         </div>
       </div>
     </div>
+
+    {% comment %} les indicateur {% endcomment %}
+    <div class="row">
+      <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+        <div class="card dash-widget">
+          <div class="card-body">
+            <span class="dash-widget-icon"><i class="fa fa-cubes"></i></span>
+            <div class="dash-widget-info">
+              <h3>{{apiData.cited_by.table.1.h_index.all}}</h3>
+              <span>Citations</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+        <div class="card dash-widget">
+          <div class="card-body">
+            <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
+            <div class="dash-widget-info">
+              <h3>{{apiData.cited_by.table.1.h_index.all}}</h3>
+              <span>Index H</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+        <div class="card dash-widget">
+          <div class="card-body">
+            <span class="dash-widget-icon"><i class="fa fa-usd"></i></span>
+            <div class="dash-widget-info">
+              <h3>{{apiData.cited_by.table.2.i10_index.all}}</h3>
+              <span>Index I10</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+        <div class="card dash-widget">
+          <div class="card-body">
+            <span class="dash-widget-icon"><i class="fa fa-usd"></i></span>
+            <div class="dash-widget-info">
+              <h3>{{apiData.cited_by.table.2.i10_index.all}}</h3>
+              <span>Index I10</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% comment %} profil {% endcomment %}
     <div class="card mb-0">
       <div class="card-body">
         <div class="row">
