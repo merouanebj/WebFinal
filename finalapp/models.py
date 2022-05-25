@@ -72,7 +72,7 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
 
     # interests
     is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
 
     objects = ResearcherUserManager()
 

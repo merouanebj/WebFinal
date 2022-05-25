@@ -128,5 +128,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
-#wache 
-AUTH_USER_MODEL = "finalapp.Researcher" 
+# wache
+AUTH_USER_MODEL = "finalapp.Researcher"
+
+# LOGIN_REDIRCT_URL = '/user/<int:pk>/dashboard/'
+LOGIN_REDIRCT_URL = '/profil/'
+LOGIN_URL = '/login/'
