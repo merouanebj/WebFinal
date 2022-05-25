@@ -15,7 +15,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = Researcher
-        fields = ('email', 'first_name', 'last_name', 'speciality',
+        fields = ('email', 'first_name', 'last_name', 'speciality','equipe_researchers',
                   'grade', 'google_scholar_account')
 
     def clean_password2(self):
@@ -38,7 +38,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = Researcher
-        fields = ('email', 'first_name', 'last_name',
+        fields = ('email', 'first_name', 'last_name','equipe_researchers',
                   'speciality', 'grade', 'google_scholar_account', 'is_active', 'is_staff')
 
 
@@ -50,7 +50,7 @@ class UserAdmin(BaseUserAdmin):
     list_filter = ('is_staff',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name', 'speciality',
+        ('Personal info', {'fields': ('first_name','equipe_researchers', 'last_name', 'speciality',
                                       'grade', 'linkedin_account', 'google_scholar_account',)}),
         ('Permissions', {
          'fields': ('is_active', 'is_superuser',)}),
@@ -59,7 +59,7 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'first_name', 'last_name', 'speciality', 'grade', 'linkedin_account', 'google_scholar_account', 'password1', 'password2'),
+            'fields': ('email', 'first_name','equipe_researchers', 'last_name', 'speciality', 'grade', 'linkedin_account', 'google_scholar_account', 'password1', 'password2'),
         }),
     )
     search_fields = ('email',)

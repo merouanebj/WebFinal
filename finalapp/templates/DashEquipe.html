@@ -1,70 +1,68 @@
 {% extends 'main.html' %} {% block content %}
 <!-- /Sidebar -->
-<div class="page-wrapper">
-  <div class="content container-fluid">
-    <!-- Page Header -->
-    <div class="page-header">
-      <div class="row">
-        <div class="col-sm-12">
-          <h3 class="page-title">Bienvenue {{user}}</h3>
-          <ul class="breadcrumb">
-            <li class="breadcrumb-item active">
-              Dashboard de L'equipe {{info_equipe.nom}} du Laboratoire
-              {{info_equipe.laboratoire}}
-            </li>
-          </ul>
-        </div>
-      </div>
+
+<!-- Page Header -->
+<div class="page-header">
+  <div class="row">
+    <div class="col-sm-12">
+      <h3 class="page-title">Bienvenue {{user}} {{chef}}</h3>
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item active">
+          Dashboard de L'equipe {{info_equipe.nom}} du Laboratoire
+          {{info_equipe.laboratoire}}
+        </li>
+      </ul>
     </div>
-    <!-- /Page Header -->
-    {% comment %} Les carts {% endcomment %}
-    <div class="row">
-      <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-        <div class="card dash-widget">
-          <div class="card-body">
-            <span class="dash-widget-icon"><i class="fa fa-cubes"></i></span>
-            <div class="dash-widget-info">
-              <h3>{{nbr_cher_equipe}}</h3>
-              <span>Chercheur</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-        <div class="card dash-widget">
-          <div class="card-body">
-            <span class="dash-widget-icon"><i class="fa fa-usd"></i></span>
-            <div class="dash-widget-info">
-              <h3>{{nbr_Citation}}</h3>
-              <span>Citation Total</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-        <div class="card dash-widget">
-          <div class="card-body">
-            <span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
-            <div class="dash-widget-info">
-              <h3>{{moy_indice_h}}</h3>
-              <span>Moyenne d'indice H</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-        <div class="card dash-widget">
-          <div class="card-body">
-            <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
-            <div class="dash-widget-info">
-              <h3>{{moy_indice_i10}}</h3>
-              <span>Moyenne d'indice I10</span>
-            </div>
-          </div>
+  </div>
+</div>
+<!-- /Page Header -->
+{% comment %} Les carts {% endcomment %}
+<div class="row">
+  <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+    <div class="card dash-widget">
+      <div class="card-body">
+        <span class="dash-widget-icon"><i class="fa fa-cubes"></i></span>
+        <div class="dash-widget-info">
+          <h3>{{nbr_cher_equipe}}</h3>
+          <span>Chercheur</span>
         </div>
       </div>
     </div>
   </div>
+  <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+    <div class="card dash-widget">
+      <div class="card-body">
+        <span class="dash-widget-icon"><i class="fa fa-usd"></i></span>
+        <div class="dash-widget-info">
+          <h3>{{nbr_Citation}}</h3>
+          <span>Citation Total</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+    <div class="card dash-widget">
+      <div class="card-body">
+        <span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
+        <div class="dash-widget-info">
+          <h3>{{moy_indice_h}}</h3>
+          <span>Moyenne d'indice H</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+    <div class="card dash-widget">
+      <div class="card-body">
+        <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
+        <div class="dash-widget-info">
+          <h3>{{moy_indice_i10}}</h3>
+          <span>Moyenne d'indice I10</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- /Page Content -->
 </div>
 {% endblock content %}

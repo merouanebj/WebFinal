@@ -414,6 +414,7 @@ def Delete_Cher_views (request,pk):
     return redirect('G_chercheurs')# la page li nekonon fiha nekhedmo bel confirme
 
 def Dash_Equipe_calc(pk):# on fait sous form de fonction pour utulistaion direct dans les autre dash board
+    
     info_equipe = Equipe.objects.get(pk = pk)
     researchers = Researcher.objects.filter(equipe_researchers = pk) # recupere les chercheur des equipe
     nbr_cher_equipe = researchers.count()
@@ -455,31 +456,50 @@ def Dash_Laboratoire_calc(pk):
     
 def Dash_Equipe(request,pk):
     context = Dash_Equipe_calc(pk)
+    chef = TestChefEquipe(request)
+    context ["chef"]=  chef
     return render (request,'DashEquipe.html',context)
 
+def Recup_id_equipe(request):
+    i = Researcher.objects.get(pk = request.user.id)
+    equipe_id = Equipe.objects.get(pk = i.equipe_researchers.id)
+    context ={
+       'equipe_id':equipe_id,
+    } 
+    return context
 
-
-
-
-def Recup_id(request):
+def Recup_id_laboratoire(request):
+    i = Researcher.objects.get(pk = request.user.id)
+    equipe_id = Equipe.objects.get(pk = i.equipe_researchers.id)
+    laboratoire_id = Laboratoire.objects.get(pk = equipe_id.laboratoire.id)
+    context ={ 
+       'laboratoire_id':laboratoire_id, 
+    } 
+    return context
+def Recup_id_division(request):
+    i = Researcher.objects.get(pk = request.user.id)
+    equipe_id = Equipe.objects.get(pk = i.equipe_researchers.id)
+    laboratoire_id = Laboratoire.objects.get(pk = equipe_id.laboratoire.id)
+    division_id = Division.objects.get(id = laboratoire_id.division.id)
+    context ={
+       'division_id':division_id,
+    } 
+    return context
+def Recup_id_etablisment(request):
     i = Researcher.objects.get(pk = request.user.id)
     equipe_id = Equipe.objects.get(pk = i.equipe_researchers.id)
     laboratoire_id = Laboratoire.objects.get(pk = equipe_id.laboratoire.id)
     division_id = Division.objects.get(id = laboratoire_id.division.id)
     etablisment_id = Etablisment.objects.get(id = division_id.etablisment.id)
     context ={
-       'equipe_id':equipe_id,
-       'laboratoire_id':laboratoire_id,
-       'division_id':division_id,
        'etablisment_id':etablisment_id 
     } 
     return context
 
-
 # affichage des listes de chercheur
 
 def Liste_cher_Eta_aff(request):
-    inter=Recup_id(request)
+    inter=Recup_id_etablisment(request)
     inter2 = inter["etablisment_id"]
     liste = CherList_eta (request,inter2)
     context ={'liste':liste}
@@ -487,7 +507,7 @@ def Liste_cher_Eta_aff(request):
         
 
 def Liste_cher_Div_aff(request):
-    inter=Recup_id(request)
+    inter=Recup_id_division(request)
     inter2 = inter["division_id"]
     liste = CherList_div (request,inter2)
     context ={'liste':liste}
@@ -502,7 +522,7 @@ def Liste_cher_Div_aff(request):
              
  
 def Liste_cher_Equipe_aff(request):
-    inter=Recup_id(request)
+    inter=Recup_id_equipe(request)
     inter2 = inter["equipe_id"]
     liste = CherList_equipe (request,inter2)
     context ={'liste':liste}
@@ -515,13 +535,20 @@ def Dash_Laboratoire(request,pk):
     return render (request,'DashLaboratoire.html',context)
   #Liste Equipe labo
 def Liste_equipe_Lab_aff (request):
-    inter = Recup_id(request)
+    inter = Recup_id_laboratoire(request)
     inter2 = inter["laboratoire_id"]
     liste = EquipeList_Lab(request,inter2)
-    context ={'liste':liste}  
+    context ={'liste':liste}
+    return render (request,'.html',context)
+   #Liste Equipe labo 
+def  Liste_cher_Lab_aff_chef_equipe (request):
+    inter = Recup_id_laboratoire(request)
+    inter2 = inter["laboratoire_id"]
+    liste = EquipeList_Lab(request,inter2)
+    context ={'liste':liste}   
   #Liste chercheur labo
 def Liste_cher_Lab_aff(request):
-      inter=Recup_id(request)
+      inter=Recup_id_laboratoire(request)
       inter2 = inter["laboratoire_id"]
       liste = CherList_labo (request,inter2)
       context ={'liste':liste}
@@ -546,3 +573,49 @@ def Liste_cher_Lab_aff(request):
       #Liste labo 
       #Liste Equipe 
       #Liste chercheur         
+      
+      
+      
+# Les Fonction de test des role 
+# test chef lab
+def TestChefEquipe(reqeust):
+   inter=Recup_id_equipe(reqeust)
+   equipe = Equipe.objects.filter(id = inter["equipe_id"].id)
+   if equipe[0].chef_equipe.id == reqeust.user.id:
+       return True
+   return False
+    
+# test chef lab
+def TestChefLaboratoire(reqeust):
+   inter=Recup_id_laboratoire(reqeust)
+   inter2 = inter["laboratoire_id"]
+   equipe = Laboratoire.objects.filter(id = inter2)
+   if equipe.chef_labo.id == reqeust.user.id:
+       return True
+   return False 
+
+# test chef lab
+def TestChefLaboratoire(reqeust):
+   inter=Recup_id_laboratoire(reqeust)
+   inter2 = inter["laboratoire_id"]
+   equipe = Laboratoire.objects.filter(id = inter2)
+   if equipe.chef_labo.id == reqeust.user.id:
+       return True
+   return False    
+
+# test chef Divison
+def TestChefDivsion(reqeust):
+   inter=Recup_id_division(reqeust)
+   inter2 = inter["division_id"]
+   equipe = Division.objects.filter(id = inter2)
+   if equipe.chef_div.id == reqeust.user.id:
+       return True
+   return False
+
+def TestChefDivsion(reqeust):
+   inter=Recup_id_etablisment(reqeust)
+   inter2 = inter["etablisment_id"]
+   equipe = Etablisment.objects.filter(id = inter2)
+   if equipe.chef_etablisement.id == reqeust.user.id:
+       return True
+   return False    
