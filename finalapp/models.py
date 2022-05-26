@@ -84,9 +84,6 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
     def get_username(self) -> str:
         return super().get_username()
 
-    def get_user_role(self):
-        return " ".join([self.ROLE_CHOICES[self.researcher_role-1][1], str(self.equipe_researchers)])
-
 
 class Location(models.Model):
     id = models.IntegerField(primary_key=True, unique=True, blank=False)

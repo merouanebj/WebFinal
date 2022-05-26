@@ -38,7 +38,6 @@ class CreateUserForm(UserCreationForm):
                   'email',
                   'speciality',
                   'grade',
-                  'researcher_role',
                   'linkedin_account',
                   'google_scholar_account',
                   'equipe_researchers',
