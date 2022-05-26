@@ -1,28 +1,4 @@
-{% extends 'main.html' %}
-{% comment %}
-<h1>{{ apiData.author.name}}</h1>
-<ul>
-  <li>Nom : {{ chercheur1.first_name }}</li>
-
-  <li>Prenom : {{ chercheur1.last_name }}</li>
-  <li>Grade : {{ chercheur1.grade }}</li>
-
-  <li>Etablisment : {{ etablisment.0}}</li>
-  <li>Division: {{ division.0 }}</li>
-
-
-  <li>Equipe : {{ equipe.0 }}</li>
-  <li>Nombre de citation : {{ }}</li>
-  <li>H_index : {{ }}</li>
-  <li>I10_Index :</li>
-
-  <li>fait partie depuis : {{ chercheur1.date_joined}}</li>
-</ul>
-{% if chercheur1.image == null %} {% else %}
-<img src="{{ chercheur1.image.url }}" />
-{% endif %} {% endcomment %}
-
-{% block content %}
+{% extends 'main.html' %} {% block content %}
 
 <div class="page-header">
   <div class="row">
@@ -145,8 +121,13 @@
             </div>
           </div>
           <div class="pro-edit">
-            <a data-target="#profile_info" data-toggle="modal" class="edit-icon" href="#"><i
-                class="fa fa-pencil"></i></a>
+            <a
+              data-target="#profile_info"
+              data-toggle="modal"
+              class="edit-icon"
+              href="#"
+              ><i class="fa fa-pencil"></i
+            ></a>
           </div>
         </div>
       </div>

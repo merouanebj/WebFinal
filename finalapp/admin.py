@@ -53,7 +53,7 @@ class UserAdmin(BaseUserAdmin):
         ('Personal info', {'fields': ('first_name', 'last_name', 'speciality',
                                       'grade', 'linkedin_account', 'google_scholar_account',)}),
         ('Permissions', {'fields': ('is_active', 'is_staff',
-         'is_superuser', 'researcher_role', 'groups', 'user_permissions',)}),
+         'is_superuser', 'groups', 'user_permissions',)}),
         ('Relations', {'fields': ('equipe_researchers',)}),
     )
 

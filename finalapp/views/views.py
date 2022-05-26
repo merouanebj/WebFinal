@@ -4,6 +4,7 @@ from finalapp.models import *
 from django.contrib import messages
 from serpapi import GoogleSearch
 from django.contrib.auth.decorators import login_required, permission_required
+from finalapp.decorators import check_user_ability
 
 
 def Test(request):
@@ -15,7 +16,7 @@ def ApiData(pk):  # l'id du chercheur
     params = {
         "engine": "google_scholar_author",
         "author_id": r.get_google_id(),
-        "api_key": "7e3cd1a6a37b960e426e2d09bcf5fec5ff3e62219a4bc1e42cd907b464e6977e"
+        "api_key": "efa8d7e7a7fda118b855de81e82288b21f5c99811905b85a22e9dfc84ebbae4d"
     }
     search = GoogleSearch(params)
     results = search.get_dict()
@@ -23,6 +24,7 @@ def ApiData(pk):  # l'id du chercheur
 
 
 @login_required
+@check_user_ability("chef_division")
 def home_views(request):
     chercheurs = Researcher.objects.all()
     divisions = Division.objects.all()
@@ -515,14 +517,6 @@ def Recup_id_etablisment(request):
     }
     return context
 
-
-def TestChefLaboratoire(reqeust):
-    inter = Recup_id_laboratoire(reqeust)
-    inter2 = inter["laboratoire_id"]
-    equipe = Laboratoire.objects.filter(id=inter2)
-    if equipe.chef_labo.id == reqeust.user.id:
-        return True
-    return False
 
 # test chef lab
 
