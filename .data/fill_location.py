@@ -4,7 +4,7 @@ with open('E:/projet/frontend/backend/data/wilaya.csv', 'r', encoding="latin1") 
     reader = csv.reader(wilaya_file)
     next(reader, None)  # to jump a line
     for row in reader:
-        a = Location.objects.create(state_name=row[0], state_number=row[1])
+        Location.objects.create(state_name=row[0], state_number=row[1])
         """ 
         This code do an insert SQL statement behind the scenes 
         An alternative code -->

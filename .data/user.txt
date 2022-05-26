@@ -1,4 +1,294 @@
-"first_name","last_name","grade","speciality","google_scholar_account","email",password=""
+"first_name","last_name","grade","speciality","google_scholar_account","email",password="
 
-"ALIANE","Hassina"  , "Natural Language Processing" ,"M.R.A","https://scholar.google.com/citations?user=VOkaVCMAAAAJ&hl=en","haliane@mail.cerist.dz" ,password="RLt5idBGWjM8mQ7z"
-Researcher.objects.create_user(email="bessa@gmail.com",first_name="bessaa",     last_name="brahim",     google_scholar_account="https://scholar.google.com/citations?user=ZYT9EzkAAAAJ",password="bessaa123")
+"ALIANE","Hassina","Natural Language Processing","M.R.A","https://scholar.google.com/citations?user=VOkaVCMAAAAJ&hl=en","haliane@mail.cerist.dz" ,password="RLt5idBGWjM8mQ7z"
+Researcher.objects.create_user(email="bessa@gmail.com",first_name="bessaa",last_name="brahim",google_scholar_account="https://scholar.google.com/citations?user=ZYT9EzkAAAAJ",password="bessaa123")
+
+
+
+Cerist Data 
+Chef Etablisement
+    last_name="BADACHE",first_name="Nadjib",grade="D.R",email="badache@mail.cerist.dz",password="HkqQyJ4Mf",google_scholar_account="https://scholar.google.com/citations?hl=en&user=P77h8G8AAAAJ"
+les divisions: DRDSI
+
+les labos :
+    DSI
+
+    Division.objects.create(nom="DSI",)
+    last_name="nouali",first_name="Omar",grade="D.R",email="onouali@mail.cerist.dz",password="U6DHZeJPE",google_scholar_account="https://scholar.google.com/citations?hl=en&user=1KHQtR8AAAAJ"
+    equipes:
+
+    last_name="",first_name="",grade="",email="",password="",google_scholar_account=""
+    last_name="",first_name="",grade="",email="",password="",google_scholar_account=""
+
+    DTISI
+    equipes :
+    nom="Equipe Systèmes Ubiquitaires",Nadir BOUCHAMA | ubisys.cerist.dz |
+    last_name="BOUCHAMA",first_name="nadir",grade="",email="",password="",google_scholar_account=""
+
+    Equipe CAlcul Parallèle et Application     | YAHIAOUI Said  | capa.cerist.dz   |
+
+
+    | YAHIAOUI Said        | M.R.B | DTISI |    |
+
+    last_name="YAHIAOUI",first_name="said",grade="",email="syahiaoui@mail.cerist.dz",password="geHmyF2NV",google_scholar_account="https://scholar.google.com/citations?hl=en&user=iki_QMAAAAAJ"
+
+last_name="BADACHE" first_name= "Nadjib"           grade="D.R"   | DIRECTION | badache@mail.cerist.dz          |
+last_name="BELAZZOUGHI" first_name= "Djamel"       grade="M.R.B" | DTISI    "email= "
+
+Researcher.objects.create(last_name="ALIOUALI", first_name= "Nadia"           ,grade="A.R"  ,email= "naliouali@mail.cerist.dz"      ,password="D4cnBTEeF")
+Researcher.objects.create(last_name="BENMEZIANE", first_name= "Souad"         ,grade="C.R"  ,email= "sbenmeziane@mail.cerist.dz      ,password="nLPhsMK2W",google_scholar_account="")
+Researcher.objects.create(last_name="BESSAI", first_name= "Fatma Zohra"       ,grade="M.R.B",email= "zbessai@mail.cerist.dz"      ,password="srpcb3XmG",google_scholar_account="")
+Researcher.objects.create(last_name="BABAKHOUYA", first_name= "Abdelaziz"     ,grade="A.R"  ,email= "babakhouya@mail.cerist.dz      ,password="f9yLaNVSj",google_scholar_account="")
+Researcher.objects.create(last_name="BENKHELIFA", first_name= "Imen"          ,grade="A.R"  ,email= "i.benkhelifa@cerist.dz"      ,password="tLrW7JuHP",google_scholar_account="")
+Researcher.objects.create(last_name="BELHOUL", first_name= "Yacine"           ,grade="A.R"  ,email= "ybelhoul@mail.cerist.dz"      ,password="epfCRUN7X",google_scholar_account="")
+Researcher.objects.create(last_name="BENNA", first_name= "amel"               ,grade="A.R"  ,email= "abenna@cerist.dz"      ,password="r79v6gpDR",google_scholar_account="")
+Researcher.objects.create(last_name="BENDJOUD", first_name= "Ahcène"          ,grade="M.R.A",email= "abendjoudi@mail.cerist.dz",password="t4VQLRJZq",google_scholar_account="")
+Researcher.objects.create(last_name="BOUABID", first_name= "Mohamed Amine"    ,grade="M.R.B , email= "bouabid@mail.cerist.dz"      ,password="CVYR7xkpB",google_scholar_account="")
+Researcher.objects.create(last_name="BOUDER", first_name= "Hadjira"           ,grade="A.R"  ,  email= "hbouder@mail.cerist.dz",password="5uFXNGxRT",google_scholar_account="")
+Researcher.objects.create(last_name="BOUDINA", first_name= "Abdelmadjid"      ,grade="A.R"  ,  email= "boudina@mail.cerist.dz",password="yVYgnvNM4",google_scholar_account="")
+Researcher.objects.create(last_name="BOURAI", first_name= "Fouzia"            ,grade="A.R"  ,  email= "fbourai@mail.cerist.dz",password="JWCgbj85v",google_scholar_account="")
+Researcher.objects.create(last_name="BOUMELLIL", first_name= "Lamia-Sabéha"   ,grade="A.R"  ,  email= "boumellil@mail.cerist.dz",password="9qJHFeQM6",google_scholar_account="")
+last_name="ALIOUALI" first_name="Nadia",  grade="A.R"   email="naliouali@mail.cerist.dz" , password="azTj28QSH",google_scholar_account=""
+last_name="BOUDER" first_name="Hadjira",  grade="A.R"   email="hbouder@mail.cerist.dz" , password="hdFZf8DSr",google_scholar_account=""
+last_name="HAMANI" first_name="chouaib",  grade="A.R"   email="chamani@mail.cerist.dz" , password="5JnSbEMxA",google_scholar_account=""
+last_name="HARIK" first_name="Hakim",     grade="A.R"   email="hhakim@mail.cerist.dz" , password="7yzBr2UKD",google_scholar_account=""
+last_name="KOUICI" first_name="Salima",   grade="A.R"   email="skouici@mail.cerist.dz" , password="YsfLr6Mwh",google_scholar_account=""
+last_name="NEKRI" first_name="Mounira",   grade="C.R"   email="mnekri@mail.cerist.dz" , password="rpB84kWjC",google_scholar_account=""
+last_name="MEKHZOUMI" first_name="Dalila",grade="A.R"   email="dmekhzoumi@mail.cerist.dz" , password="5GXLz2Wb4",google_scholar_account=""
+
+
+Researcher.objects.create_user(last_name="ALIRADI", first_name= "Rachid"           ,grade="A.R"  ,email= "raliradi@mail.cerist.dz"      ,password="y5A4B7mU3",google_scholar_account="https://scholar.google.com/citations?hl=en&user=vLBwNvwAAAAJ")
+Researcher.objects.create_user(last_name="AMRANE", first_name= "Abdessalam"        ,grade="A.R"  ,email= "amrane@mail.cerist.dz"      ,password="s8bmrdXA6",google_scholar_account="https://scholar.google.com/citations?hl=en&user=uVSO8eMAAAAJ")
+Researcher.objects.create_user(last_name="BERROUK", first_name= "Saïd"             ,grade="M.R.A",email= "berrouk@wissal.dz"      ,password="vz8xBnqrc",google_scholar_account="https://scholar.google.com/citations?hl=en&user=1iwQUu8AAAAJ")
+Researcher.objects.create_user(last_name="BAL", first_name= "Kamel"                ,grade="A.R"  ,email= "kbal@mail.cerist.dz"      ,password="EXpCUH6fW",google_scholar_account="https://scholar.google.com/citations?hl=en&user=aFVJneUAAAAJ")
+Researcher.objects.create_user(last_name="BAGAA", first_name= "Miloud"             ,grade="M.R.B",email= "bagaa@mail.cerist.dz"      ,password="zGyHKDm7E",google_scholar_account="https://scholar.google.com/citations?hl=en&user=eGQmalQAAAAJ")
+Researcher.objects.create_user(last_name="BOUCHAMA", first_name= "Nadir"           ,grade="A.R"  ,  email= "nbouchama@mail.cerist.dz",password="GaQXS8JED",google_scholar_account="https://scholar.google.com/citations?hl=en&user=v9ExwMwAAAAJ")
+Researcher.objects.create_user(last_name="BOULKRINAT", first_name= "Nour El Houda" ,grade="A.R"  ,  email= "nboulkrinat@mail.cerist.dz",password="Lsu7epmQU",google_scholar_account="https://scholar.google.com/citations?hl=en&user=pwfr0DgAAAAJ")
+Researcher.objects.create_user(last_name="BOULKABOUL", first_name= "Sahar"         ,grade="A.R"  ,  email= "bsahar@mail.cerist.dz",password="JYf9yre53",google_scholar_account="https://scholar.google.com/citations?hl=en&user=sfAaV0sAAAAJ")
+Researcher.objects.create_user(last_name="ALIANE", first_name= "Hassina"         ,grade="M.A.R"  ,  email= "haliane@mail.cerist.dz",password="RLt5idBGWjM8mQ7z",google_scholar_account="https://scholar.google.com/citations?user=VOkaVCMAAAAJ&hl=en")
+
+Researcher.objects.create_user(last_name="CHALABI" ,first_name="Lydia",   grade="A.R"  , email="lchalabi@mail.cerist.dz" , password="Qm4Xc8EwJ",google_scholar_account="https://scholar.google.com/citations?hl=en&user=cQzs_JQAAAAJ")
+Researcher.objects.create_user(last_name="DAHMANE" ,first_name="Madjid",  grade="D.R"  , email="mdahmane@mail.cerist.dz" , password="sNhrYG7LV",google_scholar_account="https://scholar.google.com/citations?hl=en&user=hplUWWEAAAAJ")
+Researcher.objects.create_user(last_name="YALAOUI" ,first_name="Bilal",   grade="A.R"  , email="yalaoui@mail.cerist.dz" , password="mnh3Dfp9Z",google_scholar_account="https://scholar.google.com/citations?hl=en&user=US3samkAAAAJ")
+
+
+azTj28QSH
+hdFZf8DSr
+ZwC9gs2Y6
+Qm4Xc8EwJ
+sNhrYG7LV
+5JnSbEMxA
+7yzBr2UKD
+YsfLr6Mwh
+5GXLz2Wb4
+rpB84kWjC
+mnh3Dfp9Z
+tu4kGs8SZ
+X9MmYP2J5
+s7daVQfqt
+4Q3mZUFkc
+tLPG7YUb2
+P9pcwzgRD
+TRr2dBJeU
+X5cUMkbVz
+xs9uGP6cS
+tu9yFqvhX
+P7AQ59uGL
+ds8AkZcGy
+B9qjM8bUZ
+ejQrgz4wD
+qAHfeCd4L
+Z8RGyxTL6
+6jNhxrEHD
+Y4c2FzLdT
+SrhRDtc2E
+AfsG9uDYS
+nsjQpNV9J
+tAYjHbk7T
+mJwD2rZLj
+kLde4G8Ku
+Q43XZPqd6
+gLNZxrC9p
+kys6Dd8m2
+dE5RGzTCk
+6PeqbacA8
+sVBxK2A6L
+kAJn6R7PS
+zZEnRW59u
+sU5pPTDMt
+5cD2wy9Jv
+vFhuQ9DnW
+GrgaH6Tpy
+z9qvQ68gK
+TsW5FwJkH
+VEQwU3c7D
+YgHBVCR26
+G3hSbdpre
+b2GQs5fwH
+HrB5MQnhv
+JdjRCne2p
+6h8BQS7Mu
+XmQbDaf9A
+pvMC3b2LB
+KyjQvfzr9
+3NUrWv9tV
+x7vY5FJbz
+AGZ6Cpz87
+WX3pMJCfb
+BT6ywKHkS
+5ckfyPtH4
+K9MDrewkJ
+yB7ce2aTh
+XZgfj3tJ2
+tfQBEGa3L
+TjC7A9Jga
+FHXVvrw5T
+6EPYLgG2Q
+CG86DM9eV
+LwrUBj6x7
+MswzPyNQ9
+gK3zcmsQU
+8w5Ly3rbe
+v3SK9qkpX
+p9umqDWsJ
+xFzRWNf7h
+EHC8fxmgb
+cMuTvS6N4
+4zB63NhVX
+XTWERSrU6
+njJtuQHY3
+fWFGbBg9D
+UDc8L3jym
+Vtcx3jeuF
+XaHh67Btq
+NzTusc6dQ
+xc7ePM5sY
+bp9tRzfEH
+NbgQxtz5f
+QCXv3RmwW
+RHgLfEF3w
+2SRdutgwN
+TrPVRcYa8
+2vLPCcZsb
+FkKR8NgzA
+HZ9CyXQDh
+7raW3pcvZ
+THRNw9V65
+TMW7FGjmn
+feEpPwsr3
+GZ9RSrt4h
+v5k4e7NDt
+nRegvh5Mk
+BS8PKQ7wq
+UBSDs7dYa
+aEvZdK6DF
+KMF59L8eu
+85svEkmqz
+k5mAa4VC6
+TgK8wp34q
+zu4QwDxS7
+ysr8gDzvW
+YUVBtpRF8
+BC5etgqbM
+2X3wmUP6b
+ZL3qBkgGT
+S5aHGUWsg
+mrPc3tZue
+KSZ4WXTc8
+KV7M2QTJw
+WZY3G8DrE
+aEZM2H4n9
+GtrCB5s9U
+yV9cptMCE
+hfsCYmy4e
+8mHRvaZYr
+XmbpckEn7
+vpLCHX3qR
+qRuWLY235
+DWMh3nAX2
+67sRnDruP
+bZhp49RED
+rW9UuZ6Mc
+KEv7yHUgs
+zmJcw9gCD
+u5xKC3RkJ
+yFJD4a8Qd
+x3PpkWdJC
+smS2PaQdt
+bpA3QE4cK
+5bSDhPNTR
+jxuSpZbE6
+MhH72PQGj
+GuaUfwmY8
+AEW8BjY5f
+6ypsdjWNV
+HJVG7udpX
+w6URkfDaC
+YDaMR4GrJ
+A7vjg8wms
+Vk8Mu4LEp
+5zRcBe3ug
+q7QJCXvBa
+sbV9StHnL
+x7DvJ4e6u
+tfvC63ZTB
+84aCDVRYg
+7Njv6JA4b
+MyfE7sutP
+yJns4LcXC
+Xcd2Uj9vR
+Kj7fMWxCS
+GM2ErN4Zj
+rH24mguNv
+ex4TkVsXS
+45j78AZ3q
+95yRwkGdV
+4EuedvRZG
+v5rzdynWx
+MTHrucUf2
+CjNB3dpVt
+9dUgypBGn
+WEdtH6DrM
+2MS3kpbC9
+Vy5ArLBdW
+y7jhG5LaY
+tfeCR98z3
+KLX5NatMb
+F6Xhy2pG8
+jRMQ6VA8e
+YB2uvTrQ3
+5NtSm8rR7
+GbjhpWHk5
+dkfMS5DV3
+MB5rj87xg
+gmjdDFY8z
+YMTym4n2R
+aRm6KPXAZ
+Vnm4drZY9
+58GTzLa4u
+Kq5hcYBDu
+8HcC79xqJ
+7mf6Ew9VJ
+u8S2Mfb3s
+UfhD6eP2B
+3vfCqZBPy
+xJAUw6Ftu
+8GnFYwpgJ
+J8keWwfZV
+x2Rz9c6ka
+fRKb8Arwn
+4qvn6CaYQ
+wjcx2BMQu
+58fSGFReH
+jAbTRs3Kc
+D3La5YCyz
+5cDrMQjwn
+vVL6Z7WuP
+dSkW32b5E
+dtU6AkEW5
+73AYkgcPn
+NvcKekF3Z
+3JufKUXSM
+MW8Tqeu7b
+N76fgH9DW
+Ce9x3BzUw

@@ -385,13 +385,13 @@ def Profil_views(request):
     chercheur1 = Researcher.objects.get(id=request.user.pk)
     # pour recuperer les donnes
     chercheur = Researcher.objects.filter(id=request.user.pk)
-    equipe = Equipe.objects.filter(id=chercheur[0].equipe_researchers.id)
-    laboratoire = Laboratoire.objects.filter(id=equipe[0].laboratoire.id)
-    division = Division.objects.filter(id=laboratoire[0].division.id)
-    etablisment = Etablisment.objects.filter(id=division[0].etablisment.id)
-    apiData = ApiData(request.user.pk)
-    context = {'chercheur1': chercheur1, 'apiData': apiData, 'etablisment': etablisment,
-               'equipe': equipe, 'laboratoire': laboratoire, 'division': division, 'equipe': equipe}
+    # equipe = Equipe.objects.filter(id=chercheur[0].equipe_researchers.id)
+    # laboratoire = Laboratoire.objects.filter(id=equipe[0].laboratoire.id)
+    # division = Division.objects.filter(id=laboratoire[0].division.id)
+    # etablisment = Etablisment.objects.filter(id=division[0].etablisment.id)
+    # apiData = ApiData(request.user.pk)
+    # context = {'chercheur1': chercheur1, 'apiData': apiData, 'etablisment': etablisment,
+    #            'equipe': equipe, 'laboratoire': laboratoire, 'division': division, 'equipe': equipe}
 
     context = {}
     return render(request, 'profil.html', context)

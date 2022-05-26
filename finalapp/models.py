@@ -132,7 +132,6 @@ class Etablisment(models.Model):
 class Division(models.Model):
     nom = models.CharField(max_length=200, default='')
     site_web = models.URLField(blank=True)
-
     # relationshi
     etablisment = models.ForeignKey(
         'Etablisment', on_delete=models.CASCADE, null=True)

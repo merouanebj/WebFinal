@@ -4,31 +4,23 @@ from django.contrib.auth import authenticate, login, logout
 from finalapp.models import *
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from finalapp.admin import UserCreationForm
 
 
 def Register_views(request):
     if request.user.is_authenticated:
-        return redirect('createquipe')
-    # wilaya = Location.objects.all()
-    # etablisment= Etablisment.objects.all()
-    # division= Division.objects.all()
-    # laboratoire= Laboratoire.objects.all()
-    form = CreateUserForm()
+        return redirect('profil')
+    form = UserCreationForm()
     if request.method == 'POST':
-        form = CreateUserForm(request.POST)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             user = form.cleaned_data.get('first_name')
             user1 = form.cleaned_data.get('last_name')
             messages.success(request, 'Compte cree pour '+user + ' '+user1)
-            return redirect('login')
-        # messages.error(request,'Verifier les inforamation fournit ')
+            Login_views(request)
+            return redirect('profil')
     context = {'form': form}
-    #    'etablisment':etablisment,
-    #    'wilaya':wilaya,
-    #    'laboratoire':laboratoire ,
-    #    'division':division}
-
     return render(request, 'register.html', context)
 
 

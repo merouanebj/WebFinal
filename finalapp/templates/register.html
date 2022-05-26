@@ -1,197 +1,147 @@
-
- {% load static %}
- {% comment %} <form action="" method="post">
+{% load static %}
+{% comment %} <form action="" method="post">
   {% csrf_token %} {{ form }}
   <input type="submit" value="Save" />
 </form> {% endcomment %}
 <!DOCTYPE html>
-<!--=== Coding by CodingLab | www.codinglabweb.com === -->
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!----======== CSS ======== -->
-    <link rel="stylesheet" href="style.css" />
 
-    <!----===== Iconscout CSS ===== -->
-    <link
-      rel="stylesheet"
-      href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="file:///C:/Users/Meoruane/Desktop/Projet%20Pfe/bootstrap-3.3.7-dist/css/bootstrap.min.css"
-    />
-    <script src="file:///C:/Users/Meoruane/Desktop/Projet%20Pfe/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-    <!-- custom css file link  -->
-    <link
-      href="{% static 'css/register.css' %}"
-      type="text/css"
-      rel="stylesheet"
-    />
-    <script>
-       $(document).ready(function()
-       {
-           var $wilaya1 =$('#wilaya1'),
-               $etablisment1 =$('#etablisment1'),
-               $options=$etablisment1.find('option');
-               $wilaya1.on('change',function()
-               {
-                       $etablisment1.html($options.filter('[value="'+this.value+'"]'));
-               }).trigger('change');
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <!----======== CSS ======== -->
+  <link rel="stylesheet" href="style.css" />
 
-       }); 
-     </script>  
-    <title>Regisration Form</title>
-  </head>
-  <body>
-    <div class="container">
-        <header>Registration</header>
+  <!----===== Iconscout CSS ===== -->
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+  <link rel="stylesheet" type="text/css"
+    href="file:///C:/Users/Meoruane/Desktop/Projet%20Pfe/bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+  <script src="file:///C:/Users/Meoruane/Desktop/Projet%20Pfe/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+  <!-- custom css file link  -->
+  <link href="{% static 'css/register.css' %}" type="text/css" rel="stylesheet" />
+  <script>
+    $(document).ready(function () {
+      var $wilaya1 = $('#wilaya1'),
+        $etablisment1 = $('#etablisment1'),
+        $options = $etablisment1.find('option');
+      $wilaya1.on('change', function () {
+        $etablisment1.html($options.filter('[value="' + this.value + '"]'));
+      }).trigger('change');
 
-        <form action="" method="post">
-          <div class="fields">
-            <div class="fields">
-              <div class="input-field">
-      <label>Nom</label>
-{% csrf_token %}
-      <input
-        type="text"
-        name="first_name"
-        placeholder="Enter votre nom"
-        required
-      />
-    </div>
+    }); 
+  </script>
+  <title>Regisration Form</title>
+</head>
 
-    <div class="input-field">
-      <label>Prenom</label>
-{% csrf_token %}
-      <input
-        type="text"
-        name="last_name"
-        placeholder="Enter votre Prenom"
-        required
-      />
-    </div>
+<body>
+  <div class="container">
+    <header>Registration</header>
 
-    <div class="input-field">
-      {% csrf_token %}<label>Email</label>
-      <input
-        type="email"
-        name="email"
-        placeholder="Enter votre email"
-        required
-      />
-    </div>
-
-    <div class="input-field">
-      <label>Grade</label>
-{% csrf_token %}
-      <input
-        type="text"
-        name="grade"
-        placeholder="Enter votre grade"
-        required
-      />
-    </div>
-    <div class="input-field">
-      <label>Spécialité</label>
-{% csrf_token %}
-      <input
-        type="text"
-        name="speciality"
-        placeholder="Enter votre spécialité"
-        required
-      />
-    </div>
-     
-    {% comment %} ------------------------------------------------------------------------------------------------------ {% endcomment %}
-    {% comment %} <div class="input-field">
-      <label>Wilaya d'etablisment</label>
-      <select id="wilaya1">
-        <option selected disabled="true" >Wilaya</option>
-        {% for item1 in wilaya %}
-        <option value="{{item1.id}}">{{item1.state_name}}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="input-field">
-      <label>Etablisment</label>
-      <select id="etablisment1">
-        <option selected disabled="true" >Etablisment</option>
-        {% for item2 in etablisment %}
-        <option value="{{item2.location}}">{{item2.nom}}</option>
-        {% endfor %}
-      </select>
-    </div> {% endcomment %}
-
-    <div class="input-field">
-      <label>Equipe</label>
-      {% csrf_token %} {{form.equipe_researchers}}
-    </div>
-    <div class="fields">
-      <div class="input-field">
-<label>Compte Linkedin</label>
-{% csrf_token %}{% csrf_token %}
-<input
-type="text"
-name="linkedin_account"
-placeholder="https://www.linkedin.com/in/"
-/>
-</div>
-
-<div class="input-field">
-<label>Compte Google Scholar</label>
-{% csrf_token %}{% csrf_token %}
-<input
-type="text"
-name="google_scholar_account"
-placeholder="https://scholar.google.com/citations?hl=ar&user="
-required
-/>
-{{form.errors.google_scholar_scholar}}
-</div>
-
-<div class="input-field">
-  <label>Role</label>
-  {% csrf_token %} {{form.role}}
-  </div>
-<div class="input-field">
-  <label>Password</label>
-  {% csrf_token %}{% csrf_token %}
-  <input type="password" name="password1" autocomplete="new-password" required id="id_password1" placeholder="Password">
-</div>
-
-<div class="input-field">
-  <label>Confirme Password</label>
-  {% csrf_token %}{% csrf_token %}
-  <input type="password" name="password2" autocomplete="new-password" required id="id_password2" placeholder="Confirme Password">
-</div>
-<div class="input-field"></div>
-{{ form.errors}}
-<div class="input-field"></div>
+    <form action="" method="post">
+      <div class="fields">
+        <div class="fields">
+          <div class="input-field">
+            <label>Nom</label>
+            {% csrf_token %}
+            <input type="text" name="first_name" placeholder="Enter votre nom" required />
           </div>
-            <button class="sumbit">
-              <span class="btnText">Submit</span>
-              <i class="uil uil-navigator"></i>
+
+          <div class="input-field">
+            <label>Prenom</label>
+            {% csrf_token %}
+            <input type="text" name="last_name" placeholder="Enter votre Prenom" required />
+          </div>
+
+          <div class="input-field">
+            {% csrf_token %}<label>Email</label>
+            <input type="email" name="email" placeholder="Enter votre email" required />
+          </div>
+
+          <div class="input-field">
+            <label>Grade</label>
+            {% csrf_token %}
+            <input type="text" name="grade" placeholder="Enter votre grade" />
+          </div>
+          <div class="input-field">
+            <label>Spécialité</label>
+            {% csrf_token %}
+            <input type="text" name="speciality" placeholder="Enter votre spécialité" />
+          </div>
+
+          {% comment %}
+          <div class="input-field">
+            <label>Wilaya d'etablisment</label>
+            <select id="wilaya1">
+              <option selected disabled="true">Wilaya</option>
+              {% for item1 in wilaya %}
+              <option value="{{item1.id}}">{{item1.state_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="input-field">
+            <label>Etablisment</label>
+            <select id="etablisment1">
+              <option selected disabled="true">Etablisment</option>
+              {% for item2 in etablisment %}
+              <option value="{{item2.location}}">{{item2.nom}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          {% endcomment %}
+
+          <div class="input-field">
+            <label>Equipe</label>
+            {% csrf_token %} {{form.equipe_researchers}}
+          </div>
+          <div class="fields">
+            <div class="input-field">
+              <label>Compte Linkedin</label>
+              {% csrf_token %}{% csrf_token %}
+              <input type="text" name="linkedin_account" placeholder="https://www.linkedin.com/in/" />
+            </div>
+
+            <div class="input-field">
+              <label>Compte Google Scholar</label>
+              {% csrf_token %}{% csrf_token %}
+              <input type="text" name="google_scholar_account"
+                placeholder="https://scholar.google.com/citations?hl=ar&user=" required />
+              {{form.errors.google_scholar_scholar}}
+            </div>
+
+            <div class="input-field">
+              <label>Role</label>
+              {% csrf_token %} {{form.role}}
+            </div>
+            <div class="input-field">
+              <label>Password</label>
+              {% csrf_token %}{% csrf_token %}
+              <input type="password" name="password1" autocomplete="new-password" required id="id_password1"
+                placeholder="Password">
+            </div>
+
+            <div class="input-field">
+              <label>Confirme Password</label>
+              {% csrf_token %}{% csrf_token %}
+              <input type="password" name="password2" autocomplete="new-password" required id="id_password2"
+                placeholder="Confirme Password">
+            </div>
+            <div class="input-field"></div>
+            {{ form.errors}}
+            <div class="input-field"></div>
+          </div>
+          <button class="sumbit">
+            <span class="btnText">Submit</span>
+            <i class="uil uil-navigator"></i>
           </button>
-          
-        </form>
- {% comment %} {% for message in messages %}
-<p id="messages" style="margin-bottom: -91px;
-margin-right: 263px; text-align:left;
-color: red;
-}">{{message}}</p>
-{% endfor %}  {% endcomment %}
- 
-
-
-
-
-    {% comment %} <script src="{% static 'js/register.js'%}"></script> {% endcomment %}
+    </form>
+    {% comment %} {% for message in messages %}
+    <p id="messages" style="margin-bottom: -91px; margin-right: 263px; text-align:left; color: red;">{{message}}</p>
+    {% endfor %} {% endcomment %}
+    {% comment %}
+    <script src="{% static 'js/register.js'%}"></script> {% endcomment %}
 </body>
-   
+
 
 </html>
