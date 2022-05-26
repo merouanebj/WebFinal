@@ -24,15 +24,15 @@ urlpatterns = [
        
     # chef laboratoire
        # les chercheur du labo + dashLab + Les equipe   
-       path('DashLaboratoire/<str:pk>/', Dash_Laboratoire, name='Dash_laboratoire'),
-       path('ListChercheurLab/', Liste_cher_Lab_aff, name='Liste_Ch_Lab'),
-       path('ListChercheurLab/chefequipe', Liste_cher_Lab_aff_chef_equipe, name='Liste_Ch_Lab'),
-       path('ListEquipeLab/', Liste_equipe_Lab_aff, name='Liste_Equipe_Lab'),
+       path('dashdivision/<str:pk>/', Dash_Division, name='Dash_laboratoire'),
+       path('ListChercheurLab/', Liste_cher_Div_aff, name='Liste_Ch_Lab'),
+      #  path('ListChercheurLab/chefequipe', Liste_cher_Lab_aff_chef_equipe, name='Liste_Ch_Lab'),
+      #  path('ListEquipeLab/', Liste_equipe_Lab_aff, name='Liste_Equipe_Lab'),
        
 
     # chef Division
        #les chercheur de la division
-       path('creatlabo/', creat_labo_views, name="creatlabo"),
+      
        
     #chef d'etablisment   
        path('creatdiv/', creat_division_views, name="creatdiv"),

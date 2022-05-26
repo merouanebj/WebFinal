@@ -1,3 +1,4 @@
+from __future__ import division
 from atexit import register
 import email
 from multiprocessing import context
@@ -71,7 +72,7 @@ def ApiData(pk): # l'id du chercheur
     params = {
     "engine": "google_scholar_author",
     "author_id": r.get_google_id(),
-    "api_key": "7e3cd1a6a37b960e426e2d09bcf5fec5ff3e62219a4bc1e42cd907b464e6977e"
+    "api_key": "5693539bbd7f27e4de0624ca01bc9ad9ecba73199cbc2ce132e589daa15f8e4a"
     }
     search = GoogleSearch(params)
     results = search.get_dict()
@@ -194,71 +195,15 @@ def DivsionList_Eta(pk):
 
 #----------------------------------------------------------------
 #Laboratoire
-def creat_labo_views(request):
-    OrderFormSet = inlineformset_factory(Division,Laboratoire,fields=('nom','site_web','chef_labo'),extra = 1)
-    inter = Recup_id_division(request)
-    div = Division.objects.get(pk = inter["division_id"].id)
-    form = OrderFormSet(queryset=Laboratoire.objects.none(),instance=div)
-    if request.method =="POST": 
-        form= OrderFormSet(request.POST, instance=div)  
-        if form.is_valid() :
-             form.save()
-             messages.success(request, 'Laboratoire a été ajouté avec succée')
-             return redirect("creatlabo")
-        else:
-            
-            form =OrderFormSet(data=request.POST) 
-    context={"form":form}
-    return render(request,"creatlabo.html",context)
-          
 
-#Modifier
-def update_laboratoire_views(request,pk):
-    cher = get_object_or_404(Laboratoire, pk=pk)
-    form =LaboratoireForm(instance=cher)
-    if request.method =="POST":   
-        form =LaboratoireForm(request.POST,instance=cher)
-        if form.is_valid():
-             form.save()
-             return redirect('G_chercheurs')
-
-    context = {'form':form}
-    return render(request,'updateLab.html',context) 
-
-#Supprimer
-def Delete_laboratoire_views (request,pk):
-    Etu=Laboratoire.objects.get(id=pk)
-    Etu.delete()
-    return redirect('G_chercheurs')      
-
-# List des laboratoire
-# tout les laboratoire
-def LaboratoireList(): 
-    i = Laboratoire.objects.all()
-    return i
-
-# les laboratoire d'un division
-def LaboratoireList_Div(pk):
-    i = Laboratoire.objects.filter(division = pk)
-    return i
-
-#les laboratoire d'un Eta
-def LaboratoireList_Eta(pk):
-    inter = Division.objects.filter(etablisment = pk)
-    researcher = Laboratoire.objects.none()
-    i =[]
-    for i1 in inter:
-        researcher = Laboratoire.objects.filter(division = i1.id)
-        i +=researcher
-    return i  
 #--------------------------------------------------------
 #Equipe
 #Ajouter
 # le seul role qui peut cree une equipe s'est le chef laboratoire
 def creat_equipe_views(request):
-    OrderFormSet = inlineformset_factory(Laboratoire,Equipe,fields=('nom','site_web','chef_equipe'),extra = 1)
+    OrderFormSet = inlineformset_factory(Division,Equipe,fields=('nom','site_web','chef_equipe'),extra = 1)
     inter = Recup_id_laboratoire(request)
-    labo = Laboratoire.objects.get(pk = inter["laboratoire_id"].id)
+    labo = Division.objects.get(pk = inter["laboratoire_id"].id)
     form = OrderFormSet(queryset=Equipe.objects.none(),instance=labo)
     if request.method =="POST":   
         form= OrderFormSet(request.POST, instance=labo)
@@ -295,34 +240,20 @@ def EquipeList():
     i = Equipe.objects.all()
     return i
 
+
 #Les equipe d'un Etablisment
 def EquipeList_Eta(pk):#pk d'un Etablismet
-    inter = Division.objects.filter(etablisment = pk)
-    researchers = Laboratoire.objects.none()
-    inter3  =[]
-
-    for i in inter:
-       researchers = Laboratoire.objects.filter(division = i.id)
-       inter3 +=researchers
-    i=[]
-    for i1 in inter:
-       researchers = Equipe.objects.filter(laboratoire = i1.id)
-       i +=researchers
-    return i
-  
-#Les equipe d'un Division
-def EquipeList_Div(pk):#pk d'un Division
-    inter = Laboratoire.objects.filter(division = pk)
+    inter = Division.objects.filter(division = pk)
     researchers = Equipe.objects.none()
     i =[]
     for i1 in inter:
-       researchers = Equipe.objects.filter(laboratoire = i1.id)
+       researchers = Equipe.objects.filter(division = i1.id)
        i +=researchers
     return i
 
-#Les equipe d'un Laboratoire
-def EquipeList_Lab(pk):#pk d'un labo
-    i = Equipe.objects.filter(laboratoire = pk)
+#Les equipe d'un Divison
+def EquipeList_Div(pk):#pk d'un labo
+    i = Equipe.objects.filter(division = pk)
     return i
 
 #-------------------------------------------------------------------
@@ -336,9 +267,9 @@ def CherList_equipe(request,pk):# pk represent l'id de l'equipe (rest a test)
 
 # afficher les chercheur d'un laboratoire
 
-def CherList_labo(request,pk):
+def CherList_div(request,pk):
     
-    inter = Equipe.objects.filter(laboratoire = pk)
+    inter = Equipe.objects.filter(division = pk)
     researchers = Researcher.objects.none()
     inter2 =[]
     for i in inter:
@@ -350,12 +281,12 @@ def CherList_labo(request,pk):
 
 # afficher les chercheur d'un division 
 
-def CherList_div(request,pk):
-     inter = Laboratoire.objects.filter(division = pk)
+def CherList_eta(request,pk):
+     inter = Division.objects.filter(division = pk)
      interEquipe = Equipe.objects.none()
      inter2 =[]
      for i in inter:
-        interEquipe = Equipe.objects.filter(laboratoire = i.id)
+        interEquipe = Equipe.objects.filter(division = i.id)
         inter2 +=interEquipe 
 
      final =[]
@@ -370,38 +301,16 @@ def CherList_div(request,pk):
 
 
 
-def CherList_eta(request,pk):
-     inter = Division.objects.filter(etablisment= pk)
-     interLaboratoire = Equipe.objects.none()
-     inter3 =[]
-     # recuperation des Laboratoire
-     for i in inter:
-        interLaboratoire = Laboratoire.objects.filter(division = i.id)
-        inter3 +=interLaboratoire
-     # recuperation des Equipe    
-     inter2 =[]
-     for i in inter3:
-        interEquipe = Equipe.objects.filter(laboratoire = i.id)
-        inter2 +=interEquipe 
-     # recuperation des chercheur
-     final =[]
-     for i in inter2:
-        researchers = Researcher.objects.filter(equipe_researchers = i.id)
-        final +=researchers
-     
-    
-     return final
 
 def Profil_views(request):
     chercheur1 = Researcher.objects.get(id = request.user.pk)
     # pour recuperer les donnes
     chercheur = Researcher.objects.filter(id =request.user.pk)
     equipe = Equipe.objects.filter(id = chercheur[0].equipe_researchers.id)
-    laboratoire = Laboratoire.objects.filter(id = equipe[0].laboratoire.id)
-    division = Division.objects.filter(id = laboratoire[0].division.id)
+    division = Division.objects.filter(id = equipe[0].division.id)
     etablisment = Etablisment.objects.filter(id =division[0].etablisment.id)
     apiData = ApiData(request.user.pk)
-    context ={'chercheur1':chercheur1,'apiData':apiData,'etablisment':etablisment,'equipe':equipe,'laboratoire':laboratoire,'division':division,'equipe':equipe}
+    context ={'chercheur1':chercheur1,'apiData':apiData,'etablisment':etablisment,'equipe':equipe,'division':division,'equipe':equipe}
     return render (request,'profil.html',context)
 
 def Profil_views_externe(request,pk):
@@ -409,10 +318,9 @@ def Profil_views_externe(request,pk):
     # pour recuperer les donnes
     chercheur = Researcher.objects.filter(id =pk)
     equipe = Equipe.objects.filter(id = chercheur[0].equipe_researchers.id)
-    laboratoire = Laboratoire.objects.filter(id = equipe[0].laboratoire.id)
-    division = Division.objects.filter(id = laboratoire[0].division.id)
+    division = Division.objects.filter(id = equipe[0].division.id)
     etablisment = Etablisment.objects.filter(id =division[0].etablisment.id)
-    context ={'chercheur1':chercheur1,'etablisment':etablisment,'equipe':equipe,'laboratoire':laboratoire,'division':division,'equipe':equipe}
+    context ={'chercheur1':chercheur1,'etablisment':etablisment,'equipe':equipe,'division':division,'equipe':equipe}
     return render (request,'profil.html',context)
 
 
@@ -434,39 +342,50 @@ def Dash_Equipe_calc(pk):# on fait sous form de fonction pour utulistaion direct
         nbr_Citation += inter["cited_by"]["table"][0]["citations"]["all"]
         moy_indice_h += inter["cited_by"]["table"][1]["h_index"]["all"]  
         moy_indice_i10 += inter["cited_by"]["table"][2]["i10_index"]["all"]
-     
-    moy_indice_h = moy_indice_h/nbr_cher_equipe
-    moy_indice_i10 = moy_indice_i10/nbr_cher_equipe
+    if nbr_cher_equipe == 0:
+         moy_indice_h = 0.0
+         moy_indice_i10 = 0.0  
+    else:  
+       moy_indice_h = moy_indice_h/nbr_cher_equipe
+       moy_indice_i10 = moy_indice_i10/nbr_cher_equipe
       
     context ={'nbr_cher_equipe':nbr_cher_equipe ,'info_equipe': info_equipe,'nbr_Citation':nbr_Citation,'moy_indice_h':moy_indice_h,'moy_indice_i10':moy_indice_i10}
     return context
 
-def Dash_Laboratoire_calc(pk):
-    info_laboratoire = Laboratoire.objects.get(pk = pk)
-    equipes = Equipe.objects.filter(laboratoire = pk)
-    nbr_equipe_laboratoire = equipes.count()
-    nbr_CitationL = 0
-    nbr_cher_laboratoire=0
-    moy_indice_hL = 0.0
-    moy_indice_i10L = 0.0
-    for i in equipes:
-        inter = Dash_Equipe_calc(i.id)
-        nbr_CitationL += inter["nbr_Citation"]       
-        moy_indice_hL += inter["moy_indice_h"]
-        moy_indice_i10L += inter["moy_indice_i10"]
-        nbr_cher_laboratoire += inter["nbr_cher_equipe"]
-    
-    moy_indice_hL=moy_indice_hL/nbr_equipe_laboratoire
-    moy_indice_i10L=moy_indice_i10L/nbr_equipe_laboratoire
-    
-    context ={'nbr_equipe_laboratoire':nbr_equipe_laboratoire,'nbr_cher_laboratoire':nbr_cher_laboratoire ,'info_laboratoire': info_laboratoire,'nbr_Citation':nbr_CitationL,'moy_indice_h':moy_indice_hL,'moy_indice_i10':moy_indice_i10L}
-    return context
+ 
+def Dash_Division_calc(pk):
+     info_division = Division.objects.get(pk = pk)
+     equipes = Equipe.objects.filter(division = pk)
+     nbr_equipe_division = equipes.count()
+     nbr_CitationL = 0
+     nbr_cher_division=0
+     moy_indice_hL = 0.0
+     moy_indice_i10L = 0.0
+     for i in equipes:
+         inter = Dash_Equipe_calc(i.id)
+         nbr_CitationL += inter["nbr_Citation"]       
+         moy_indice_hL += inter["moy_indice_h"]
+         moy_indice_i10L += inter["moy_indice_i10"]
+         nbr_cher_division += inter["nbr_cher_equipe"]
+     if nbr_equipe_division == 0:
+         moy_indice_hL = 0.0
+         moy_indice_i10L = 0.0  
+     else: 
+         moy_indice_hL=moy_indice_hL/nbr_equipe_division
+         moy_indice_i10L=moy_indice_i10L/nbr_equipe_division
+   
+     context ={'nbr_equipe_division':nbr_equipe_division,'nbr_cher_division':nbr_cher_division ,'info_division': info_division,'nbr_Citation':nbr_CitationL,'moy_indice_h':moy_indice_hL,'moy_indice_i10':moy_indice_i10L}
+     return context
     
 def Dash_Equipe(request,pk):
     context = Dash_Equipe_calc(pk)
     chef = TestChefEquipe(request)
     context ["chef"]=  chef
     return render (request,'DashEquipe.html',context)
+
+def Dash_Division(request,pk):
+    context = Dash_Division_calc(pk)
+    return render (request,'DashDivision.html',context)
 
 def Recup_id_equipe(request):
     i = Researcher.objects.get(pk = request.user.id)
@@ -476,19 +395,11 @@ def Recup_id_equipe(request):
     } 
     return context
 
-def Recup_id_laboratoire(request):
-    i = Researcher.objects.get(pk = request.user.id)
-    equipe_id = Equipe.objects.get(pk = i.equipe_researchers.id)
-    laboratoire_id = Laboratoire.objects.get(pk = equipe_id.laboratoire.id)
-    context ={ 
-       'laboratoire_id':laboratoire_id, 
-    } 
     return context
 def Recup_id_division(request):
     i = Researcher.objects.get(pk = request.user.id)
     equipe_id = Equipe.objects.get(pk = i.equipe_researchers.id)
-    laboratoire_id = Laboratoire.objects.get(pk = equipe_id.laboratoire.id)
-    division_id = Division.objects.get(id = laboratoire_id.division.id)
+    division_id = Division.objects.get(id = equipe_id.division.id)
     context ={
        'division_id':division_id,
     } 
@@ -496,8 +407,7 @@ def Recup_id_division(request):
 def Recup_id_etablisment(request):
     i = Researcher.objects.get(pk = request.user.id)
     equipe_id = Equipe.objects.get(pk = i.equipe_researchers.id)
-    laboratoire_id = Laboratoire.objects.get(pk = equipe_id.laboratoire.id)
-    division_id = Division.objects.get(id = laboratoire_id.division.id)
+    division_id = Division.objects.get(id = equipe_id.division.id)
     etablisment_id = Etablisment.objects.get(id = division_id.etablisment.id)
     context ={
        'etablisment_id':etablisment_id 
@@ -538,28 +448,19 @@ def Liste_cher_Equipe_aff(request):
 
 # les affichage d'une chef de labo
   #DashLabo
-def Dash_Laboratoire(request,pk):
-    context = Dash_Laboratoire_calc(pk)
-    return render (request,'DashLaboratoire.html',context)
+def Dash_Division(request,pk):
+    context = Dash_Division_calc(pk)
+    return render (request,'DashDivision.html',context)
   #Liste Equipe labo
-def Liste_equipe_Lab_aff (request):
-    inter = Recup_id_laboratoire(request)
-    inter2 = inter["laboratoire_id"]
-    liste = EquipeList_Lab(request,inter2)
+def Liste_equipe_Div_aff (request):
+    inter = Recup_id_division(request)
+    inter2 = inter["division_id"]
+    liste = EquipeList_Div(request,inter2)
     context ={'liste':liste}
     return render (request,'.html',context)
    #Liste Equipe labo 
-def  Liste_cher_Lab_aff_chef_equipe (request):
-    inter = Recup_id_laboratoire(request)
-    liste = EquipeList_Lab(request, inter["laboratoire_id"])
-    context ={'liste':liste}   
-  #Liste chercheur labo
-def Liste_cher_Lab_aff(request):
-      inter=Recup_id_laboratoire(request)
-      inter2 = inter["laboratoire_id"]
-      liste = CherList_labo (request,inter2)
-      context ={'liste':liste}
-      return render (request,'list_ch_lab.html',context) 
+
+
 
       
 #les affichage d'une chef Divsion
@@ -593,31 +494,15 @@ def TestChefEquipe(reqeust):
    return False
     
 # test chef lab habbes le3abe 
-def TestChefLaboratoire(reqeust):
-   inter=Recup_id_laboratoire(reqeust)
-   inter2 = inter["laboratoire_id"]
-   equipe = Laboratoire.objects.filter(id = inter2)
-   if equipe.chef_labo.id == reqeust.user.id:
-       return True
-   return False 
-
-# test chef lab
-def TestChefLaboratoire(reqeust):
-   inter=Recup_id_laboratoire(reqeust)
-   inter2 = inter["laboratoire_id"]
-   equipe = Laboratoire.objects.filter(id = inter2)
-   if equipe.chef_labo.id == reqeust.user.id:
-       return True
-   return False    
-
-# test chef Divison
-def TestChefDivsion(reqeust):
+def TestChefDivision(reqeust):
    inter=Recup_id_division(reqeust)
    inter2 = inter["division_id"]
    equipe = Division.objects.filter(id = inter2)
    if equipe.chef_div.id == reqeust.user.id:
        return True
-   return False
+   return False 
+
+
 
 def TestChefDivsion(reqeust):
    inter=Recup_id_etablisment(reqeust)

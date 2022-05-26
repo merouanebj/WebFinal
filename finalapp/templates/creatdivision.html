@@ -1,0 +1,57 @@
+{% extends 'main.html' %} {% block content %}
+<div class="container">
+  <h2>Creation D'une Nouvelle Division</h2>
+
+  <style>
+    .input-field input,
+    select {
+      width: 279px;
+    }
+    .container form {
+      position: relative;
+      margin-top: 16px;
+      min-height: 404px;
+      background-color: #fff;
+      overflow: hidden;
+    }
+
+    h2,
+    .h2 {
+      width: 362px;
+    }
+    .input-field label {
+      width: 136px;
+    }
+  </style>
+  <form action="" method="POST">
+    {% csrf_token %} {{ form.management_form }} {% for field in form %}
+
+    <div class="fields">
+      <div class="input-field">
+        {% csrf_token %}<label>Nom</label> {{ field.nom }}
+      </div>
+    </div>
+    <div class="fields">
+      <div class="input-field">
+        {% csrf_token %}<label>Site Web</label>
+        {{field.site_web}}
+      </div>
+    </div>
+    <div class="fields">
+      <div class="input-field">
+        {%csrf_token %} <label>Chef De la Division</label>{{ field.chef_div }}
+      </div>
+    </div>
+    <hr />
+    {% endfor %}
+
+    <button class="sumbit">
+      <span class="btnText">Submit</span>
+      <i class="uil uil-navigator"></i>
+    </button>
+  </form>
+  {% for message in messages %}
+  <p id="messages">{{message}}</p>
+  {% endfor %}
+  <div>{% endblock content %}</div>
+</div>

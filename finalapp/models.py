@@ -135,7 +135,7 @@ class Equipe(models.Model):
     nom = models.CharField(max_length=200)
     site_web=models.URLField(blank=True)
     # Relationship
-    divsion = models.ForeignKey(
+    division = models.ForeignKey(
         'Division', on_delete=models.CASCADE, null=True)
     chef_equipe = models.OneToOneField(
         'Researcher', on_delete=models.SET_NULL, null=True, blank=True)
