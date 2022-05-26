@@ -20,16 +20,14 @@ class DivisionForm  (ModelForm):
           model = Division
           fields = '__all__'          
           
-class LaboratoireForm  (ModelForm):
-      class Meta:
-          model = Laboratoire
-          fields = '__all__'        
+    
 
 class EquipeForm  (ModelForm):
+      nom = forms.CharField(widget=forms.TextInput(attrs={"placeholder":"Entre le Nom de L'equipe"}))
       class Meta:
           model = Equipe
           fields = '__all__'
-          
+     
           
 #Login Form      
 class CreateUserForm(UserCreationForm):
@@ -40,7 +38,6 @@ class CreateUserForm(UserCreationForm):
                  'email',
                  'speciality',
                  'grade',
-                 'role',
                  'linkedin_account',
                  'google_scholar_account',
                  'equipe_researchers',

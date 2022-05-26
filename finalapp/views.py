@@ -3,12 +3,13 @@ import email
 from multiprocessing import context
 from pyexpat.errors import messages
 import re
+from django.forms import inlineformset_factory
 from django.shortcuts import get_object_or_404, redirect, render
 import requests
 from .forms import *
 from  django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate,login,logout
-from .models import *
+from finalapp.models import *
 from django.contrib import messages
 from serpapi import GoogleSearch
 
@@ -21,7 +22,7 @@ def Test (request):
 
 def Register_views(request):
     if request.user.is_authenticated:
-        return redirect('createquipe')
+        return redirect('profil')
     # wilaya = Location.objects.all()
     # etablisment= Etablisment.objects.all()
     # division= Division.objects.all()
@@ -78,7 +79,7 @@ def ApiData(pk): # l'id du chercheur
 
 
 def home_views(request):
-   labos = Laboratoire.objects.all()
+   labos = Equipe.objects.all()
    chercheurs =Researcher.objects.all()
    divisions = Division.objects.all()
    Etablisments =Etablisment.objects.all()  
@@ -145,17 +146,21 @@ def EtablismentList_location(pk):# l'id d'une wilaya
 #Division
 #Ajouter
 def creat_division_views(request):
-    form =DivisionForm(data=request.POST)
-    if request.method =="POST":   
+    OrderFormSet = inlineformset_factory(Etablisment,Division,fields=('nom','site_web','chef_div'),extra = 1)
+    inter = Recup_id_etablisment(request)
+    eta = Etablisment.objects.get(pk = inter["etablisment_id"].id)
+    form = OrderFormSet(queryset=Division.objects.none(),instance=eta)
+    if request.method =="POST":
+        form= OrderFormSet(request.POST, instance=eta)   
         if form.is_valid() :
              form.save()
              messages.success(request, 'Division a été ajouté avec succée')
-             return redirect("creatDivision")
-        return render(request,"creatDivision.html",{"form":form})
-
-    else:
-           form= DivisionForm
-           return render(request,'creatDivision.html',{"form":form})
+             return redirect("creatdiv")
+        else:
+            form =OrderFormSet(data=request.POST) 
+            messages.success(request, 'Echec l\'hors de la creation !!')
+    context={"form":form}
+    return render(request,"creatdivision.html",context)
 
 #Modifier
 def update_division_views(request,pk):
@@ -190,17 +195,22 @@ def DivsionList_Eta(pk):
 #----------------------------------------------------------------
 #Laboratoire
 def creat_labo_views(request):
-    form =LaboratoireForm(data=request.POST)
-    if request.method =="POST":   
+    OrderFormSet = inlineformset_factory(Division,Laboratoire,fields=('nom','site_web','chef_labo'),extra = 1)
+    inter = Recup_id_division(request)
+    div = Division.objects.get(pk = inter["division_id"].id)
+    form = OrderFormSet(queryset=Laboratoire.objects.none(),instance=div)
+    if request.method =="POST": 
+        form= OrderFormSet(request.POST, instance=div)  
         if form.is_valid() :
              form.save()
              messages.success(request, 'Laboratoire a été ajouté avec succée')
              return redirect("creatlabo")
-        return render(request,"creatlabo.html",{"form":form})
-
-    else:
-           form= LaboratoireForm
-           return render(request,'creatlabo.html',{"form":form})   
+        else:
+            
+            form =OrderFormSet(data=request.POST) 
+    context={"form":form}
+    return render(request,"creatlabo.html",context)
+          
 
 #Modifier
 def update_laboratoire_views(request,pk):
@@ -246,20 +256,20 @@ def LaboratoireList_Eta(pk):
 #Ajouter
 # le seul role qui peut cree une equipe s'est le chef laboratoire
 def creat_equipe_views(request):
-    chef_labo = Researcher.objects.get(pk = request.user.id)
-    form =EquipeForm(data=request.POST)
+    OrderFormSet = inlineformset_factory(Laboratoire,Equipe,fields=('nom','site_web','chef_equipe'),extra = 1)
+    inter = Recup_id_laboratoire(request)
+    labo = Laboratoire.objects.get(pk = inter["laboratoire_id"].id)
+    form = OrderFormSet(queryset=Equipe.objects.none(),instance=labo)
     if request.method =="POST":   
+        form= OrderFormSet(request.POST, instance=labo)
         if form.is_valid() :
              form.save()
              messages.success(request, 'Equipe a été ajouté avec succée')
              return redirect("createquipe")
          
-        context={"form":form}
-        return render(request,"createquipe.html",context)
-    else:   
-           context={"form":form}
-           form= EquipeForm
-           return render(request,'createquipe.html',context)
+    context={"form":form}
+    return render(request,"createquipe.html",context)
+    
 
 #Modifier
 def update_equipe_views(request,pk):
@@ -541,8 +551,7 @@ def Liste_equipe_Lab_aff (request):
    #Liste Equipe labo 
 def  Liste_cher_Lab_aff_chef_equipe (request):
     inter = Recup_id_laboratoire(request)
-    inter2 = inter["laboratoire_id"]
-    liste = EquipeList_Lab(request,inter2)
+    liste = EquipeList_Lab(request, inter["laboratoire_id"])
     context ={'liste':liste}   
   #Liste chercheur labo
 def Liste_cher_Lab_aff(request):
@@ -583,7 +592,7 @@ def TestChefEquipe(reqeust):
        return True
    return False
     
-# test chef lab
+# test chef lab habbes le3abe 
 def TestChefLaboratoire(reqeust):
    inter=Recup_id_laboratoire(reqeust)
    inter2 = inter["laboratoire_id"]

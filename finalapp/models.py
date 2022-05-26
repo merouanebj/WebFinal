@@ -1,14 +1,9 @@
-from enum import unique
-from re import U
 from django.db import models
-from django.core.exceptions import ValidationError
-
 # Create your models here.
-from email.policy import default
 from django.utils.translation import gettext_lazy as _
 from django.db import models
 
-# For the Custom user
+
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 # to specify a range
 # from django.core.validators import MinValueValidator, MaxValueValidator
@@ -19,20 +14,19 @@ class ResearcherUserManager(BaseUserManager):
     The Manager of the user(Researcher)
     """
 
-    def create_user(self, first_name, last_name, google_scholar_account, email, password=None, **other_fields):
+    def create_user(self, first_name, last_name, email, password=None, **other_fields):
         """
         Simple user
         """
         if not email:
             raise ValueError(_("the email must be set "))
         email = self.normalize_email(email)
-        user = self.model(email=email, first_name=first_name, last_name=last_name,
-                          google_scholar_account=google_scholar_account, **other_fields)
+        user = self.model(email=email, first_name=first_name, last_name=last_name, **other_fields)
         user.set_password(password)
         user.save()
         return user
 
-    def create_superuser(self, first_name, last_name, google_scholar_account, email, password=None, **other_fields):
+    def create_superuser(self, first_name, last_name, email, password=None, **other_fields):
         """
         Superuser(admin)
         """
@@ -49,7 +43,7 @@ class ResearcherUserManager(BaseUserManager):
 
         if other_fields.get('is_superuser') is not True:
             raise ValueError("Superuser must be is_superuser")
-        return self.create_user(first_name, last_name, google_scholar_account, email, password, **other_fields)
+        return self.create_user(first_name, last_name, email, password, **other_fields)
 
 
 # custom user
@@ -73,14 +67,7 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
     # Relationship between Database tables
     equipe_researchers = models.ForeignKey(
         'Equipe', on_delete=models.SET_NULL, null=True, blank=True)
-    # Role dans l'organissme
-    roleD=(('Membre d\'equipe ','Membre d\'equipe '),
-         ('Chef d\'equipe','Chef d\'equipe'),
-         ('Chef de Laboratoire','Chef de Laboratoire'),
-         ('Chef de Divsion','Chef de Division'),
-         ('Chef d\'etablisment','Chef d\'etablisment'))
-    role=models.CharField(max_length=100,null=True,choices=roleD)
-
+    
     # interests
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
@@ -88,7 +75,7 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
     objects = ResearcherUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name','speciality','grade' ,'google_scholar_account']
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
     class Meta:
         ordering = ['date_joined']
@@ -141,26 +128,15 @@ class Division(models.Model):
         return self.nom
 
 
-class Laboratoire(models.Model):
-    nom = models.CharField(max_length=200)
-    site_web=models.URLField(blank=True)
 
-    # relationship
-    division = models.ForeignKey(
-        'Division', on_delete=models.CASCADE, null=True)
-    chef_labo = models.OneToOneField(
-        'Researcher', on_delete=models.SET_NULL, null=True, blank=True)
-
-    def __str__(self):
-        return self.nom
 
 
 class Equipe(models.Model):
     nom = models.CharField(max_length=200)
     site_web=models.URLField(blank=True)
     # Relationship
-    laboratoire = models.ForeignKey(
-        'Laboratoire', on_delete=models.CASCADE, null=True)
+    divsion = models.ForeignKey(
+        'Division', on_delete=models.CASCADE, null=True)
     chef_equipe = models.OneToOneField(
         'Researcher', on_delete=models.SET_NULL, null=True, blank=True)
 

@@ -154,11 +154,6 @@ required
 {{form.errors.google_scholar_scholar}}
 </div>
 
-<div class="input-field">
-  <label>Role</label>
-  {% csrf_token %} {{form.role}}
-  </div>
-<div class="input-field">
   <label>Password</label>
   {% csrf_token %}{% csrf_token %}
   <input type="password" name="password1" autocomplete="new-password" required id="id_password1" placeholder="Password">
@@ -170,7 +165,7 @@ required
   <input type="password" name="password2" autocomplete="new-password" required id="id_password2" placeholder="Confirme Password">
 </div>
 <div class="input-field"></div>
-{{ form.errors}}
+{{ form.errors.0.chef_equipe}}
 <div class="input-field"></div>
           </div>
             <button class="sumbit">

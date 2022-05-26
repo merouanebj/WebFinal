@@ -1,6 +1,7 @@
 {% extends 'main.html' %} {% block content %}
 <div class="container">
   <h2>Creation d'un nouvelle Equipe</h2>
+  {% comment %}
   <form action="" method="post">
     <div class="fields">
       <div class="input-field">
@@ -22,12 +23,45 @@
         {%csrf_token %} <label>Laboratoire</label>{{ form.laboratoire}}
       </div>
     </div>
+  </form>
+  {% endcomment %}
+  <style>
+    .container form {
+      position: relative;
+      margin-top: 16px;
+      min-height: 404px;
+      background-color: #fff;
+      overflow: hidden;
+    }
+  </style>
+  <form action="" method="POST">
+    {% csrf_token %} {{ form.management_form }} {% for field in form %}
+
+    <div class="fields">
+      <div class="input-field">
+        {% csrf_token %}<label>Nom</label> {{ field.nom }}
+      </div>
+    </div>
+    <div class="fields">
+      <div class="input-field">
+        {% csrf_token %}<label>Site Web</label> {{ field.site_web }}
+      </div>
+    </div>
+    <div class="fields">
+      <div class="input-field">
+        {%csrf_token %} <label>Chef D'equipe</label>{{ field.chef_equipe }}
+      </div>
+    </div>
+    <hr />
+    {% endfor %}
 
     <button class="sumbit">
       <span class="btnText">Submit</span>
       <i class="uil uil-navigator"></i>
     </button>
   </form>
-
-  {% endblock content %}
+  {% for message in messages %}
+  <p id="messages">{{message}}</p>
+  {% endfor %} {{ form.errors}}
+  <div>{% endblock content %}</div>
 </div>

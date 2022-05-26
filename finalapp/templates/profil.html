@@ -1,40 +1,4 @@
-{% extends 'main.html' %} {% comment %}
-<h1>{{ apiData.author.name}}</h1>
-<ul>
-  <li>Nom : {{ chercheur1.first_name }}</li>
-
-  <li>Prenom : {{ chercheur1.last_name }}</li>
-  <li>Grade : {{ chercheur1.grade }}</li>
-
-  <li>Etablisment : {{ etablisment.0}}</li>
-  <li>Division: {{ division.0 }}</li>
-  <li>Laboratoire :{{ laboratoire.0}}</li>
-
-  <li>Equipe : {{ equipe.0 }}</li>
-  <li>Nombre de citation : {{ }}</li>
-  <li>H_index : {{ }}</li>
-  <li>I10_Index :</li>
-
-  <li>fait partie depuis : {{ chercheur1.date_joined}}</li>
-</ul>
-{% if chercheur1.image == null %} {% else %}
-<img src="{{ chercheur1.image.url }}" />
-{% endif %} {% endcomment %} {% block content %}
-
-<div class="page-header">
-  <div class="row">
-    <div class="col-sm-12">
-      <h3 class="page-title">Bienvenue {{user}}</h3>
-      {% comment %}
-      <ul class="breadcrumb">
-        <li class="breadcrumb-item active"></li>
-      </ul>
-      {% endcomment %}
-    </div>
-  </div>
-</div>
-
-{% comment %} les indicateur {% endcomment %}
+{% extends 'main.html' %} {% block content %}
 <div class="row">
   <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
     <div class="card dash-widget">
@@ -165,5 +129,4 @@
     </div>
   </div>
 </div>
-
 {% endblock content %}
