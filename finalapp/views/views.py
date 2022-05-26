@@ -24,17 +24,13 @@ def ApiData(pk):  # l'id du chercheur
 
 @login_required
 def home_views(request):
-    labos = Laboratoire.objects.all()
     chercheurs = Researcher.objects.all()
     divisions = Division.objects.all()
     Etablisments = Etablisment.objects.all()
-
-    Total_labo = labos.count() - 1
     Total_chercheur = chercheurs.count() - 1
     Total_Etablisment = Etablisments.count()
     Total_division = divisions.count() - 1
     context = {
-        'Total_labo': Total_labo,
         'Total_chercheur': Total_chercheur,
         'Total_Etablisment': Total_Etablisment,
         'Total_division': Total_division
@@ -145,79 +141,11 @@ def DivisionList():
     i = Division.objects.all()
     return i
 
-# les laboratoire d'une division
-
 
 def DivsionList_Eta(pk):
     i = Division.objects.filter(etablisment=pk)
     return i
 
-# ----------------------------------------------------------------
-# Laboratoire
-
-
-def creat_labo_views(request):
-    form = LaboratoireForm(data=request.POST)
-    if request.method == "POST":
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Laboratoire a été ajouté avec succée')
-            return redirect("creatlabo")
-        return render(request, "creatlabo.html", {"form": form})
-
-    else:
-        form = LaboratoireForm
-        return render(request, 'creatlabo.html', {"form": form})
-
-# Modifier
-
-
-def update_laboratoire_views(request, pk):
-    cher = get_object_or_404(Laboratoire, pk=pk)
-    form = LaboratoireForm(instance=cher)
-    if request.method == "POST":
-        form = LaboratoireForm(request.POST, instance=cher)
-        if form.is_valid():
-            form.save()
-            return redirect('G_chercheurs')
-
-    context = {'form': form}
-    return render(request, 'updateLab.html', context)
-
-# Supprimer
-
-
-def Delete_laboratoire_views(request, pk):
-    Etu = Laboratoire.objects.get(id=pk)
-    Etu.delete()
-    return redirect('G_chercheurs')
-
-# List des laboratoire
-# tout les laboratoire
-
-
-def LaboratoireList():
-    i = Laboratoire.objects.all()
-    return i
-
-# les laboratoire d'un division
-
-
-def LaboratoireList_Div(pk):
-    i = Laboratoire.objects.filter(division=pk)
-    return i
-
-# les laboratoire d'un Eta
-
-
-def LaboratoireList_Eta(pk):
-    inter = Division.objects.filter(etablisment=pk)
-    researcher = Laboratoire.objects.none()
-    i = []
-    for i1 in inter:
-        researcher = Laboratoire.objects.filter(division=i1.id)
-        i += researcher
-    return i
 # --------------------------------------------------------
 # Equipe
 # Ajouter
@@ -374,14 +302,6 @@ def CherList_eta(request, pk):
 
 
 def Profil_views(request):
-    if not request.user in Researcher.objects.filter(etablisment__isnull=True):
-        request.user.researcher_role = Researcher.CHEFETA
-    elif not request.user in Researcher.objects.filter(division__isnull=True):
-        request.user.researcher_role = Researcher.CHEFDIV
-    elif not request.user in Researcher.objects.filter(laboratoire__isnull=True):
-        request.user.researcher_role = Researcher.CHEFLAB
-    elif not request.user in Researcher.objects.filter(equipe__isnull=True):
-        request.user.researcher_role = Researcher.MEMBRE
     chercheur1 = Researcher.objects.get(id=request.user.pk)
     # pour recuperer les donnes
     chercheur = Researcher.objects.filter(id=request.user.pk)
@@ -584,21 +504,53 @@ def Liste_cher_Lab_aff(request):
     return render(request, 'list_ch_lab.html', context)
 
 
-# les affichage d'une chef Divsion
-    # Dash Divsion
-    # Liste labo
-    # Liste Equipe
-    # Liste chercheur
+def Recup_id_etablisment(request):
+    i = Researcher.objects.get(pk=request.user.id)
+    equipe_id = Equipe.objects.get(pk=i.equipe_researchers.id)
+    laboratoire_id = Laboratoire.objects.get(pk=equipe_id.laboratoire.id)
+    division_id = Division.objects.get(id=laboratoire_id.division.id)
+    etablisment_id = Etablisment.objects.get(id=division_id.etablisment.id)
+    context = {
+        'etablisment_id': etablisment_id
+    }
+    return context
 
-# les affichage d'une chef Divsion
-    # Dash Divsion
-    # Liste labo
-    # Liste Equipe
-    # Liste chercheur
 
-# les affichage d'une chef Etablisment
-    # Dash Etablismet
-    # liste division
-    # Liste labo
-    # Liste Equipe
-    # Liste chercheur
+def TestChefLaboratoire(reqeust):
+    inter = Recup_id_laboratoire(reqeust)
+    inter2 = inter["laboratoire_id"]
+    equipe = Laboratoire.objects.filter(id=inter2)
+    if equipe.chef_labo.id == reqeust.user.id:
+        return True
+    return False
+
+# test chef lab
+
+
+def TestChefLaboratoire(reqeust):
+    inter = Recup_id_laboratoire(reqeust)
+    inter2 = inter["laboratoire_id"]
+    equipe = Laboratoire.objects.filter(id=inter2)
+    if equipe.chef_labo.id == reqeust.user.id:
+        return True
+    return False
+
+# test chef Divison
+
+
+def TestChefDivsion(reqeust):
+    inter = Recup_id_division(reqeust)
+    inter2 = inter["division_id"]
+    equipe = Division.objects.filter(id=inter2)
+    if equipe.chef_div.id == reqeust.user.id:
+        return True
+    return False
+
+
+def TestChefDivsion(reqeust):
+    inter = Recup_id_etablisment(reqeust)
+    inter2 = inter["etablisment_id"]
+    equipe = Etablisment.objects.filter(id=inter2)
+    if equipe.chef_etablisement.id == reqeust.user.id:
+        return True
+    return False

@@ -18,12 +18,6 @@ class DivisionForm  (ModelForm):
         fields = '__all__'
 
 
-class LaboratoireForm  (ModelForm):
-    class Meta:
-        model = Laboratoire
-        fields = '__all__'
-
-
 class EquipeForm  (ModelForm):
     class Meta:
         model = Equipe

@@ -85,14 +85,6 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
         return super().get_username()
 
 
-class Location(models.Model):
-    id = models.IntegerField(primary_key=True, unique=True, blank=False)
-    state_name = models.CharField(max_length=30, blank=False)
-
-    def __str__(self) -> str:
-        return self.state_name
-
-
 class Etablisment(models.Model):
     nom = models.CharField(max_length=200, default='')
     logo = models.ImageField(null=True, blank=True)
@@ -120,27 +112,13 @@ class Division(models.Model):
         return self.nom
 
 
-class Laboratoire(models.Model):
+class Equipe(models.Model):
     nom = models.CharField(max_length=200)
     site_web = models.URLField(blank=True)
 
     # relationship
     division = models.ForeignKey(
         'Division', on_delete=models.CASCADE, null=True)
-    chef_labo = models.OneToOneField(
-        'Researcher', on_delete=models.SET_NULL, null=True, blank=True)
-
-    def __str__(self):
-        return self.nom
-
-
-class Equipe(models.Model):
-    nom = models.CharField(max_length=200)
-    site_web = models.URLField(blank=True)
-
-    # relationship
-    laboratoire = models.ForeignKey(
-        'Laboratoire', on_delete=models.CASCADE, null=True)
     chef_equipe = models.OneToOneField(
         'Researcher', on_delete=models.SET_NULL, null=True, blank=True)
 
@@ -148,7 +126,9 @@ class Equipe(models.Model):
         return self.nom
 
 
-class Directions(models.Model):
-    nom = models.CharField(max_length=150, )
-    chef_direction = models.OneToOneField(
-        'Researcher', on_delete=models.SET_NULL, null=True)
+class Location(models.Model):
+    id = models.IntegerField(primary_key=True, unique=True, blank=False)
+    state_name = models.CharField(max_length=30, blank=False)
+
+    def __str__(self) -> str:
+        return self.state_name
