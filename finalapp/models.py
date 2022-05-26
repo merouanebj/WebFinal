@@ -9,20 +9,20 @@ class ResearcherUserManager(BaseUserManager):
     The Manager of the user(Researcher)
     """
 
-    def create_user(self, first_name, last_name, google_scholar_account, email, password=None, **other_fields):
+    def create_user(self, first_name, last_name, email, password=None, **other_fields):
         """
         Simple user
         """
         if not email:
             raise ValueError(_("the email must be set "))
         email = self.normalize_email(email)
-        user = self.model(email=email, first_name=first_name, last_name=last_name,
-                          google_scholar_account=google_scholar_account, **other_fields)
+        user = self.model(email=email, first_name=first_name,
+                          last_name=last_name, **other_fields)
         user.set_password(password)
         user.save()
         return user
 
-    def create_superuser(self, first_name, last_name, google_scholar_account, email, password=None, **other_fields):
+    def create_superuser(self, first_name, last_name, email, password=None, **other_fields):
         """
         Superuser(admin)
         """
@@ -39,12 +39,12 @@ class ResearcherUserManager(BaseUserManager):
 
         if other_fields.get('is_superuser') is not True:
             raise ValueError("Superuser must be is_superuser")
-        return self.create_user(first_name, last_name, google_scholar_account, email, password, **other_fields)
+        return self.create_user(first_name, last_name, email, password, **other_fields)
 
 
 class Researcher(AbstractBaseUser, PermissionsMixin):
     """
-    The user profile of a researcher 
+        The user profile of a researcher 
     """
     # attributes
     first_name = models.CharField(max_length=150, default='')
@@ -53,40 +53,23 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
     speciality = models.CharField(max_length=150, blank=True)
     grade = models.CharField(max_length=200, blank=True)
 
-    # extra info
+    # extra information
     image = models.ImageField(blank=True, default='D', upload_to='images')
     linkedin_account = models.URLField(blank=True)
     google_scholar_account = models.URLField(blank=True, unique=True)
-    date_joined = models.DateTimeField(auto_now_add=True)
-    affecte = models.BooleanField(default=False)
 
-    # Relationship between Database tables
+    is_staff = models.BooleanField(default=False)
+    date_joined = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+
+    # relationship
     equipe_researchers = models.ForeignKey(
         'Equipe', on_delete=models.SET_NULL, null=True, blank=True)
-
-    CHEFETA = 1
-    CHEFDIV = 2
-    CHEFLAB = 3
-    CHEFEQUIPE = 4
-    MEMBRE = 5
-    ROLE_CHOICES = (
-        (CHEFETA, 'Chef d\'etablisment'),
-        (CHEFDIV, 'Chef de Division'),
-        (CHEFLAB, 'Chef de Laboratoire'),
-        (CHEFEQUIPE, 'Chef d\'equipe'),
-        (MEMBRE, 'Membre d\'equipe'),
-    )
-    researcher_role = models.PositiveSmallIntegerField(
-        choices=ROLE_CHOICES, blank=True, null=True, default=1)
-
-    # interests
-    is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
 
     objects = ResearcherUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'google_scholar_account']
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
     class Meta:
         ordering = ['date_joined']
@@ -106,9 +89,8 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
 
 
 class Location(models.Model):
-    id = models.IntegerField(primary_key=True)
-    state_name = models.CharField(max_length=30)
-    # validators=[MinValueValidator(1), MaxValueValidator(58)],
+    id = models.IntegerField(primary_key=True, unique=True, blank=False)
+    state_name = models.CharField(max_length=30, blank=False)
 
     def __str__(self) -> str:
         return self.state_name
@@ -122,8 +104,6 @@ class Etablisment(models.Model):
         'Location', on_delete=models.CASCADE, null=True)
     chef_etablisement = models.OneToOneField(
         'Researcher', on_delete=models.SET_NULL, null=True, blank=True)
-    # directions = models.ForeignKey(
-    #     'Directions', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.nom
@@ -132,7 +112,8 @@ class Etablisment(models.Model):
 class Division(models.Model):
     nom = models.CharField(max_length=200, default='')
     site_web = models.URLField(blank=True)
-    # relationshi
+
+    # relationship
     etablisment = models.ForeignKey(
         'Etablisment', on_delete=models.CASCADE, null=True)
     chef_div = models.OneToOneField(
@@ -159,7 +140,8 @@ class Laboratoire(models.Model):
 class Equipe(models.Model):
     nom = models.CharField(max_length=200)
     site_web = models.URLField(blank=True)
-    # Relationship
+
+    # relationship
     laboratoire = models.ForeignKey(
         'Laboratoire', on_delete=models.CASCADE, null=True)
     chef_equipe = models.OneToOneField(
