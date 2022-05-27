@@ -21,7 +21,8 @@ class ResearcherUserManager(BaseUserManager):
         if not email:
             raise ValueError(_("the email must be set "))
         email = self.normalize_email(email)
-        user = self.model(email=email, first_name=first_name, last_name=last_name, **other_fields)
+        user = self.model(email=email, first_name=first_name,
+                          last_name=last_name, **other_fields)
         user.set_password(password)
         user.save()
         return user
@@ -58,15 +59,15 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
     speciality = models.CharField(max_length=150, blank=True)
     grade = models.CharField(max_length=200, blank=True)
 
-    # extra info  
-    image = models.ImageField(blank=True,default='D', upload_to='images')
+    # extra info
+    image = models.ImageField(blank=True, default='D', upload_to='images')
     linkedin_account = models.URLField(blank=True)
-    google_scholar_account = models.URLField(blank=True,unique=True)
+    google_scholar_account = models.URLField(blank=True, unique=True)
     date_joined = models.DateTimeField(auto_now_add=True)
     # Relationship between Database tables
     equipe_researchers = models.ForeignKey(
         'Equipe', on_delete=models.SET_NULL, null=True, blank=True)
-    
+
     # interests
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -82,12 +83,15 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
     # Researche : YAHIA Ilyes
     def get_google_id(self):
         return self.google_scholar_account.partition("user=")[2][:12]
-    
+
     def __str__(self) -> str:
-        return " ".join([ self.first_name.upper(), self.last_name.capitalize()])
+        return " ".join([self.first_name.upper(), self.last_name.capitalize()])
 
     def get_username(self) -> str:
         return super().get_username()
+
+    # def get_id(self):
+    #     return self.id
 
 
 class Location(models.Model):
@@ -102,7 +106,7 @@ class Location(models.Model):
 class Etablisment(models.Model):
     nom = models.CharField(max_length=200, default='')
     logo = models.ImageField(null=True, blank=True)
-    site_web=models.URLField(blank=True)
+    site_web = models.URLField(blank=True)
     location = models.ForeignKey(
         'Location', on_delete=models.CASCADE, null=True)
     chef_etablisement = models.OneToOneField(
@@ -116,7 +120,7 @@ class Etablisment(models.Model):
 
 class Division(models.Model):
     nom = models.CharField(max_length=200, default='')
-    site_web=models.URLField(blank=True)
+    site_web = models.URLField(blank=True)
 
     # relationshi
     etablisment = models.ForeignKey(
@@ -128,24 +132,23 @@ class Division(models.Model):
         return self.nom
 
 
-
-
-
 class Equipe(models.Model):
     nom = models.CharField(max_length=200)
-    site_web=models.URLField(blank=True)
+    site_web = models.URLField(blank=True)
     # Relationship
     division = models.ForeignKey(
         'Division', on_delete=models.CASCADE, null=True)
     chef_equipe = models.OneToOneField(
-        'Researcher', on_delete=models.SET_NULL, null=True, blank=True)
+        'Researcher', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.nom
+
+    def get_chefequipe_id(self) -> int:
+        return self.chef_equipe
 
 
 class Directions(models.Model):
     nom = models.CharField(max_length=150, )
     chef_direction = models.OneToOneField(
         'Researcher', on_delete=models.SET_NULL, null=True)
-    

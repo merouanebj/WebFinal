@@ -75,7 +75,7 @@ def ApiData(pk):  # l'id du chercheur
     params = {
         "engine": "google_scholar_author",
         "author_id": r.get_google_id(),
-        "api_key": "5693539bbd7f27e4de0624ca01bc9ad9ecba73199cbc2ce132e589daa15f8e4a"
+        "api_key": "6bbac90594777b50d1a7cb232de4c87e7eab93ca2cbdf37657081d9912f28970"
     }
     search = GoogleSearch(params)
     results = search.get_dict()
@@ -470,6 +470,14 @@ def Liste_cher_Eta_aff(request):
     liste = CherList_eta(request, inter2)
     context = {'liste': liste}
     return render(request, 'list_ch_eta.html', context)
+
+
+def Liste_cher_Div_aff(request):
+    inter = Recup_id_division(request)
+    inter2 = inter["division_id"]
+    liste = CherList_div(request, inter2)
+    context = {'liste': liste}
+    return render(request, 'list_ch_div.html', context)
 
 
 def Liste_cher_Div_aff(request):
