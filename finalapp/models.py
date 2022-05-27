@@ -70,7 +70,7 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
     
     # interests
     is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
 
     objects = ResearcherUserManager()
 
@@ -86,6 +86,7 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
     
     def __str__(self) -> str:
         return " ".join([ self.first_name.upper(), self.last_name.capitalize()])
+
     def get_username(self) -> str:
         return super().get_username()
 

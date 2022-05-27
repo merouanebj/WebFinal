@@ -1,7 +1,4 @@
-from __future__ import division
-from atexit import register
-import email
-from multiprocessing import context
+
 from pyexpat.errors import messages
 import re
 from django.forms import inlineformset_factory
@@ -16,6 +13,11 @@ from serpapi import GoogleSearch
 
 # Create your views here.
 #Login
+
+
+def Test (request):
+    return render (request,'main.html')
+
 def Register_views(request):
     if request.user.is_authenticated:
         return redirect('profil')
@@ -60,9 +62,6 @@ def Login_views(request):
             messages.info(request,'Email ou Mot de passe incorect')
     context = {}
     return render (request,'login.html',context)
-
-def Test (request):
-    return render (request,'main.html')
    
 
 def ApiData(pk): # l'id du chercheur
@@ -308,7 +307,7 @@ def Profil_views(request):
     division = Division.objects.filter(id = equipe[0].division.id)
     etablisment = Etablisment.objects.filter(id =division[0].etablisment.id)
     apiData = ApiData(request.user.pk)
-    context ={'chercheur1':chercheur1,'apiData':apiData,'etablisment':etablisment,'division':division,'equipe':equipe}
+    context ={'chercheur1':chercheur1,'apiData':apiData,'etablisment':etablisment,'equipe':equipe,'division':division,'equipe':equipe}
     return render (request,'profil.html',context)
 
 def Profil_views_externe(request,pk):
@@ -318,9 +317,8 @@ def Profil_views_externe(request,pk):
     equipe = Equipe.objects.filter(id = chercheur[0].equipe_researchers.id)
     division = Division.objects.filter(id = equipe[0].division.id)
     etablisment = Etablisment.objects.filter(id =division[0].etablisment.id)
-    apiData = ApiData(pk)
-    context ={'apiData':apiData,'chercheur1':chercheur1,'etablisment':etablisment,'equipe':equipe,'division':division,'equipe':equipe}
-    return render (request,'profilE.html',context)
+    context ={'chercheur1':chercheur1,'etablisment':etablisment,'equipe':equipe,'division':division,'equipe':equipe}
+    return render (request,'profil.html',context)
 
 
 def Delete_Cher_views (request,pk):
@@ -446,13 +444,6 @@ def Liste_cher_Equipe_aff(request):
     context["info_equipe"] = info_equipe
     return render (request,'list_ch_equipe.html',context)
 
-def Liste_cher_Equipe_aff_list(request):
-    inter=Recup_id_equipe(request)
-    liste = CherList_equipe (request,inter["equipe_id"])
-    info_equipe = Equipe.objects.get(pk = inter["equipe_id"].id)
-    context ={'liste':liste}
-    context["info_equipe"] = info_equipe
-    return render (request,'list_ch_equipe-list.html',context)
 # les affichage d'une chef de labo
   #DashLabo
 def Dash_Division(request,pk):

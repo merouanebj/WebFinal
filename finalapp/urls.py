@@ -1,6 +1,11 @@
 
+import imp
 from django.urls import path
-from finalapp.views import *
+
+from .views import *
+
+
+
 urlpatterns = [
     path('', home_views, name='landing'),
     
@@ -9,6 +14,7 @@ urlpatterns = [
     path('login/', Login_views, name="login"),
     path('logout/', Logout_views, name="logout"),
     path('profil/', Profil_views, name='profil'),
+    path('profil/membre/<int:pk>/', Profil_views_externe, name='profilE'),
     
     
     path('test/', Test, name='Test'),
@@ -21,6 +27,7 @@ urlpatterns = [
        #les chercheur de son equipe + dashboard
        path('DashEquipe/<int:pk>/', Dash_Equipe, name='Dash_equipe'),
        path('ListChercheurEquipe/', Liste_cher_Equipe_aff, name='Liste_Ch_Equipe'),
+       path('ListChercheurEquipe/liste/', Liste_cher_Equipe_aff_list, name='Liste_Ch_Equipe_liste'),
        
     # chef laboratoire
        # les chercheur du labo + dashLab + Les equipe   

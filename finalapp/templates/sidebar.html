@@ -1,0 +1,112 @@
+{%load static %}
+<div class="sidebar" id="sidebar">
+        <div class="sidebar-inner slimscroll">
+          <div id="sidebar-menu" class="sidebar-menu">
+            <ul>
+              <li class="menu-title">
+                <span>Dashboard</span>
+              </li>
+              <li class="submenu">
+                <a href="#"
+                  ><i class="la la-dashboard"></i> <span> Dashboard</span>
+                  <span class="menu-arrow"></span
+                ></a>
+                <ul style="display: none">
+                  <li>
+                    <a class="active" href="index.html"
+                      >Etablisment Dashboard</a
+                    >
+                  </li>
+                  
+                  <li>
+                    <a href="employee-dashboard.html">Division Dashboard</a>
+                  </li>
+                  
+                  <li>
+                    <a href="employee-dashboard.html">Laboratoire Dashboard</a>
+                  </li>
+                  <li>
+                    <a href="employee-dashboard.html">Equipe Dashboard</a>
+                  </li>
+                </ul>
+              </li>
+              {% comment %}
+              <li class="submenu">
+                <a href="#"
+                  ><i class="la la-cube"></i> <span> Apps</span>
+                  <span class="menu-arrow"></span
+                ></a>
+                <ul style="display: none">
+                  <li><a href="chat.html">Chat</a></li>
+                  <li class="submenu">
+                    <a href="#"
+                      ><span> Calls</span> <span class="menu-arrow"></span
+                    ></a>
+                    <ul style="display: none">
+                      <li><a href="voice-call.html">Voice Call</a></li>
+                      <li><a href="video-call.html">Video Call</a></li>
+                      <li><a href="outgoing-call.html">Outgoing Call</a></li>
+                      <li><a href="incoming-call.html">Incoming Call</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="events.html">Calendar</a></li>
+                  <li><a href="contacts.html">Contacts</a></li>
+                  <li><a href="inbox.html">Email</a></li>
+                  <li><a href="file-manager.html">File Manager</a></li>
+                </ul>
+              </li>
+              {% endcomment %}
+              <li class="menu-title">
+                <span>Effectifs </span>
+              </li>
+              {% comment %} class="noti-dot" {% endcomment %} {% comment %}
+              Division {% endcomment %} {% comment %} Chercheur {% endcomment %}
+              <li>
+                <a href="clients.html"
+                  ><i class="la la-users"></i> <span>Etablismets</span></a
+                >
+              </li>
+              <li>
+                <a href="clients.html"
+                  ><i class="la la-users"></i> <span>Divisions</span></a
+                >
+              </li>
+              <li>
+                <a href="clients.html"
+                  ><i class="la la-users"></i> <span>Laboratoires</span></a
+                >
+              </li>
+              <li>
+                <a href="clients.html"
+                  ><i class="la la-users"></i> <span>Equipes</span></a
+                >
+              </li>
+
+              <li class="submenu">
+                <a href="#"
+                  ><i class="la la-user"></i> <span> Chercheurs</span>
+                  <span class="menu-arrow"></span
+                ></a>
+                <ul style="display: none">
+                  <li><a href="employees.html"> Tout les Chercheurs</a></li>
+                  <li><a href="holidays.html">Les Chefs Des Equipes</a></li>
+                  <li>
+                    <a href="leaves.html"
+                      >Les Chefs Des Laboratoires
+                      {% comment %} <span class="badge badge-pill bg-primary float-right"
+                        >1</span {% endcomment %}
+                      </a
+                    >
+                  </li>
+                  <li>
+                    <a href="leaves-employee.html">Les Chefs Des Divisions</a>
+                  </li>
+                  <li>
+                    <a href="leaves-employee.html">Les Chefs Des Etablisment</a>
+                  </li>
+                </ul>
+              </li> 
+            </ul>
+          </div>
+        </div>
+      </div>
