@@ -1,7 +1,4 @@
-from __future__ import division
-from atexit import register
-import email
-from multiprocessing import context
+
 from pyexpat.errors import messages
 import re
 from django.forms import inlineformset_factory
@@ -13,9 +10,13 @@ from django.contrib.auth import authenticate, login, logout
 from finalapp.models import *
 from django.contrib import messages
 from serpapi import GoogleSearch
-from finalapp.decorators import *
+
 # Create your views here.
 # Login
+
+
+def Test(request):
+    return render(request, 'main.html')
 
 
 def Register_views(request):
@@ -64,10 +65,6 @@ def Login_views(request):
             messages.info(request, 'Email ou Mot de passe incorect')
     context = {}
     return render(request, 'login.html', context)
-
-
-def Test(request):
-    return render(request, 'main.html')
 
 
 def ApiData(pk):  # l'id du chercheur
@@ -224,7 +221,6 @@ def DivsionList_Eta(pk):
 # le seul role qui peut cree une equipe s'est le chef laboratoire
 
 
-@check_if_chefdivision
 def creat_equipe_views(request):
     OrderFormSet = inlineformset_factory(
         Division, Equipe, fields=('nom', 'site_web', 'chef_equipe'), extra=1)
@@ -340,12 +336,11 @@ def Profil_views(request):
     division = Division.objects.filter(id=equipe[0].division.id)
     etablisment = Etablisment.objects.filter(id=division[0].etablisment.id)
     apiData = ApiData(request.user.pk)
-    context = {'chercheur1': chercheur1, 'apiData': apiData,
-               'etablisment': etablisment, 'division': division, 'equipe': equipe}
+    context = {'chercheur1': chercheur1, 'apiData': apiData, 'etablisment': etablisment,
+               'equipe': equipe, 'division': division, 'equipe': equipe}
     return render(request, 'profil.html', context)
 
 
-@check_user_identity
 def Profil_views_externe(request, pk):
     chercheur1 = Researcher.objects.get(id=pk)
     # pour recuperer les donnes
@@ -353,10 +348,9 @@ def Profil_views_externe(request, pk):
     equipe = Equipe.objects.filter(id=chercheur[0].equipe_researchers.id)
     division = Division.objects.filter(id=equipe[0].division.id)
     etablisment = Etablisment.objects.filter(id=division[0].etablisment.id)
-    apiData = ApiData(pk)
-    context = {'apiData': apiData, 'chercheur1': chercheur1, 'etablisment': etablisment,
+    context = {'chercheur1': chercheur1, 'etablisment': etablisment,
                'equipe': equipe, 'division': division, 'equipe': equipe}
-    return render(request, 'profilE.html', context)
+    return render(request, 'profil.html', context)
 
 
 def Delete_Cher_views(request, pk):
@@ -481,15 +475,6 @@ def Liste_cher_Div_aff(request):
     return render(request, 'list_ch_div.html', context)
 
 
-def Liste_cher_Div_aff(request):
-    inter = Recup_id_division(request)
-
-    info_division = Division.objects.get(pk=inter["division_id"].id)
-    liste = CherList_div(request, inter["division_id"])
-    context = {'liste': liste}
-    return render(request, 'list_ch_div.html', context)
-
-
 # les affichage d'une chef d'equipe
     # DashEquipe
     # Liste Chercheur
@@ -503,14 +488,6 @@ def Liste_cher_Equipe_aff(request):
     context["info_equipe"] = info_equipe
     return render(request, 'list_ch_equipe.html', context)
 
-
-def Liste_cher_Equipe_aff_list(request):
-    inter = Recup_id_equipe(request)
-    liste = CherList_equipe(request, inter["equipe_id"])
-    info_equipe = Equipe.objects.get(pk=inter["equipe_id"].id)
-    context = {'liste': liste}
-    context["info_equipe"] = info_equipe
-    return render(request, 'list_ch_equipe-list.html', context)
 # les affichage d'une chef de labo
   # DashLabo
 
