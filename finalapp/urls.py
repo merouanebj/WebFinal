@@ -31,19 +31,23 @@ urlpatterns = [
        
     # chef laboratoire
        # les chercheur du labo + dashLab + Les equipe   
-       path('dashdivision/<str:pk>/', Dash_Division, name='Dash_laboratoire'),
-       path('ListChercheurLab/', Liste_cher_Div_aff, name='Liste_Ch_Lab'),
+     
+      
       #  path('ListChercheurLab/chefequipe', Liste_cher_Lab_aff_chef_equipe, name='Liste_Ch_Lab'),
       #  path('ListEquipeLab/', Liste_equipe_Lab_aff, name='Liste_Equipe_Lab'),
        
 
     # chef Division
        #les chercheur de la division
-      
+         path('dashdivision/<str:pk>/', Dash_Division, name='Dash_div'),
+         path('ListChercheurDivision/', Liste_cher_Div_aff, name='Liste_Ch_Division'),
+         path('ListChercheurDivision/liste/', Liste_cher_Div_aff_list, name='Liste_Ch_Division_liste'),
+       
        
     #chef d'etablisment   
        path('creatdiv/', creat_division_views, name="creatdiv"),
-       
+       path('ListChercheurEtablisment/',       Liste_cher_Eta_aff, name='Liste_Ch_Etablisment'),
+       path('ListChercheurEtablisment/liste/', Liste_cher_Eta_aff_list, name='Liste_Ch_Etablisment_liste'),
        
      #delegue
        path('createta/', creat_Etablisment_views, name="createta"),

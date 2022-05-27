@@ -280,7 +280,7 @@ def CherList_div(request,pk):
 # afficher les chercheur d'un division 
 
 def CherList_eta(request,pk):
-     inter = Division.objects.filter(division = pk)
+     inter = Division.objects.filter(etablisment = pk)
      interEquipe = Equipe.objects.none()
      inter2 =[]
      for i in inter:
@@ -417,20 +417,37 @@ def Recup_id_etablisment(request):
 
 def Liste_cher_Eta_aff(request):
     inter=Recup_id_etablisment(request)
-    inter2 = inter["etablisment_id"]
-    liste = CherList_eta (request,inter2)
+    liste = CherList_eta(request,inter["etablisment_id"])
+    info_etablisment = Etablisment.objects.get(pk = inter["etablisment_id"].id)
     context ={'liste':liste}
+    context["info_etablisment"] = info_etablisment
     return render (request,'list_ch_eta.html',context)
+
+def Liste_cher_Eta_aff_list(request):
+    inter=Recup_id_etablisment(request)
+    liste = CherList_eta (request,inter["etablisment_id"])
+    info_etablisment = Etablisment.objects.get(pk = inter["etablisment_id"].id)
+    context ={'liste':liste}
+    context["info_etablisment"] = info_etablisment
+    return render (request,'list_ch_eta-list.html',context)
+
         
 
 def Liste_cher_Div_aff(request):
     inter=Recup_id_division(request)
-
     info_division = Division.objects.get(pk = inter["division_id"].id)
     liste = CherList_div (request,inter["division_id"])
     context ={'liste':liste}
+    context["info_division"] = info_division
     return render (request,'list_ch_div.html',context)
 
+def Liste_cher_Div_aff_list(request):
+    inter=Recup_id_division(request)
+    liste = CherList_div (request,inter["division_id"])
+    info_division = Division.objects.get(pk = inter["division_id"].id)
+    context ={'liste':liste}
+    context["info_division"] = info_division
+    return render (request,'list_ch_div-list.html',context)
 
 
 
