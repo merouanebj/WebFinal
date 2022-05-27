@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'finalapp',
+    'bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -128,5 +129,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
-#wache 
-AUTH_USER_MODEL = "finalapp.Researcher" 
+# wache
+AUTH_USER_MODEL = "finalapp.Researcher"
+LOGIN_REDIRCT_URL = '/profile/'
+LOGIN_URL = '/auth/login/'
