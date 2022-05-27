@@ -63,7 +63,6 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
     linkedin_account = models.URLField(blank=True)
     google_scholar_account = models.URLField(blank=True,unique=True)
     date_joined = models.DateTimeField(auto_now_add=True)
-    affecte = models.BooleanField(default=False)
     # Relationship between Database tables
     equipe_researchers = models.ForeignKey(
         'Equipe', on_delete=models.SET_NULL, null=True, blank=True)

@@ -425,8 +425,9 @@ def Liste_cher_Eta_aff(request):
 
 def Liste_cher_Div_aff(request):
     inter=Recup_id_division(request)
-    inter2 = inter["division_id"]
-    liste = CherList_div (request,inter2)
+
+    info_division = Division.objects.get(pk = inter["division_id"].id)
+    liste = CherList_div (request,inter["division_id"])
     context ={'liste':liste}
     return render (request,'list_ch_div.html',context)
 
