@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from finalapp.models import *
-from finalapp.views import *
+from finalapp._views.views import *
 from finalapp.decorators import *
 from django.contrib.auth.decorators import login_required
 from serpapi import GoogleSearch

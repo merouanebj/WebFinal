@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from finalapp.views import *
+from finalapp._views.views import *
 
 
 def try_view(request):

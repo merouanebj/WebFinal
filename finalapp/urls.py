@@ -1,6 +1,7 @@
 from django.urls import path
 
-from finalapp.views import *
+from finalapp._views.views import *
+from finalapp._views.authentication import *
 urlpatterns = [
     path('', home_views, name='landing'),
 
@@ -43,23 +44,20 @@ urlpatterns = [
     path('DashDivsion/<int:pk>/', Dash_Division, name='Dash_division'),
 
     # chef d'etablisment
-    path('creatdiv/', creat_division_views, name="creatdiv"),
+    #     path('creatdiv/', creat_division_views, name="creatdiv"),
     path('ListChercheurEtablisment/',
          Liste_cher_Eta_aff, name='Liste_Ch_Etablisment'),
     path('ListChercheurEtablisment/liste/', Liste_cher_Eta_aff_list,
          name='Liste_Ch_Etablisment_liste'),
     path('ListEquipeEtablisment/liste/', Liste_equipe_Eta_aff_list,
          name='Liste_equipe_Etablisment_liste'),
-    path('ListDivisionEtablisment/liste/', Liste_division_Eta_aff_list,
-         name='Liste_division_Etablisment_liste'),
-
+    #     path('ListDivisionEtablisment/liste/', Liste_division_Eta_aff_list,
+    #     name = 'Liste_division_Etablisment_liste'),
 
     #
 
-
     # delegue
     path('createta/', creat_Etablisment_views, name="createta"),
-
 
     # chef equipe
     # les chercheur de son equipe + dashboard
@@ -73,17 +71,17 @@ urlpatterns = [
 
     # chef laboratoire
     # les chercheur du labo + dashLab + Les equipe
-    path('DashLaboratoire/<str:pk>/', Dash_Laboratoire, name='Dash_laboratoire'),
+    #     path('DashLaboratoire/<str:pk>/', Dash_Laboratoire, name='Dash_laboratoire'),
     # >
-    path('laboratoire/<str:pk>/dashboard',
-         Dash_Laboratoire, name='Dash_laboratoire'),
+    #     path('laboratoire/<str:pk>/dashboard',
+    #     Dash_Laboratoire, name='Dash_laboratoire'),
 
-    path('ListChercheurLab/', Liste_cher_Lab_aff, name='Liste_Ch_Lab'),
-    path('ListEquipeLab/', Liste_equipe_Lab_aff, name='Liste_Equipe_Lab'),
-    # >
-    path('laboratoire/equipes', Liste_cher_Lab_aff, name='Liste_Ch_Lab'),
-    path('laboratoire/allmembers', Liste_cher_Lab_aff, name='Liste_Ch_Lab'),
-    path('laboratoire/equipe/members', Liste_cher_Lab_aff, name='Liste_Ch_Lab'),
+    #     path('ListChercheurLab/', Liste_cher_Lab_aff, name='Liste_Ch_Lab'),
+    #     path('ListEquipeLab/', Liste_equipe_Lab_aff, name='Liste_Equipe_Lab'),
+
+    #     path('laboratoire/equipes', Liste_cher_Lab_aff, name='Liste_Ch_Lab'),
+    #     path('laboratoire/allmembers', Liste_cher_Lab_aff, name='Liste_Ch_Lab'),
+    #     path('laboratoire/equipe/members', Liste_cher_Lab_aff, name='Liste_Ch_Lab'),
 
     #    path('ListChercheurLab/chefequipe', Liste_cher_Lab_aff_chef_equipe, name='Liste_Ch_Lab'),
     # chef Division

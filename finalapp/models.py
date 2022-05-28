@@ -66,7 +66,7 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
 
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
-<<<<<<< HEAD
+
     # Relationship between Database tables
     equipe_researchers = models.ForeignKey(
         'Equipe', on_delete=models.SET_NULL, null=True, blank=True)
@@ -74,13 +74,12 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
     # interests
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-=======
+
     is_active = models.BooleanField(default=True)
 
     # relationship
     equipe_researchers = models.ForeignKey(
         'Equipe', on_delete=models.SET_NULL, null=True, blank=True)
->>>>>>> 667ebaf7667f2bb6d31f0c494a841b0c09874c25
 
     objects = ResearcherUserManager()
 
@@ -104,7 +103,6 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
     #     return self.id
 
 
-<<<<<<< HEAD
 class Location(models.Model):
     id = models.IntegerField(primary_key=True)
     state_name = models.CharField(max_length=30)
@@ -117,14 +115,13 @@ class Location(models.Model):
         ordering = ['id']
 
 
-=======
->>>>>>> 667ebaf7667f2bb6d31f0c494a841b0c09874c25
 class Etablisment(models.Model):
     nom = models.CharField(max_length=200, default='')
     logo = models.ImageField(null=True, blank=True)
     site_web = models.URLField(blank=True)
     location = models.ForeignKey(
         'Location', on_delete=models.CASCADE, null=True)
+    added = models.CharField(max_length=100, blank=True)
     chef_etablisement = models.OneToOneField(
         'Researcher', on_delete=models.SET_NULL, null=True, blank=True)
 
@@ -149,12 +146,6 @@ class Division(models.Model):
 class Equipe(models.Model):
     nom = models.CharField(max_length=200)
     site_web = models.URLField(blank=True)
-<<<<<<< HEAD
-    # Relationship
-=======
-
-    # relationship
->>>>>>> 667ebaf7667f2bb6d31f0c494a841b0c09874c25
     division = models.ForeignKey(
         'Division', on_delete=models.CASCADE, null=True)
     chef_equipe = models.OneToOneField(
