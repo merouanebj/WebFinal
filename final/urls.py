@@ -2,7 +2,6 @@ from turtle import home
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from finalapp.views import *
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [

@@ -1,22 +1,23 @@
-
 {% extends 'main.html' %} {% block content %}
 <div class="page-header">
   <div class="row">
     <div class="col-sm-12">
-      
       <h3 class="page-title">Bienvenue {{user}}</h3>
- 
+
       <ul class="breadcrumb">
         <li class="breadcrumb-item active">Profile</li>
       </ul>
     </div>
   </div>
 </div>
+{% comment %} Citation {% endcomment %}
 <div class="row">
   <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
     <div class="card dash-widget">
       <div class="card-body">
-        <span class="dash-widget-icon"><i class="bi bi-chat-quote-fill"></i></span>
+        <span class="dash-widget-icon"
+          ><i class="bi bi-chat-quote-fill"></i
+        ></span>
         <div class="dash-widget-info">
           <h3>{{apiData.cited_by.table.0.citations.all}}</h3>
           <span>Citations</span>
@@ -24,10 +25,13 @@
       </div>
     </div>
   </div>
+  {% comment %} INDEX H {% endcomment %}
   <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
     <div class="card dash-widget">
       <div class="card-body">
-        <span class="dash-widget-icon"><i class="bi bi-bookmarks-fill"></i></span>
+        <span class="dash-widget-icon"
+          ><i class="bi bi-bookmarks-fill"></i
+        ></span>
         <div class="dash-widget-info">
           <h3>{{apiData.cited_by.table.1.h_index.all}}</h3>
           <span>Index H</span>
@@ -35,7 +39,7 @@
       </div>
     </div>
   </div>
-
+  {% comment %} INDEX I10 {% endcomment %}
   <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
     <div class="card dash-widget">
       <div class="card-body">
@@ -47,6 +51,7 @@
       </div>
     </div>
   </div>
+  {% comment %} Best Year {% endcomment %}
   <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
     <div class="card dash-widget">
       <div class="card-body">
@@ -59,7 +64,18 @@
     </div>
   </div>
 </div>
-
+<div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+  <div class="card dash-widget">
+    <div class="card-body">
+      <span class="dash-widget-icon"><i class="bi bi-bar-chart"></i></span>
+      <div class="dash-widget-info">
+        <h3>{{apiData.articles_num}}</h3>
+        <span>Publications</span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 {% comment %} profil {% endcomment %}
 <div class="card mb-0">
   <div class="card-body">
@@ -91,20 +107,20 @@
                   <li>
                     <div class="title">Etablisment:</div>
                     <div class="text">
-                      <a href="">{{ etablisment.0}}</a>
+                      <a href="">{{etablisment.0}}</a>
                     </div>
                   </li>
                   <li>
                     <div class="title">Division:</div>
                     <div class="text">
-                      <a href="">{{ division.0}}</a>
+                      <a href="">{{division.0}}</a>
                     </div>
                   </li>
 
                   <li>
                     <div class="title">Equipe:</div>
                     <div class="text">
-                      <a href="">{{ equipe.0}}</a>
+                      <a href="">{{equipe.0}}</a>
                     </div>
                   </li>
                   <li>
@@ -137,32 +153,4 @@
     </div>
   </div>
 </div>
-
-  
-</div>
 {% endblock content %}
-{% comment %}
-<div class="card tab-box">
-  <div class="row user-tabs">
-    <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
-      <ul class="nav nav-tabs nav-tabs-bottom">
-        <li class="nav-item">
-          <a href="#emp_profile" data-toggle="tab" class="nav-link active"
-            >Profile</a
-          >
-        </li>
-        <li class="nav-item">
-          <a href="#emp_projects" data-toggle="tab" class="nav-link"
-            >Projects</a
-          >
-        </li>
-        <li class="nav-item">
-          <a href="#bank_statutory" data-toggle="tab" class="nav-link"
-            >Bank & Statutory <small class="text-danger">(Admin Only)</small></a
-          >
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
-{% endcomment %} 
