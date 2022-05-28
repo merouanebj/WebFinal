@@ -41,32 +41,57 @@
       <a href="" class="logo">
         <i class="fas fa-graduation-cap"></i> Dz_Research
       </a>
+    </div>
+  </section>
 
-      <nav class="navbar" style="margin-top: -10px">
-        <a href="{% url 'login' %}" type="button" class="btn">S'identifier </a>
-        <a href="{% url 'register' %} " type="button" class="btn">Rejoindre </a>
-      </nav>
+  <div class="merouane" id="merouane">
+    <div></div>
+    <h1 class="heading"><span>our</span> Partenaire</h1>
+    <section class="icons-container">
+      <div class="icons">
+        <i class="fas fa-users"></i>
+        <h3>{{Total_chercheur}}+</h3>
+        <p>Chercheurs</p>
+      </div>
 
-      <div id="menu-btn" class="fas fa-bars"></div>
-    </header>
+      <div class="icons">
+        <i class="far fa-building"></i> <i class="far fa-building"></i>
+        <h3>{{Total_Etablisment}}+</h3>
+        <p>Etablisment Dans Le territoire national</p>
+      </div>
 
-    <!-- header section ends -->
+      <div class="icons">
+        <i class="fas fa-solar-panel"></i>
+        <h3>{{Total_division}}+</h3>
+        <p>Division de recherche</p>
+      </div>
 
-    <!-- home section starts  -->
+    </section>
+  </div>
 
-    <section class="home" id="home">
+
+  <section class="about" id="about">
+    <h1 class="heading"><span>about</span> us</h1>
+
+    <div class="row">
       <div class="image">
-        <img src="{% static 'images/home-img.svg'%}" alt="" />
+        <img src="{% static 'images/index-stats.svg'%}" alt="" />
       </div>
 
       <div class="content">
-        <h3>La Première Plateforme Qui réunit Tous Les Chercheurs Algeriens</h3>
+        <h3>Pourqoui Rejoindre la platforme Dz_Research</h3>
         <p>
-          Dz_Research est une plateforme en ligne pour le recueil d'indicateurs
-          de la recherche nationale
+          cet platforme est dans le but de facilter la cordination entre les
+          Etablisments du territoire national
         </p>
+        <p>
+          Mesurez l'impact des Chercheurs, Equipes , Laboratoires de
+          recherche... dans le cadre d'ameliore la productivte Scientifique
+          national
+        </p>
+
         <a href="#" class="btn">
-          contact us <span class="fas fa-chevron-right"></span>
+          learn more <span class="fas fa-chevron-right"></span>
         </a>
       </div>
     </section>
@@ -103,78 +128,48 @@
         </div>
       </section>
     </div>
+  </section>
 
-    <!-- icons section ends -->
+  <!-- about section ends -->
 
-    <!-- about section starts  -->
+  <!-- footer section starts  -->
 
-    <section class="about" id="about">
-      <h1 class="heading"><span>about</span> us</h1>
-
-      <div class="row">
-        <div class="image">
-          <img src="{% static 'images/index-stats.svg'%}" alt="" />
-        </div>
-
-        <div class="content">
-          <h3>Pourqoui Rejoindre la platforme Dz_Research</h3>
-          <p>
-            cet platforme est dans le but de facilter la cordination entre les
-            Etablisments du territoire national
-          </p>
-          <p>
-            Mesurez l'impact des Chercheurs, Equipes , Laboratoires de
-            recherche... dans le cadre d'ameliore la productivte Scientifique
-            national
-          </p>
-
-          <a href="#" class="btn">
-            learn more <span class="fas fa-chevron-right"></span>
-          </a>
-        </div>
+  <section class="footer">
+    <div class="box-container">
+      <div class="box">
+        <h3>quick links</h3>
+        <a href="#home"> <i class="fas fa-chevron-right"></i> home </a>
+        <a href="#merouane">
+          <i class="fas fa-chevron-right"></i> effective
+        </a>
+        <a href="#about"> <i class="fas fa-chevron-right"></i> about </a>
       </div>
-    </section>
 
-    <!-- about section ends -->
+      <div class="box">
+        <h3>contact info</h3>
+        <a href="#"> <i class="fas fa-phone"></i> +123-456-7890 </a>
 
-    <!-- footer section starts  -->
-
-    <section class="footer">
-      <div class="box-container">
-        <div class="box">
-          <h3>quick links</h3>
-          <a href="#home"> <i class="fas fa-chevron-right"></i> home </a>
-          <a href="#merouane">
-            <i class="fas fa-chevron-right"></i> effective
-          </a>
-          <a href="#about"> <i class="fas fa-chevron-right"></i> about </a>
-        </div>
-
-        <div class="box">
-          <h3>contact info</h3>
-          <a href="#"> <i class="fas fa-phone"></i> +123-456-7890 </a>
-
-          <a href="#"> <i class="fas fa-envelope"></i> dzresearch@gmail.com </a>
-          <a
-            href="https://www.google.com/maps/dir//cerist+algeria+address/@36.7213347,3.0395886,12z/data=!4m9!4m8!1m1!4e1!1m5!1m1!1s0x128fb1eeed506b85:0xd3989c39f305dfb3!2m2!1d3.0039407!2d36.7590375"
-          >
-            <i class="fas fa-map-marker-alt"></i> Rue Frères Aissou, Ben Aknoun
-            - 16028
-          </a>
-        </div>
-
-        <div class="box">
-          <h3>follow us</h3>
-          <a href="#"> <i class="fab fa-facebook-f"></i> facebook </a>
-          <a href="#"> <i class="fab fa-twitter"></i> twitter </a>
-          <a href="#"> <i class="fab fa-linkedin"></i> linkedin </a>
-        </div>
+        <a href="#"> <i class="fas fa-envelope"></i> dzresearch@gmail.com </a>
+        <a
+          href="https://www.google.com/maps/dir//cerist+algeria+address/@36.7213347,3.0395886,12z/data=!4m9!4m8!1m1!4e1!1m5!1m1!1s0x128fb1eeed506b85:0xd3989c39f305dfb3!2m2!1d3.0039407!2d36.7590375">
+          <i class="fas fa-map-marker-alt"></i> Rue Frères Aissou, Ben Aknoun
+          - 16028
+        </a>
       </div>
-    </section>
 
-    <!-- footer section ends -->
+      <div class="box">
+        <h3>follow us</h3>
+        <a href="#"> <i class="fab fa-facebook-f"></i> facebook </a>
+        <a href="#"> <i class="fab fa-twitter"></i> twitter </a>
+        <a href="#"> <i class="fab fa-linkedin"></i> linkedin </a>
+      </div>
+    </div>
+  </section>
 
-    <!-- custom js file link  -->
-    <script src="{% static 'js/home.js'%}"></script>
-  </body>
+  <!-- footer section ends -->
+
+  <!-- custom js file link  -->
+  <script src="{% static 'js/home.js'%}"></script>
+</body>
+
 </html>

@@ -1,11 +1,9 @@
-
 {% extends 'main.html' %} {% block content %}
 <div class="page-header">
   <div class="row">
     <div class="col-sm-12">
       
-      <h3 class="page-title">Bienvenue {{user}}</h3>
- 
+      <h3 class="page-title">Bienvenue {{user}}</h3> 
       <ul class="breadcrumb">
         <li class="breadcrumb-item active">Profile</li>
       </ul>
@@ -77,6 +75,7 @@
                 <div class="profile-info-left">
                   <h3 class="user-name m-t-0 mb-0">{{user}}</h3>
                   <h6 class="text-muted">{{user.speciality}}</h6>
+                  <!-- <h6 class="text-muted">{{user.}}</h6> -->
 
                   <div class="small doj text-muted">
                     Date of Join : {{user.date_joined}}
@@ -100,7 +99,6 @@
                       <a href="">{{ division.0}}</a>
                     </div>
                   </li>
-
                   <li>
                     <div class="title">Equipe:</div>
                     <div class="text">

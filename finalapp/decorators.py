@@ -1,4 +1,3 @@
-
 import re
 from django.http import Http404, HttpResponse
 from django.shortcuts import redirect
@@ -7,6 +6,7 @@ from finalapp.models import Division, Equipe, Researcher
 
 
 def check_user_group(*groups):
+
     def decorators(function):
         def wrapper(request, *args, **kwargs):
             if request.user.groups.filter(name__in=groups).exists():
