@@ -75,5 +75,5 @@ def Dash_Equipe(request, pk):
 #             form.
 
 def equipe_dash(request):
-
-    pass
+    ApiData()
+    return render()

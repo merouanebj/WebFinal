@@ -102,6 +102,9 @@ class Location(models.Model):
     def __str__(self) -> str:
         return self.state_name
 
+    class Meta:
+        ordering = ['id']
+
 
 class Etablisment(models.Model):
     nom = models.CharField(max_length=200, default='')

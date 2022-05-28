@@ -4,31 +4,14 @@
 <div class="page-header">
   <div class="row align-items-center">
     <div class="col">
-      <h3 class="page-title">Les Chercheur De L'equipe GL</h3>
+      <h3 class="page-title">
+        Les Equipes De La Division {{info_division.nom}}
+      </h3>
       <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.html">Effectifs</a></li>
-        <li class="breadcrumb-item active">Tous les Chercheurs</li>
+        <li class="breadcrumb-item active">Tous les Equipes</li>
         <li class="breadcrumb-item active">Liste</li>
       </ul>
-    </div>
-    <div class="col-auto float-right ml-auto">
-      <a
-        href="#"
-        class="btn add-btn"
-        data-toggle="modal"
-        data-target="#add_client"
-        ><i class="fa fa-plus"></i> Add Client</a
-      >
-      <div class="view-icons">
-        <a href="{% url 'Liste_Ch_Equipe' %}" class="grid-view btn btn-link"
-          ><i class="fa fa-th"></i
-        ></a>
-        <a
-          href="{% url 'Liste_Ch_Equipe_liste' %}"
-          class="list-view btn btn-link active"
-          ><i class="fa fa-bars"></i
-        ></a>
-      </div>
     </div>
   </div>
 </div>
@@ -47,15 +30,23 @@
      .column4 {
          width: 360px;
          text-align: left; {% endcomment %}
-         .column5 {
-            width: 222px;
-            padding-left: 38px;
-            padding-right: 30px;
-            text-align:left;
+         .column3 {
+            width: 276px;
+            padding-left: 13px;
         }
-        .column2 {
-            width: 219px;
-            padding-right: 40px;}
+          .column6{
+            padding-right:0px;
+          }
+           .column5 {
+              width: 222px;
+              padding-left: 20px;
+              padding-right: 30px;
+              text-align:left;
+          }
+          .column2 {
+              width: 219px;
+              padding-left: 30px;
+              padding-right: 40px;}
 </style>
 <div class="row">
   <div class="col-md-12">
@@ -64,24 +55,23 @@
         <table style="width: 900px">
           <thead>
             <tr>
-              <th class="column1">Chercheur</th>
-              <th class="column2">Spécialité</th>
-              <th>Grade</th>
-              <th class="column6">Email</th>
-              <th class="column5">Profil</th>
+              <th class="column1">Equipe</th>
+              <th class="column2">Chef D'equipe</th>
+              <th>Divsion</th>
+              <th class="column3">Tableau de bord</th>
             </tr>
           </thead>
           <tbody>
             {% for i in liste %}
             <tr>
-              <td class="column6">{{i.first_name}} {{i.last_name}}</td>
-              <td class="column2">{{i.speciality}}</td>
-              <td>{{i.grade}}</td>
-              <td class="column6">{{i.email}}</td>
+              <td class="column6">{{i.nom}}</td>
+              <td class="column2">{{i.chef_equipe}}</td>
+              <td class="column3">{{i.division}}</td>
+
               <td class="column5">
-                <a href="{% url 'profilE' i.id %}"
+                <a href="{% url 'Dash_equipe' i.id %}"
                   ><button type="button" class="btn btn-outline-secondary">
-                    Profile
+                    Tableau de bord
                     <i class="bi bi-arrow-up-right-square-fill"></i></button
                 ></a>
               </td>

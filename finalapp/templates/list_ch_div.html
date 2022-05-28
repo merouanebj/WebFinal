@@ -1,9 +1,87 @@
 {% extends 'main.html' %} {% block content %}
+<div class="page-header">
+  <div class="row align-items-center">
+    <div class="col">
+      <h3 class="page-title">
+        Les Chercheur De La Division {{info_division.nom}}
+      </h3>
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Effectifs</a></li>
+        <li class="breadcrumb-item active">Tous les Chercheurs</li>
+      </ul>
+    </div>
+    <div class="col-auto float-right ml-auto">
+      <a
+        href="#"
+        class="btn add-btn"
+        data-toggle="modal"
+        data-target="#add_client"
+        ><i class="fa fa-plus"></i> Add Client</a
+      >
+      <div class="view-icons">
+        <a
+          href="{% url 'Liste_Ch_Division' %}"
+          class="grid-view btn btn-link active"
+          ><i class="fa fa-th"></i
+        ></a>
+        <a
+          href="{% url 'Liste_Ch_Division_liste' %}"
+          class="list-view btn btn-link"
+          ><i class="fa fa-bars"></i
+        ></a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Page Content -->
 
-<h1>Saha chikh</h1>
-<ul>
+<div class="row staff-grid-row">
   {% for i in liste %}
-  <li>{{i.first_name}}</li>
+
+  <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
+    <div class="profile-widget">
+      <div class="profile-img">
+        <a href="client-profile.html" class="avatar"><img alt="" src="" /></a>
+      </div>
+      <div class="dropdown profile-action">
+        <a
+          href="#"
+          class="action-icon dropdown-toggle"
+          data-toggle="dropdown"
+          aria-expanded="false"
+          ><i class="material-icons">more_vert</i></a
+        >
+        <div class="dropdown-menu dropdown-menu-right">
+          <a
+            class="dropdown-item"
+            href="#"
+            data-toggle="modal"
+            data-target="#edit_client"
+            ><i class="fa fa-pencil m-r-5"></i> Edit</a
+          >
+          <a
+            class="dropdown-item"
+            href="#"
+            data-toggle="modal"
+            data-target="#delete_client"
+            ><i class="fa fa-trash-o m-r-5"></i> Delete</a
+          >
+        </div>
+      </div>
+      <h4 class="user-name m-t-10 mb-0 text-ellipsis">
+        <a href="client-profile.html">{{i.first_name}} {{i.last_name}}</a>
+      </h4>
+      <h5 class="user-name m-t-10 mb-0 text-ellipsis">
+        <a href="client-profile.html">{{i.speciality}}</a>
+      </h5>
+      <div class="small text-muted">{{i.grade}}</div>
+      <a href="{% url 'profilE' i.id %}" class="btn btn-white btn-sm m-t-10"
+        >View Profile</a
+      >
+    </div>
+  </div>
   {% endfor %}
-</ul>
+</div>
+<!-- /Page Content -->
+
 {% endblock content %}

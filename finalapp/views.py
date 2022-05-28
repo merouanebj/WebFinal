@@ -13,7 +13,7 @@ from django.contrib.auth import authenticate, login, logout
 from finalapp.models import *
 from django.contrib import messages
 from serpapi import GoogleSearch
-from finalapp.decorators import *
+
 # Create your views here.
 # Login
 
@@ -75,7 +75,7 @@ def ApiData(pk):  # l'id du chercheur
     params = {
         "engine": "google_scholar_author",
         "author_id": r.get_google_id(),
-        "api_key": "6bbac90594777b50d1a7cb232de4c87e7eab93ca2cbdf37657081d9912f28970"
+        "api_key": "5693539bbd7f27e4de0624ca01bc9ad9ecba73199cbc2ce132e589daa15f8e4a"
     }
     search = GoogleSearch(params)
     results = search.get_dict()
@@ -224,7 +224,6 @@ def DivsionList_Eta(pk):
 # le seul role qui peut cree une equipe s'est le chef laboratoire
 
 
-@check_if_chefdivision
 def creat_equipe_views(request):
     OrderFormSet = inlineformset_factory(
         Division, Equipe, fields=('nom', 'site_web', 'chef_equipe'), extra=1)
@@ -272,7 +271,7 @@ def EquipeList():
 
 # Les equipe d'un Etablisment
 def EquipeList_Eta(pk):  # pk d'un Etablismet
-    inter = Division.objects.filter(division=pk)
+    inter = Division.objects.filter(etablisment=pk)
     researchers = Equipe.objects.none()
     i = []
     for i1 in inter:
@@ -292,14 +291,14 @@ def EquipeList_Div(pk):  # pk d'un labo
 # les information pour un profil de chercheur
 
 
-def CherList_equipe(request, pk):  # pk represent l'id de l'equipe (rest a test)
+def CherList_equipe(pk):  # pk represent l'id de l'equipe (rest a test)
     researchers = Researcher.objects.filter(equipe_researchers=pk)
     return researchers
 
 # afficher les chercheur d'un laboratoire
 
 
-def CherList_div(request, pk):
+def CherList_div(pk):
 
     inter = Equipe.objects.filter(division=pk)
     researchers = Researcher.objects.none()
@@ -314,8 +313,8 @@ def CherList_div(request, pk):
 # afficher les chercheur d'un division
 
 
-def CherList_eta(request, pk):
-    inter = Division.objects.filter(division=pk)
+def CherList_eta(pk):
+    inter = Division.objects.filter(etablisment=pk)
     interEquipe = Equipe.objects.none()
     inter2 = []
     for i in inter:
@@ -340,12 +339,18 @@ def Profil_views(request):
     division = Division.objects.filter(id=equipe[0].division.id)
     etablisment = Etablisment.objects.filter(id=division[0].etablisment.id)
     apiData = ApiData(request.user.pk)
-    context = {'chercheur1': chercheur1, 'apiData': apiData,
+    inter = apiData["cited_by"]["graph"]
+    max = 0
+    best_annee = 0
+    for i in inter:
+        if max < i["citations"]:
+            max = i["citations"]
+            best_annee = i["year"]
+    context = {'best_annee': best_annee, 'chercheur1': chercheur1, 'apiData': apiData,
                'etablisment': etablisment, 'division': division, 'equipe': equipe}
     return render(request, 'profil.html', context)
 
 
-@check_user_identity
 def Profil_views_externe(request, pk):
     chercheur1 = Researcher.objects.get(id=pk)
     # pour recuperer les donnes
@@ -354,8 +359,15 @@ def Profil_views_externe(request, pk):
     division = Division.objects.filter(id=equipe[0].division.id)
     etablisment = Etablisment.objects.filter(id=division[0].etablisment.id)
     apiData = ApiData(pk)
-    context = {'apiData': apiData, 'chercheur1': chercheur1, 'etablisment': etablisment,
-               'equipe': equipe, 'division': division, 'equipe': equipe}
+    inter = apiData["cited_by"]["graph"]
+    max = 0
+    best_annee = 0
+    for i in inter:
+        if max < i["citations"]:
+            max = i["citations"]
+            best_annee = i["year"]
+    context = {'best_annee': best_annee, 'apiData': apiData, 'chercheur1': chercheur1,
+               'etablisment': etablisment, 'equipe': equipe, 'division': division, 'equipe': equipe}
     return render(request, 'profilE.html', context)
 
 
@@ -467,28 +479,65 @@ def Recup_id_etablisment(request):
 
 def Liste_cher_Eta_aff(request):
     inter = Recup_id_etablisment(request)
-    inter2 = inter["etablisment_id"]
-    liste = CherList_eta(request, inter2)
+    liste = CherList_eta(inter["etablisment_id"])
+    info_etablisment = Etablisment.objects.get(pk=inter["etablisment_id"].id)
     context = {'liste': liste}
+    context["info_etablisment"] = info_etablisment
     return render(request, 'list_ch_eta.html', context)
 
 
-def Liste_cher_Div_aff(request):
-    inter = Recup_id_division(request)
-    inter2 = inter["division_id"]
-    liste = CherList_div(request, inter2)
+def Liste_cher_Eta_aff_list(request):
+    inter = Recup_id_etablisment(request)
+    liste = CherList_eta(inter["etablisment_id"])
+    info_etablisment = Etablisment.objects.get(pk=inter["etablisment_id"].id)
     context = {'liste': liste}
-    return render(request, 'list_ch_div.html', context)
+    context["info_etablisment"] = info_etablisment
+    return render(request, 'list_ch_eta-list.html', context)
 
 
 def Liste_cher_Div_aff(request):
     inter = Recup_id_division(request)
-
     info_division = Division.objects.get(pk=inter["division_id"].id)
-    liste = CherList_div(request, inter["division_id"])
+    liste = CherList_div(inter["division_id"])
     context = {'liste': liste}
+    context["info_division"] = info_division
     return render(request, 'list_ch_div.html', context)
 
+
+def Liste_cher_Div_aff_list(request):
+    inter = Recup_id_division(request)
+    liste = CherList_div(inter["division_id"])
+    info_division = Division.objects.get(pk=inter["division_id"].id)
+    context = {'liste': liste}
+    context["info_division"] = info_division
+    return render(request, 'list_ch_div-list.html', context)
+
+
+def Liste_equipe_Eta_aff_list(request):
+    inter = Recup_id_etablisment(request)
+    liste = EquipeList_Eta(inter["etablisment_id"].id)
+    info_etablisment = Etablisment.objects.get(pk=inter["etablisment_id"].id)
+    context = {'liste': liste}
+    context["info_etablisment"] = info_etablisment
+    return render(request, 'list_equipe_Eta.html', context)
+
+
+def Liste_equipe_Div_aff_list(request):
+    inter = Recup_id_division(request)
+    liste = EquipeList_Div(inter["division_id"].id)
+    info_division = Division.objects.get(pk=inter["division_id"].id)
+    context = {'liste': liste}
+    context["info_division"] = info_division
+    return render(request, 'list_equipe_Div.html', context)
+
+
+def Liste_division_Eta_aff_list(request):
+    inter = Recup_id_etablisment(request)
+    liste = DivsionList_Eta(inter["etablisment_id"].id)
+    info_etablisment = Etablisment.objects.get(pk=inter["etablisment_id"].id)
+    context = {'liste': liste}
+    context["info_etablisment"] = info_etablisment
+    return render(request, 'list_division_Eta.html', context)
 
 # les affichage d'une chef d'equipe
     # DashEquipe

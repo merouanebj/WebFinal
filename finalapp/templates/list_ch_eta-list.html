@@ -4,7 +4,9 @@
 <div class="page-header">
   <div class="row align-items-center">
     <div class="col">
-      <h3 class="page-title">Les Chercheur De L'equipe GL</h3>
+      <h3 class="page-title">
+        Les Chercheurs De L'Etablisment {{info_etablisment.nom}}
+      </h3>
       <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.html">Effectifs</a></li>
         <li class="breadcrumb-item active">Tous les Chercheurs</li>
@@ -12,19 +14,14 @@
       </ul>
     </div>
     <div class="col-auto float-right ml-auto">
-      <a
-        href="#"
-        class="btn add-btn"
-        data-toggle="modal"
-        data-target="#add_client"
-        ><i class="fa fa-plus"></i> Add Client</a
-      >
       <div class="view-icons">
-        <a href="{% url 'Liste_Ch_Equipe' %}" class="grid-view btn btn-link"
+        <a
+          href="{% url 'Liste_Ch_Etablisment' %}"
+          class="grid-view btn btn-link"
           ><i class="fa fa-th"></i
         ></a>
         <a
-          href="{% url 'Liste_Ch_Equipe_liste' %}"
+          href="{% url 'Liste_Ch_Etablisment_liste' %}"
           class="list-view btn btn-link active"
           ><i class="fa fa-bars"></i
         ></a>
@@ -47,15 +44,23 @@
      .column4 {
          width: 360px;
          text-align: left; {% endcomment %}
-         .column5 {
-            width: 222px;
-            padding-left: 38px;
-            padding-right: 30px;
-            text-align:left;
+         .column3 {
+            width: 276px;
+            padding-left: 45px;
         }
-        .column2 {
-            width: 219px;
-            padding-right: 40px;}
+          .column6{
+            padding-right:0px;
+          }
+           .column5 {
+              width: 222px;
+              padding-left: 20px;
+              padding-right: 30px;
+              text-align:left;
+          }
+          .column2 {
+              width: 219px;
+              padding-left: 30px;
+              padding-right: 40px;}
 </style>
 <div class="row">
   <div class="col-md-12">
@@ -67,6 +72,8 @@
               <th class="column1">Chercheur</th>
               <th class="column2">Spécialité</th>
               <th>Grade</th>
+              <th class="column3">Equipe</th>
+
               <th class="column6">Email</th>
               <th class="column5">Profil</th>
             </tr>
@@ -77,6 +84,7 @@
               <td class="column6">{{i.first_name}} {{i.last_name}}</td>
               <td class="column2">{{i.speciality}}</td>
               <td>{{i.grade}}</td>
+              <td class="column3">{{i.equipe_researchers}}</td>
               <td class="column6">{{i.email}}</td>
               <td class="column5">
                 <a href="{% url 'profilE' i.id %}"
