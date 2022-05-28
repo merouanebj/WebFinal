@@ -26,6 +26,7 @@ urlpatterns = [
     # chef equipe
        #les chercheur de son equipe + dashboard
        path('DashEquipe/<int:pk>/', Dash_Equipe, name='Dash_equipe'),
+       
        path('ListChercheurEquipe/', Liste_cher_Equipe_aff, name='Liste_Ch_Equipe'),
        path('ListChercheurEquipe/liste/', Liste_cher_Equipe_aff_list, name='Liste_Ch_Equipe_liste'),
        
@@ -42,13 +43,21 @@ urlpatterns = [
          path('dashdivision/<str:pk>/', Dash_Division, name='Dash_div'),
          path('ListChercheurDivision/', Liste_cher_Div_aff, name='Liste_Ch_Division'),
          path('ListChercheurDivision/liste/', Liste_cher_Div_aff_list, name='Liste_Ch_Division_liste'),
-       
+         path('ListEquipeDivision/liste/', Liste_equipe_Div_aff_list, name='Liste_equipe_Division_liste'),
+
+       path('DashDivsion/<int:pk>/', Dash_Division, name='Dash_division'),
        
     #chef d'etablisment   
        path('creatdiv/', creat_division_views, name="creatdiv"),
        path('ListChercheurEtablisment/',       Liste_cher_Eta_aff, name='Liste_Ch_Etablisment'),
        path('ListChercheurEtablisment/liste/', Liste_cher_Eta_aff_list, name='Liste_Ch_Etablisment_liste'),
+       path('ListEquipeEtablisment/liste/', Liste_equipe_Eta_aff_list, name='Liste_equipe_Etablisment_liste'),
+       path('ListDivisionEtablisment/liste/', Liste_division_Eta_aff_list, name='Liste_division_Etablisment_liste'),
        
+       
+     #
+    
+         
      #delegue
        path('createta/', creat_Etablisment_views, name="createta"),
        

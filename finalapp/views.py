@@ -241,7 +241,7 @@ def EquipeList():
 
 #Les equipe d'un Etablisment
 def EquipeList_Eta(pk):#pk d'un Etablismet
-    inter = Division.objects.filter(division = pk)
+    inter = Division.objects.filter(etablisment = pk)
     researchers = Equipe.objects.none()
     i =[]
     for i1 in inter:
@@ -259,13 +259,13 @@ def EquipeList_Div(pk):#pk d'un labo
 # les information pour un profil de chercheur
 
 
-def CherList_equipe(request,pk):# pk represent l'id de l'equipe (rest a test)
+def CherList_equipe(pk):# pk represent l'id de l'equipe (rest a test)
     researchers = Researcher.objects.filter(equipe_researchers = pk)
     return researchers
 
 # afficher les chercheur d'un laboratoire
 
-def CherList_div(request,pk):
+def CherList_div(pk):
     
     inter = Equipe.objects.filter(division = pk)
     researchers = Researcher.objects.none()
@@ -279,7 +279,7 @@ def CherList_div(request,pk):
 
 # afficher les chercheur d'un division 
 
-def CherList_eta(request,pk):
+def CherList_eta(pk):
      inter = Division.objects.filter(etablisment = pk)
      interEquipe = Equipe.objects.none()
      inter2 =[]
@@ -308,7 +308,14 @@ def Profil_views(request):
     division = Division.objects.filter(id = equipe[0].division.id)
     etablisment = Etablisment.objects.filter(id =division[0].etablisment.id)
     apiData = ApiData(request.user.pk)
-    context ={'chercheur1':chercheur1,'apiData':apiData,'etablisment':etablisment,'division':division,'equipe':equipe}
+    inter =apiData["cited_by"]["graph"]
+    max =0
+    best_annee = 0
+    for i in inter :
+         if max < i["citations"]:
+            max = i["citations"]
+            best_annee =i["year"]
+    context ={'best_annee':best_annee,'chercheur1':chercheur1,'apiData':apiData,'etablisment':etablisment,'division':division,'equipe':equipe}
     return render (request,'profil.html',context)
 
 def Profil_views_externe(request,pk):
@@ -319,7 +326,14 @@ def Profil_views_externe(request,pk):
     division = Division.objects.filter(id = equipe[0].division.id)
     etablisment = Etablisment.objects.filter(id =division[0].etablisment.id)
     apiData = ApiData(pk)
-    context ={'apiData':apiData,'chercheur1':chercheur1,'etablisment':etablisment,'equipe':equipe,'division':division,'equipe':equipe}
+    inter =apiData["cited_by"]["graph"]
+    max =0
+    best_annee = 0
+    for i in inter :
+         if max < i["citations"]:
+            max = i["citations"]
+            best_annee =i["year"]
+    context ={'best_annee':best_annee,'apiData':apiData,'chercheur1':chercheur1,'etablisment':etablisment,'equipe':equipe,'division':division,'equipe':equipe}
     return render (request,'profilE.html',context)
 
 
@@ -366,7 +380,7 @@ def Dash_Division_calc(pk):
          moy_indice_hL += inter["moy_indice_h"]
          moy_indice_i10L += inter["moy_indice_i10"]
          nbr_cher_division += inter["nbr_cher_equipe"]
-     if nbr_equipe_division == 0:
+     if  nbr_equipe_division == 0:
          moy_indice_hL = 0.0
          moy_indice_i10L = 0.0  
      else: 
@@ -417,7 +431,7 @@ def Recup_id_etablisment(request):
 
 def Liste_cher_Eta_aff(request):
     inter=Recup_id_etablisment(request)
-    liste = CherList_eta(request,inter["etablisment_id"])
+    liste = CherList_eta(inter["etablisment_id"])
     info_etablisment = Etablisment.objects.get(pk = inter["etablisment_id"].id)
     context ={'liste':liste}
     context["info_etablisment"] = info_etablisment
@@ -425,7 +439,7 @@ def Liste_cher_Eta_aff(request):
 
 def Liste_cher_Eta_aff_list(request):
     inter=Recup_id_etablisment(request)
-    liste = CherList_eta (request,inter["etablisment_id"])
+    liste = CherList_eta (inter["etablisment_id"])
     info_etablisment = Etablisment.objects.get(pk = inter["etablisment_id"].id)
     context ={'liste':liste}
     context["info_etablisment"] = info_etablisment
@@ -436,20 +450,44 @@ def Liste_cher_Eta_aff_list(request):
 def Liste_cher_Div_aff(request):
     inter=Recup_id_division(request)
     info_division = Division.objects.get(pk = inter["division_id"].id)
-    liste = CherList_div (request,inter["division_id"])
+    liste = CherList_div (inter["division_id"])
     context ={'liste':liste}
     context["info_division"] = info_division
     return render (request,'list_ch_div.html',context)
 
 def Liste_cher_Div_aff_list(request):
     inter=Recup_id_division(request)
-    liste = CherList_div (request,inter["division_id"])
+    liste = CherList_div (inter["division_id"])
     info_division = Division.objects.get(pk = inter["division_id"].id)
     context ={'liste':liste}
     context["info_division"] = info_division
     return render (request,'list_ch_div-list.html',context)
 
 
+def Liste_equipe_Eta_aff_list(request):
+    inter=Recup_id_etablisment(request)
+    liste = EquipeList_Eta(inter["etablisment_id"].id)
+    info_etablisment = Etablisment.objects.get(pk = inter["etablisment_id"].id)
+    context ={'liste':liste}
+    context["info_etablisment"] = info_etablisment
+    return render (request,'list_equipe_Eta.html',context)
+
+def Liste_equipe_Div_aff_list(request):
+    inter=Recup_id_division(request)
+    liste = EquipeList_Div(inter["division_id"].id)
+    info_division= Division.objects.get(pk = inter["division_id"].id)
+    context ={'liste':liste}
+    context["info_division"] = info_division
+    return render (request,'list_equipe_Div.html',context)
+
+
+def Liste_division_Eta_aff_list(request):
+    inter=Recup_id_etablisment(request)
+    liste = DivsionList_Eta(inter["etablisment_id"].id)
+    info_etablisment = Etablisment.objects.get(pk = inter["etablisment_id"].id)
+    context ={'liste':liste}
+    context["info_etablisment"] = info_etablisment
+    return render (request,'list_division_Eta.html',context)
 
 # les affichage d'une chef d'equipe
        #DashEquipe
