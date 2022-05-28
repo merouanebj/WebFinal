@@ -3,13 +3,11 @@ from finalapp.models import *
 from finalapp.views import *
 from finalapp.decorators import *
 from django.contrib.auth.decorators import login_required
-from finalapp.forms2 import *
 
 # on fait sous form de fonction pour utulistaion direct dans les autre dash board
 
 
 def Dash_Equipe_calc(pk):
-
     info_equipe = Equipe.objects.get(pk=pk)
     researchers = Researcher.objects.filter(
         equipe_researchers=pk)  # recupere les chercheur des equipe
@@ -68,8 +66,6 @@ def Dash_Equipe(request, pk):
     context["chef"] = chef
     return render(request, 'DashEquipe.html', context)
 
-# only chef division
-
 
 # @check_if_chefdivision
 # def create_equipe(request):
@@ -77,3 +73,7 @@ def Dash_Equipe(request, pk):
 #         form = EquipeForm(request.POST)
 #         if form.is_valid():
 #             form.
+
+def equipe_dash(request):
+
+    pass

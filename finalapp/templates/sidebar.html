@@ -1,4 +1,5 @@
 {%load static %}
+{%load tag%}
 <div class="sidebar" id="sidebar">
         <div class="sidebar-inner slimscroll">
           <div id="sidebar-menu" class="sidebar-menu">
@@ -7,27 +8,28 @@
                 <span>Dashboard</span>
               </li>
               <li class="submenu">
-                <a href="#"
-                  ><i class="la la-dashboard"></i> <span> Dashboard</span>
+                <a href="#">
+                <i class="la la-dashboard"></i> <span> Dashboard</span>
                   <span class="menu-arrow"></span
                 ></a>
                 <ul style="display: none">
+                {% if user|user_role == "chef_eta" %}
                   <li>
                     <a class="active" href="index.html"
                       >Etablisment Dashboard</a
                     >
                   </li>
-                  
+                  {%endif%}
+                  {% if user|user_role == "chef_div"%}
                   <li>
                     <a href="employee-dashboard.html">Division Dashboard</a>
                   </li>
-                  
-                  <li>
-                    <a href="employee-dashboard.html">Laboratoire Dashboard</a>
-                  </li>
+                  {%endif%}
+                  {% if user|user_role == "chef_equipe" %}
                   <li>
                     <a href="employee-dashboard.html">Equipe Dashboard</a>
                   </li>
+                  {%endif%}
                 </ul>
               </li>
               {% comment %}

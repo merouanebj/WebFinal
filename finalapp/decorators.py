@@ -29,7 +29,7 @@ def check_if_chefequipe(function):
     def wrapper(request, pk):
         if request.user == Equipe.objects.get(id=pk).chef_equipe:
             return function(request, pk)
-        return HttpResponse('you dont have acces')
+        raise Http404("You dont have access")
     return wrapper
 
 
