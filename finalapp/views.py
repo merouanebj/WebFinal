@@ -387,8 +387,50 @@ def Dash_Division_calc(pk):
          moy_indice_hL=moy_indice_hL/nbr_equipe_division
          moy_indice_i10L=moy_indice_i10L/nbr_equipe_division
    
-     context ={'nbr_equipe_division':nbr_equipe_division,'nbr_cher_division':nbr_cher_division ,'info_division': info_division,'nbr_Citation':nbr_CitationL,'moy_indice_h':moy_indice_hL,'moy_indice_i10':moy_indice_i10L}
+     context ={'nbr_equipe_division':nbr_equipe_division,
+               'nbr_cher_division':nbr_cher_division ,
+               'info_division': info_division,
+               'nbr_Citation':nbr_CitationL,
+               'moy_indice_h':moy_indice_hL,
+               'moy_indice_i10':moy_indice_i10L}
      return context
+ 
+def Dash_Eta_calc(pk):
+     info_etablisment = Etablisment.objects.get(pk = pk)
+     divisions = Division.objects.filter(etablisment = pk )
+     nbr_division_etablisment = divisions.count()
+     nbr_equipe_etablisment=0
+     nbr_CitationL = 0
+     nbr_cher_etablisment=0
+     moy_indice_hL = 0.0
+     moy_indice_i10L = 0.0
+     for i in divisions:
+         inter = Dash_Division_calc(i.id)
+         nbr_equipe_etablisment += inter["nbr_equipe_division"]
+         nbr_CitationL += inter["nbr_Citation"]       
+         moy_indice_hL += inter["moy_indice_h"]
+         moy_indice_i10L += inter["moy_indice_i10"]
+         nbr_cher_etablisment += inter["nbr_cher_division"]
+     if  nbr_division_etablisment == 0:
+         moy_indice_hL = 0.0
+         moy_indice_i10L = 0.0  
+     else: 
+         moy_indice_hL=moy_indice_hL/nbr_division_etablisment
+         moy_indice_i10L=moy_indice_i10L/nbr_division_etablisment
+   
+     context ={'nbr_equipe_etablisment':nbr_equipe_etablisment,
+               'nbr_cher_etablisment':nbr_cher_etablisment ,
+               'info_etablisment': info_etablisment,
+               'nbr_division_etablisment':nbr_division_etablisment,
+               'nbr_Citation':nbr_CitationL,
+               'moy_indice_h':moy_indice_hL,
+               'moy_indice_i10':moy_indice_i10L}
+     return context
+ 
+ 
+def Dash_Etablisemnt(request,pk):
+    context = Dash_Eta_calc(pk)
+    return render (request,'DashEtablisment.html',context)
     
 def Dash_Equipe(request,pk):
     context = Dash_Equipe_calc(pk)
@@ -489,11 +531,9 @@ def Liste_division_Eta_aff_list(request):
     context["info_etablisment"] = info_etablisment
     return render (request,'list_division_Eta.html',context)
 
-# les affichage d'une chef d'equipe
-       #DashEquipe
-       #Liste Chercheur
-             
- 
+
+
+
 def Liste_cher_Equipe_aff(request):
     inter=Recup_id_equipe(request)
     liste = CherList_equipe (request,inter["equipe_id"])

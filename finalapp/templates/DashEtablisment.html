@@ -1,0 +1,95 @@
+{% extends 'main.html' %} {% block content %}
+<!-- /Sidebar -->
+
+<!-- Page Header -->
+<div class="page-header">
+  <div class="row">
+    <div class="col-sm-12">
+      <h3 class="page-title">Bienvenue {{user}}</h3>
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item active">
+          Dashboard de L'etablisment {{info_etablisment.nom}}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- /Page Header -->
+{% comment %} Les carts {% endcomment %}
+<div class="row">
+  <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+    <div class="card dash-widget">
+      <div class="card-body">
+        <span class="dash-widget-icon"><i class="bi bi-file-person"></i></span>
+        <div class="dash-widget-info">
+          <h3>{{nbr_cher_etablisment}}</h3>
+          <span>Chercheur</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+    <div class="card dash-widget">
+      <div class="card-body">
+        <span class="dash-widget-icon"
+          ><i class="bi bi-diagram-2-fill"></i
+        ></span>
+        <div class="dash-widget-info">
+          <h3>{{nbr_equipe_etablisment}}</h3>
+          <span>Equipes</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+    <div class="card dash-widget">
+      <div class="card-body">
+        <span class="dash-widget-icon"></span>
+        <div class="dash-widget-info">
+          <h3>{{nbr_division_etablisment}}</h3>
+          <span>Division</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+    <div class="card dash-widget">
+      <div class="card-body">
+        <span class="dash-widget-icon"
+          ><i class="bi bi-chat-quote-fill"></i
+        ></span>
+        <div class="dash-widget-info">
+          <h3>{{nbr_Citation}}</h3>
+          <span>Citation Total</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+    <div class="card dash-widget">
+      <div class="card-body">
+        <span class="dash-widget-icon"
+          ><i class="bi bi-bookmarks-fill"></i
+        ></span>
+        <div class="dash-widget-info">
+          <h3>{{moy_indice_h}}</h3>
+          <span>Indice H</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+    <div class="card dash-widget">
+      <div class="card-body">
+        <span class="dash-widget-icon"><i class="bi bi-info-circle"></i></span>
+        <div class="dash-widget-info">
+          <h3>{{moy_indice_i10}}</h3>
+          <span>Indice I10</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- /Page Content -->
+</div>
+{% endblock content %}

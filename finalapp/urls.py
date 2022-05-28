@@ -26,6 +26,7 @@ urlpatterns = [
     # chef equipe
        #les chercheur de son equipe + dashboard
        path('DashEquipe/<int:pk>/', Dash_Equipe, name='Dash_equipe'),
+       path('dashetablisment/<int:pk>/', Dash_Etablisemnt, name='Dash_etablisment'),
        
        path('ListChercheurEquipe/', Liste_cher_Equipe_aff, name='Liste_Ch_Equipe'),
        path('ListChercheurEquipe/liste/', Liste_cher_Equipe_aff_list, name='Liste_Ch_Equipe_liste'),
