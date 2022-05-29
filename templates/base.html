@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
+  <meta name="description" content="Smarthr - Bootstrap Admin Template" />
+  <meta name="keywords"
+    content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <meta name="author" content="Dreamguys - Bootstrap Admin Template" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Dashboard - HRMS admin template</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/fontawesome.min.css"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"
+    integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="shortcut icon" type="image/x-icon" href={% static
+    'images/facivon.png' %}" />
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/line-awesome.min.css' %}" />
+
+  <link rel="stylesheet" href="{% static 'plugins/morris/morris.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+
+<body>
+  <div class="main-wrapper">
+    {% include "components/header.html"%}
+    {% include "components/sidebar.html"%}
+    <div class="page-wrapper">
+      <div class="content container-fluid">
+        {% block content %}{% endblock content %}
+      </div>
+    </div>
+  </div>
+
+  <script src="{% static '/js/jquery-3.5.1.min.js'%}"></script>
+  <script src="{% static 'js/popper.min.js'%}"></script>
+  <script src="{% static 'js/bootstrap.min.js'%}"></script>
+  <script src="{% static 'js/jquery.slimscroll.min.js'%}"></script>
+  <script src="{% static 'plugins/morris/morris.min.js'%}"></script>
+  <script src="{% static 'plugins/raphael/raphael.min.js'%}"></script>
+  <script src="{% static 'js/chart.js'%}"></script>
+  <script src="{% static 'js/app.js'%}"></script>
+</body>
+
+</html>

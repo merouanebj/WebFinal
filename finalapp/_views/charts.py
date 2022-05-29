@@ -1,12 +1,14 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from finalapp._views.views import *
+
+from finalapp._views.functions import *
+from finalapp._views.functions import *
 
 
 def try_view(request):
     context = {}
-    context["data"] = ApiData(request.user.pk)["cited_by"]["graph"]
-    return render(request, 'charts/equipe.html', context)
+    context["data"] = serpapi_author(request)["cited_by"]["graph"]
+    return render(request, 'pages/equipe.html', context)
 
 
 def equipe_dash(request):

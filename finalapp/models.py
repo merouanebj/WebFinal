@@ -99,20 +99,8 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
     def get_username(self) -> str:
         return super().get_username()
 
-    # def get_id(self):
-    #     return self.id
-
-
-class Location(models.Model):
-    id = models.IntegerField(primary_key=True)
-    state_name = models.CharField(max_length=30)
-    # validators=[MinValueValidator(1), MaxValueValidator(58)],
-
-    def __str__(self) -> str:
-        return self.state_name
-
-    class Meta:
-        ordering = ['id']
+    def get_id(self) -> int:
+        return self.pk
 
 
 class Etablisment(models.Model):
@@ -127,6 +115,18 @@ class Etablisment(models.Model):
 
     def __str__(self):
         return self.nom
+
+
+class Location(models.Model):
+    id = models.IntegerField(primary_key=True)
+    state_name = models.CharField(max_length=30)
+    # validators=[MinValueValidator(1), MaxValueValidator(58)],
+
+    def __str__(self) -> str:
+        return self.state_name
+
+    class Meta:
+        ordering = ['id']
 
 
 class Division(models.Model):
@@ -151,11 +151,11 @@ class Equipe(models.Model):
     chef_equipe = models.OneToOneField(
         'Researcher', on_delete=models.SET_NULL, null=True)
 
-    def __str__(self):
-        return self.nom
-
     def get_chefequipe_id(self) -> int:
         return self.chef_equipe
+
+    def __str__(self):
+        return str(self.nom) + " chef: " + str(Researcher.objects.get(id=self.chef_equipe.get_id()))
 
 
 class Location(models.Model):
