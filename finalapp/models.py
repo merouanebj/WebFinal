@@ -90,8 +90,8 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
     def get_username(self) -> str:
         return super().get_username()
 
-    # def get_id(self):
-    #     return self.id
+    def get_id(self) -> int:
+        return self.pk
 
 
 class Location(models.Model):
@@ -144,11 +144,11 @@ class Equipe(models.Model):
     chef_equipe = models.OneToOneField(
         'Researcher', on_delete=models.SET_NULL, null=True)
 
-    def __str__(self):
-        return self.nom
-
     def get_chefequipe_id(self) -> int:
         return self.chef_equipe
+
+    def __str__(self):
+        return str(self.nom) + " chef: " + str(Researcher.objects.get(id=self.chef_equipe.get_id()))
 
 
 class Directions(models.Model):

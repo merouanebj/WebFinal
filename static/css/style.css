@@ -1362,21 +1362,26 @@ table.dataTable thead > tr > td.sorting {
 /*-----------------
 	8. Header
 -----------------------*/
-
+.mini-sidebar.expand-menu .header,
 .header {
-  background: #16a085;
   background: -moz-linear-gradient(left, #16a085 0%, #14ffd0 100%);
   background: -webkit-linear-gradient(left, #16a085 0%, #14ffd0 100%);
   background: -ms-linear-gradient(left, #16a085 0%, #14ffd0 100%);
   background: linear-gradient(to right, #16a085 0%, #14ffd0 100%);
+  background: #fff;
   border-bottom: 1px solid transparent;
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
   height: 60px;
-  left: 0;
+  left: 230px;
   position: fixed;
   right: 0;
   top: 0;
   z-index: 1002;
+}
+
+.mini-sidebar .header {
+  left: 60px;
+  transition: all 0.2s ease-in-out 0s;
 }
 .header .header-left {
   float: left;
@@ -1455,7 +1460,7 @@ table.dataTable thead > tr > td.sorting {
   padding: 17px 20px;
 }
 .page-title-box h3 {
-  color: #fff;
+  color: #000;
   font-size: 20px;
   font-weight: normal;
   margin: 0;
@@ -1531,13 +1536,13 @@ table.dataTable thead > tr > td.sorting {
 -----------------------*/
 
 .sidebar {
-  background-color: #34444c;
+  background-color: #000;
   border-right: 1px solid transparent;
   bottom: 0;
   left: 0;
   margin-top: 0;
   position: fixed;
-  top: 60px;
+  top: 0;
   transition: all 0.2s ease-in-out 0s;
   width: 230px;
   z-index: 1001;
@@ -1777,6 +1782,14 @@ table.dataTable thead > tr > td.sorting {
   color: #fff;
 }
 
+.sidebar li:hover {
+  margin: 0 10px;
+  background-color: #202020;
+  border: 2px solid rgb(100, 95, 95);
+  border-radius: 10px;
+  box-shadow: rgba(236, 231, 231, 0.3) 0px 19px 38px,
+    rgba(170, 164, 164, 0.22) 0px 15px 12px;
+}
 /*-----------------
 	10. Content
 -----------------------*/
