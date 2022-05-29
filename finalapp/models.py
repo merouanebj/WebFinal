@@ -50,7 +50,7 @@ class ResearcherUserManager(BaseUserManager):
 # custom user
 class Researcher(AbstractBaseUser, PermissionsMixin):
     """
-        The user profile of a researcher 
+    The user profile of a researcher 
     """
     # attributes
     first_name = models.CharField(max_length=150, default='')
@@ -59,14 +59,11 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
     speciality = models.CharField(max_length=150, blank=True)
     grade = models.CharField(max_length=200, blank=True)
 
-    # extra information
+    # extra info
     image = models.ImageField(blank=True, default='D', upload_to='images')
     linkedin_account = models.URLField(blank=True)
     google_scholar_account = models.URLField(blank=True, unique=True)
-
-    is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
-
     # Relationship between Database tables
     equipe_researchers = models.ForeignKey(
         'Equipe', on_delete=models.SET_NULL, null=True, blank=True)
@@ -74,12 +71,6 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
     # interests
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-
-    is_active = models.BooleanField(default=True)
-
-    # relationship
-    equipe_researchers = models.ForeignKey(
-        'Equipe', on_delete=models.SET_NULL, null=True, blank=True)
 
     objects = ResearcherUserManager()
 
@@ -103,20 +94,6 @@ class Researcher(AbstractBaseUser, PermissionsMixin):
         return self.pk
 
 
-class Etablisment(models.Model):
-    nom = models.CharField(max_length=200, default='')
-    logo = models.ImageField(null=True, blank=True)
-    site_web = models.URLField(blank=True)
-    location = models.ForeignKey(
-        'Location', on_delete=models.CASCADE, null=True)
-    added = models.CharField(max_length=100, blank=True)
-    chef_etablisement = models.OneToOneField(
-        'Researcher', on_delete=models.SET_NULL, null=True, blank=True)
-
-    def __str__(self):
-        return self.nom
-
-
 class Location(models.Model):
     id = models.IntegerField(primary_key=True)
     state_name = models.CharField(max_length=30)
@@ -129,11 +106,26 @@ class Location(models.Model):
         ordering = ['id']
 
 
+class Etablisment(models.Model):
+    nom = models.CharField(max_length=200, default='')
+    logo = models.ImageField(null=True, blank=True)
+    site_web = models.URLField(blank=True)
+    location = models.ForeignKey(
+        'Location', on_delete=models.CASCADE, null=True)
+    chef_etablisement = models.OneToOneField(
+        'Researcher', on_delete=models.SET_NULL, null=True, blank=True)
+    # directions = models.ForeignKey(
+    #     'Directions', on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.nom
+
+
 class Division(models.Model):
     nom = models.CharField(max_length=200, default='')
     site_web = models.URLField(blank=True)
 
-    # relationship
+    # relationshi
     etablisment = models.ForeignKey(
         'Etablisment', on_delete=models.CASCADE, null=True)
     chef_div = models.OneToOneField(
@@ -146,6 +138,7 @@ class Division(models.Model):
 class Equipe(models.Model):
     nom = models.CharField(max_length=200)
     site_web = models.URLField(blank=True)
+    # Relationship
     division = models.ForeignKey(
         'Division', on_delete=models.CASCADE, null=True)
     chef_equipe = models.OneToOneField(
@@ -158,9 +151,7 @@ class Equipe(models.Model):
         return str(self.nom) + " chef: " + str(Researcher.objects.get(id=self.chef_equipe.get_id()))
 
 
-class Location(models.Model):
-    id = models.IntegerField(primary_key=True, unique=True, blank=False)
-    state_name = models.CharField(max_length=30, blank=False)
-
-    def __str__(self) -> str:
-        return self.state_name
+class Directions(models.Model):
+    nom = models.CharField(max_length=150, )
+    chef_direction = models.OneToOneField(
+        'Researcher', on_delete=models.SET_NULL, null=True)
